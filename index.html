@@ -1,9 +1,9 @@
 <!doctype html>
-<html lang="ko">
+<html lang="zh-CN">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>바벨 단어 계산기</title>
+<title>巴别塔单词计算器</title>
 <style>
 :root{--bg:#fafaf8;--card:#fff;--ink:#1d1d1b;--mute:#777;--line:#e4e2dc;--accent:#2f5bd8;--accent-ink:#fff;--lock:#fff3c4;--lock-line:#d9a900;--ok:#1c7c3c;--no:#b3261e}
 @media (prefers-color-scheme:dark){:root{--bg:#161614;--card:#1f1f1c;--ink:#ecebe6;--mute:#9a988f;--line:#34332e;--accent:#7aa2ff;--accent-ink:#0b1020;--lock:#3b3414;--lock-line:#c9a227;--ok:#5fcf86;--no:#ff8a80}}
@@ -76,341 +76,341 @@ textarea{width:100%;min-height:60px;font:12px/1.4 ui-monospace,Consolas,monospac
 </head>
 <body>
 <main>
-<h1>바벨 단어 계산기</h1>
-<p class="sub">Towers of Babble용 · 가진 알파벳으로 만들 수 있는 단어를 예상 점수순으로 보여줘요. <span id="dictInfo"></span> <span id="uInfo"></span></p>
-<p class="banner" id="uNote" hidden>게임 수치표가 들어 있어서 도감에 직접 적지 않아도 모든 단어의 실제 수치를 바로 볼 수 있어요. 아래 도감 탭은 이전 기록 보관용이에요.</p>
+<h1>巴别塔单词计算器</h1>
+<p class="sub">适用于 Towers of Babble · 按预估分数排序显示手上字母能拼出的单词。 <span id="dictInfo"></span> <span id="uInfo"></span></p>
+<p class="banner" id="uNote" hidden>内置游戏数值表，无需手动录入图鉴即可直接查看所有单词的实际数值。下方的图鉴标签页用于保存以往的记录。</p>
 
 <nav class="tabs" id="tabs">
-  <button class="tab on" data-tab="calc">계산기</button>
-  <button class="tab" data-tab="find">단어 검색</button>
-  <button class="tab" data-tab="towers">타워 도감<small id="cntCards"></small></button>
-  <button class="tab" data-tab="mods">파츠 도감<small id="cntMods"></small></button>
-  <button class="tab" data-tab="fit">공식 추정</button>
-  <button class="tab" data-tab="set">설정 · 백업</button>
+  <button class="tab on" data-tab="calc">计算器</button>
+  <button class="tab" data-tab="find">单词搜索</button>
+  <button class="tab" data-tab="towers">塔图鉴<small id="cntCards"></small></button>
+  <button class="tab" data-tab="mods">部件图鉴<small id="cntMods"></small></button>
+  <button class="tab" data-tab="fit">公式推定</button>
+  <button class="tab" data-tab="set">设置 · 备份</button>
 </nav>
 <div id="migBanner" class="banner" hidden></div>
 
-<!-- ============ 계산기 ============ -->
+<!-- ============ 计算器 ============ -->
 <div class="panel" id="panel-calc">
   <section>
     <div class="row">
-      <input id="rack" type="text" placeholder="알파벳 입력 (예: oeoarotibanyll)" autocomplete="off" autocapitalize="off" spellcheck="false">
-      <button id="go" class="primary">계산</button>
+      <input id="rack" type="text" placeholder="输入字母 (例如: oeoarotibanyll)" autocomplete="off" autocapitalize="off" spellcheck="false">
+      <button id="go" class="primary">计算</button>
     </div>
     <div class="filters">
-      <label>정렬 기준 (점수 종류)<select id="metric" class="setctl"></select></label>
-      <label>결과 필터
-        <select id="mode" class="setctl"><option value="all">전부 (타워·파츠 상관없음)</option><option value="noun">명사만 (타워)</option><option value="mod">동사·형용사·부사만 (파츠)</option><option value="tower">타워만 (수치표 기준)</option><option value="harv">수확 타워만 (수치표 기준)</option><option value="part">파츠만 (수치표 기준)</option></select></label>
-      <label>레벨 단어값 상한 (글자합+1.5×길이, 비우면 제한 없음)<input id="maxV" type="number" min="0" step="0.5" placeholder="25.5" class="setctl"></label>
-      <label class="chk"><input id="tableOnly" type="checkbox" class="setctl"> 게임 수치표에 없는 단어 제외</label>
-      <label>최소 단어 길이<input id="minLen" type="number" min="1" max="15" class="setctl"></label>
-      <label>나눠 쓸 최대 단어 수
-        <select id="maxWords" class="setctl"><option value="1">1 (한 단어만)</option><option value="2">2</option><option value="3">3</option><option value="4">4</option></select></label>
+      <label>排序标准 (分数类型)<select id="metric" class="setctl"></select></label>
+      <label>结果筛选
+        <select id="mode" class="setctl"><option value="all">全部 (不限塔·部件)</option><option value="noun">仅名词 (塔)</option><option value="mod">仅动词·形容词·副词 (部件)</option><option value="tower">仅塔 (按数值表)</option><option value="harv">仅收获塔 (按数值表)</option><option value="part">仅部件 (按数值表)</option></select></label>
+      <label>等级单词值上限 (字母和+1.5×长度, 留空则无限制)<input id="maxV" type="number" min="0" step="0.5" placeholder="25.5" class="setctl"></label>
+      <label class="chk"><input id="tableOnly" type="checkbox" class="setctl"> 排除游戏数值表中没有的单词</label>
+      <label>最小单词长度<input id="minLen" type="number" min="1" max="15" class="setctl"></label>
+      <label>拆分使用的最大单词数
+        <select id="maxWords" class="setctl"><option value="1">1 (仅一个单词)</option><option value="2">2</option><option value="3">3</option><option value="4">4</option></select></label>
     </div>
     <p class="note" id="metricNote"></p>
     <div id="chips" class="chips"></div>
-    <p class="note">글자를 누르면 잠금(노란색)이 켜지고 꺼져요. 리롤 도구가 잠긴 글자를 기준으로 계산해요.</p>
+    <p class="note">点击字母可开启/关闭锁定(黄色)。重掷工具以锁定的字母为基准进行计算。</p>
   </section>
 
   <section id="results" hidden>
-    <h2>추천</h2>
+    <h2>推荐</h2>
     <div id="bestBox"></div>
     <div id="comboList"></div>
-    <h3>가능한 단어 순위</h3>
+    <h3>可用单词排行</h3>
     <div id="wordTable" class="scroll"></div>
 
-    <h3>시작 철자로 찾기</h3>
-    <p class="note">현재 글자로 만들 수 있는 단어 중 원하는 철자로 시작(또는 끝나거나 포함)하는 것만 순위로 보여 줘요. 비워 두면 시작 철자별 최고 단어를 한눈에 보여 줘요. 위의 결과 필터와 정렬 기준이 그대로 적용돼요.</p>
+    <h3>按开头字母查找</h3>
+    <p class="note">仅按排行显示当前字母能拼出的、以指定字母开头(或结尾、包含)的单词。留空则一目了然地显示各开头字母的最佳单词。上方结果筛选和排序标准原样生效。</p>
     <div class="filters">
-      <label>시작 철자<input id="pfStart" type="text" placeholder="예: st" autocomplete="off" spellcheck="false"></label>
-      <label>끝 철자<input id="pfEnd" type="text" placeholder="예: er" autocomplete="off" spellcheck="false"></label>
-      <label>포함 철자(연속)<input id="pfHas" type="text" placeholder="예: ion" autocomplete="off" spellcheck="false"></label>
+      <label>开头字母<input id="pfStart" type="text" placeholder="例如: st" autocomplete="off" spellcheck="false"></label>
+      <label>结尾字母<input id="pfEnd" type="text" placeholder="例如: er" autocomplete="off" spellcheck="false"></label>
+      <label>包含字母(连续)<input id="pfHas" type="text" placeholder="例如: ion" autocomplete="off" spellcheck="false"></label>
     </div>
     <div id="pfOut" class="scroll"></div>
   </section>
 
   <section id="rerollBox" hidden>
-    <h2>리롤 도구</h2>
-    <p class="note">위의 글자 칩에서 잠글 글자를 고르고(처음엔 추천 단어의 글자가 잠겨 있어요) 시뮬레이션을 돌려 보세요.</p>
+    <h2>重掷工具</h2>
+    <p class="note">在上方字母块中选择要锁定的字母(初始已锁定推荐单词的字母)并运行模拟。</p>
     <div class="row">
-      <button id="lockBest">추천 결과 글자로 잠금</button>
-      <button id="lockNone">잠금 해제</button>
-      <button id="simBtn" class="primary">선택한 잠금으로 시뮬레이션</button>
-      <button id="candBtn" class="primary">돌려볼 만한 잠금 후보 추천</button>
+      <button id="lockBest">按推荐结果字母锁定</button>
+      <button id="lockNone">解除锁定</button>
+      <button id="simBtn" class="primary">按所选锁定进行模拟</button>
+      <button id="candBtn" class="primary">推荐值得一试的锁定候选</button>
     </div>
     <div id="simOut" class="scroll"></div>
     <div id="candOut" class="scroll"></div>
   </section>
 
   <section>
-    <h2>단어 직접 확인</h2>
-    <div class="row"><input id="chk" type="text" placeholder="단어 입력" autocomplete="off" spellcheck="false"></div>
+    <h2>直接查看单词</h2>
+    <div class="row"><input id="chk" type="text" placeholder="输入单词" autocomplete="off" spellcheck="false"></div>
     <div id="chkOut"></div>
   </section>
 </div>
 
-<!-- ============ 단어 검색 ============ -->
+<!-- ============ 单词搜索 ============ -->
 <div class="panel" id="panel-find" hidden>
   <section>
-    <h2>단어 검색 — 조건 안에서 가장 센 단어 찾기</h2>
-    <p class="note">게임 수치표 전체에서 찾아요. 아래 조건은 모두 동시에 만족해야 해요(AND). 레벨 단어값(글자합 + 1.5×글자 수) 상한을 걸면 시작 타워로 쓸 수 있는 단어만 남아요(데모는 25.5까지가 Hard). 정렬은 "점수 기준"으로 해요.</p>
+    <h2>单词搜索 — 在条件下寻找最强的单词</h2>
+    <p class="note">在整个游戏数值表中搜索。以下条件需同时满足(AND)。设置等级单词值(字母和 + 1.5×字母数)上限后，就只剩下可用作初始塔的单词(演示版 25.5 以下为 Hard)。排序按"分数标准"进行。</p>
     <div class="row" id="fdPresets"></div>
     <div class="filters">
-      <label>종류<select id="fdKind"><option value="T">타워</option><option value="H">수확 타워</option><option value="P">파츠(품질·동작)</option></select></label>
-      <label>정렬할 점수 기준<select id="fdMetric"></select></label>
-      <label>레벨 단어값 상한<input id="fdCap" type="number" step="0.5" min="0" value="25.5"></label>
-      <label>최소 글자 수<input id="fdMin" type="number" min="0" max="20"></label>
-      <label>최대 글자 수<input id="fdMax" type="number" min="0" max="20"></label>
-      <label>시작 철자<input id="fdStart" type="text" placeholder="예: st" autocomplete="off" spellcheck="false"></label>
-      <label>끝 철자<input id="fdEnd" type="text" placeholder="예: er" autocomplete="off" spellcheck="false"></label>
-      <label>포함 철자(연속)<input id="fdHasTxt" type="text" placeholder="예: ion" autocomplete="off" spellcheck="false"></label>
-      <label>저주 단어<select id="fdCurse"><option value="">포함</option><option value="no">제외</option><option value="only">저주 단어만</option></select></label>
-      <label>수확 자원<select id="fdRes"><option value="">상관없음</option><option value="c">크리스탈</option><option value="o">광석</option><option value="w">나무</option></select></label>
-      <label>스페셜 개수 이상<input id="fdNsp" type="number" min="0" max="10" placeholder="예: 2"></label>
-      <label>보여 줄 개수<select id="fdLimit"><option value="40">40</option><option value="100">100</option><option value="300">300</option></select></label>
-      <label>비교 단어(지금 쓰는 것)<input id="fdCmp" type="text" placeholder="예: defender" autocomplete="off" spellcheck="false"></label>
-      <label class="chk"><input id="fdRack" type="checkbox"> 계산기에 넣은 글자로 만들 수 있는 것만</label>
+      <label>类型<select id="fdKind"><option value="T">塔</option><option value="H">收获塔</option><option value="P">部件(品质·动作)</option></select></label>
+      <label>用于排序的分数标准<select id="fdMetric"></select></label>
+      <label>等级单词值 上限<input id="fdCap" type="number" step="0.5" min="0" value="25.5"></label>
+      <label>最小字母数<input id="fdMin" type="number" min="0" max="20"></label>
+      <label>最大字母数<input id="fdMax" type="number" min="0" max="20"></label>
+      <label>开头字母<input id="fdStart" type="text" placeholder="例如: st" autocomplete="off" spellcheck="false"></label>
+      <label>结尾字母<input id="fdEnd" type="text" placeholder="例如: er" autocomplete="off" spellcheck="false"></label>
+      <label>包含字母(连续)<input id="fdHasTxt" type="text" placeholder="例如: ion" autocomplete="off" spellcheck="false"></label>
+      <label>诅咒单词<select id="fdCurse"><option value="">包含</option><option value="no">排除</option><option value="only">仅诅咒单词</option></select></label>
+      <label>收获资源<select id="fdRes"><option value="">不限</option><option value="c">水晶</option><option value="o">矿石</option><option value="w">木头</option></select></label>
+      <label>特殊能力数量以上<input id="fdNsp" type="number" min="0" max="10" placeholder="例如: 2"></label>
+      <label>显示数量<select id="fdLimit"><option value="40">40</option><option value="100">100</option><option value="300">300</option></select></label>
+      <label>对比单词(当前使用的)<input id="fdCmp" type="text" placeholder="例如: defender" autocomplete="off" spellcheck="false"></label>
+      <label class="chk"><input id="fdRack" type="checkbox"> 仅显示可用计算器中输入的字母拼出的单词</label>
     </div>
-    <h3>스페셜이 있어야 함 (모두 가진 단어만)</h3>
+    <h3>必须具备的特殊能力 (仅显示全部拥有的单词)</h3>
     <div class="chips" id="fdHas"></div>
-    <h3>스페셜이 없어야 함</h3>
+    <h3>不得具有的特殊能力</h3>
     <div class="chips" id="fdNot"></div>
-    <h3>수치 조건</h3>
-    <p class="note">예: 체력 ≥ 500, 사거리 ≥ 8, 독 있음. 조건끼리는 모두 만족해야 해요.</p>
+    <h3>数值条件</h3>
+    <p class="note">例如: 体力 ≥ 500, 射程 ≥ 8, 有毒。各条件需全部满足。</p>
     <div id="fdConds"></div>
-    <p class="row"><button id="fdAddCond">+ 수치 조건 추가</button><button id="fdReset">필터 초기화</button><button id="fdGo" class="primary">검색</button></p>
+    <p class="row"><button id="fdAddCond">+ 添加数值条件</button><button id="fdReset">筛选 重置</button><button id="fdGo" class="primary">搜索</button></p>
     <div id="findOut" class="scroll"></div>
   </section>
 </div>
 
-<!-- ============ 타워 도감 ============ -->
+<!-- ============ 塔图鉴 ============ -->
 <div class="panel" id="panel-towers" hidden>
   <section>
-    <h2>타워 · 채취 건물 기록</h2>
-    <p class="note">게임에서 만든 건물의 수치를 적어 두세요. <b>단어 본체 수치만</b> 적는 게 가장 정확해요. 상세 화면에서 아래는 빼고 적어 주세요.</p>
+    <h2>塔 · 采集建筑记录</h2>
+    <p class="note">请记录游戏中建造的建筑数值。只记录<b>单词本体数值</b>最准确。请在详情界面排除以下内容后记录。</p>
     <ul class="note" style="margin:4px 0 8px;padding-left:20px">
-      <li><b>MODS 줄</b>에 나온 파츠 값 — SPECIAL 줄의 수치에는 파츠 값이 합쳐져 있어요. 파츠 값을 뺀 본체 수치를 적고, 파츠는 파츠 도감에 따로 적어요.</li>
-      <li><b>AURAS</b>·<b>SEMANTIC</b>·<b>META-WORDS</b> 보너스 — 괄호 안 % 나 (+79.5) 같은 값이에요. 이 값이 이미 반영된 오렌지·보라색 수치는 걷어낸 기본값을 적고, 보너스 자체는 "공식 추정" 탭의 관측 기록에 적어요.</li>
+      <li><b>MODS 行</b>中显示的部件值 — SPECIAL 行的数值已包含部件值。请记录减去部件值后的本体数值，部件单独记录到部件图鉴中。</li>
+      <li><b>AURAS</b>·<b>SEMANTIC</b>·<b>META-WORDS</b> 加成 — 即括号内的 % 或 (+79.5) 之类的值。已经包含这些值的橙色·紫色数值请记录剔除后的基础值，加成本身记录到"公式推定"标签页的观测记录中。</li>
     </ul>
     <div class="row">
-      <input id="cdWord" type="text" placeholder="단어" style="width:170px" autocomplete="off" spellcheck="false">
-      <select id="cdRole"><option value="tower">타워 (적 공격)</option><option value="harvester">자원 채취</option></select>
-      <input id="cdNote" type="text" placeholder="메모 (선택)" style="flex:1;min-width:160px">
+      <input id="cdWord" type="text" placeholder="单词" style="width:170px" autocomplete="off" spellcheck="false">
+      <select id="cdRole"><option value="tower">塔 (攻击敌人)</option><option value="harvester">资源采集</option></select>
+      <input id="cdNote" type="text" placeholder="备注 (可选)" style="flex:1;min-width:160px">
     </div>
     <div id="cdTower">
       <div class="grid">
-        <label>체력(HP)<input id="cd_t_hp" type="number" min="0" step="any"></label>
-        <label>공격력(대미지)<input id="cd_t_atk" type="number" min="0" step="any"></label>
-        <label>공격속도<input id="cd_t_aspd" type="number" min="0" step="any"></label>
-        <label>방어력(ARMOR)<input id="cd_t_armor" type="number" min="0" step="any"></label>
-        <label>공격 범위(RANGE)<input id="cd_t_range" type="number" min="0" step="any"></label>
+        <label>体力(HP)<input id="cd_t_hp" type="number" min="0" step="any"></label>
+        <label>攻击力(伤害)<input id="cd_t_atk" type="number" min="0" step="any"></label>
+        <label>攻击速度<input id="cd_t_aspd" type="number" min="0" step="any"></label>
+        <label>防御力(ARMOR)<input id="cd_t_armor" type="number" min="0" step="any"></label>
+        <label>攻击范围(RANGE)<input id="cd_t_range" type="number" min="0" step="any"></label>
       </div>
-      <h3>스페셜 기능 <span class="hint">체크하고, 게임에 표시된 단일 수치와 상세 설명 문구를 적어요</span></h3>
+      <h3>特殊能力 <span class="hint">勾选后，记录游戏中显示的单一数值和详细说明文字</span></h3>
       <div id="cdTSp" class="sprows"></div>
     </div>
     <div id="cdHarv" hidden>
-      <h3>수집 가능한 자원 (중복 선택)</h3><div id="cdRes" class="reslist"></div>
+      <h3>可收集的资源 (可多选)</h3><div id="cdRes" class="reslist"></div>
       <div class="grid">
-        <label>체력(HP)<input id="cd_h_hp" type="number" min="0" step="any"></label>
-        <label>방어력(ARMOR)<input id="cd_h_armor" type="number" min="0" step="any"></label>
-        <label>HARVEST <span class="hint">한 번에 가져오는 양</span><input id="cd_h_harvest" type="number" min="0" step="any"></label>
-        <label>INTERVAL <span class="hint">왕복 시간(초) · 기본 3.2, 낮을수록 좋음</span><input id="cd_h_interval" type="number" min="0" step="any"></label>
-        <label>수집 범위(RANGE)<input id="cd_h_range" type="number" min="0" step="any"></label>
+        <label>体力(HP)<input id="cd_h_hp" type="number" min="0" step="any"></label>
+        <label>防御力(ARMOR)<input id="cd_h_armor" type="number" min="0" step="any"></label>
+        <label>HARVEST <span class="hint">一次获取的量</span><input id="cd_h_harvest" type="number" min="0" step="any"></label>
+        <label>INTERVAL <span class="hint">往返时间(秒) · 默认 3.2, 越低越好</span><input id="cd_h_interval" type="number" min="0" step="any"></label>
+        <label>收集范围(RANGE)<input id="cd_h_range" type="number" min="0" step="any"></label>
       </div>
-      <h3>스페셜 기능 <span class="hint">다중 채집 · 범위 채집 등, 단일 수치와 상세 문구</span></h3>
+      <h3>特殊能力 <span class="hint">多重采集 · 范围采集等, 单一数值和详细文字</span></h3>
       <div id="cdHSp" class="sprows"></div>
     </div>
-    <p class="row"><button id="cdSave" class="primary">도감에 저장</button><button id="cdClear">입력 비우기</button></p>
+    <p class="row"><button id="cdSave" class="primary">保存到图鉴</button><button id="cdClear">清空输入</button></p>
   </section>
   <section>
-    <h2>도감</h2>
+    <h2>图鉴</h2>
     <div class="filters">
-      <label>역할<select id="cdFilterRole"><option value="">전체</option><option value="tower">타워</option><option value="harvester">채취</option></select></label>
-      <label>기능·자원<select id="cdFilterSp"></select></label>
+      <label>角色<select id="cdFilterRole"><option value="">全部</option><option value="tower">塔</option><option value="harvester">采集</option></select></label>
+      <label>功能·资源<select id="cdFilterSp"></select></label>
     </div>
     <div id="cdTable" class="scroll"></div>
   </section>
   <details>
-    <summary>스페셜 기능 목록 관리 (빠진 기능 직접 추가)</summary>
-    <p class="note">목록에 없는 기능이 나오면 이름을 적어서 추가하세요. 타워·채취·파츠 입력 화면에 모두 나타나요.</p>
-    <div class="row"><input id="spNew" type="text" maxlength="12" placeholder="기능 이름 (예: 연쇄 폭발)" style="width:220px"><button id="spAdd">추가</button></div>
+    <summary>特殊能力列表管理 (手动添加缺失的功能)</summary>
+    <p class="note">出现列表中没有的功能时，请输入名称添加。塔·采集·部件输入界面都会显示。</p>
+    <div class="row"><input id="spNew" type="text" maxlength="12" placeholder="功能名称 (例如: 连锁爆炸)" style="width:220px"><button id="spAdd">添加</button></div>
     <div id="spList"></div>
   </details>
 </div>
 
-<!-- ============ 파츠 도감 ============ -->
+<!-- ============ 部件图鉴 ============ -->
 <div class="panel" id="panel-mods" hidden>
   <section>
-    <h2>파츠(모드) 기록</h2>
-    <p class="note">형용사·동사·부사 파츠를 건물에 붙였을 때의 효과를 적어 두세요. 한 파츠가 여러 스탯을 올리거나 새 기능을 줄 수 있어요. "% 증가"는 원래 수치 대비 증가율, "+고정"은 더해지는 값이에요.</p>
+    <h2>部件(模组)记录</h2>
+    <p class="note">请记录将形容词·动词·副词部件附加到建筑上时的效果。一个部件可能提升多项属性或赋予新功能。"% 增加"是相对原数值的增幅，"+固定"是相加的值。</p>
     <div class="row">
-      <input id="mdWord" type="text" placeholder="파츠 단어" style="width:170px" autocomplete="off" spellcheck="false">
-      <input id="mdNote" type="text" placeholder="메모 (선택)" style="flex:1;min-width:160px">
+      <input id="mdWord" type="text" placeholder="部件单词" style="width:170px" autocomplete="off" spellcheck="false">
+      <input id="mdNote" type="text" placeholder="备注 (可选)" style="flex:1;min-width:160px">
     </div>
-    <h3>스탯 효과</h3>
+    <h3>属性效果</h3>
     <div id="mdEff"></div>
-    <p><button id="mdAddEff" class="x">+ 효과 줄 추가</button></p>
-    <h3>부여하는 스페셜 기능 <span class="hint">체크하고 단일 수치와 상세 문구</span></h3>
+    <p><button id="mdAddEff" class="x">+ 添加效果行</button></p>
+    <h3>赋予的特殊能力 <span class="hint">勾选并记录单一数值和详细文字</span></h3>
     <div id="mdSp" class="sprows"></div>
-    <p class="row"><button id="mdSave" class="primary">파츠 도감에 저장</button><button id="mdClear">입력 비우기</button></p>
+    <p class="row"><button id="mdSave" class="primary">保存到部件图鉴</button><button id="mdClear">清空输入</button></p>
   </section>
   <section>
-    <h2>파츠 도감</h2>
+    <h2>部件图鉴</h2>
     <div id="mdTable" class="scroll"></div>
   </section>
 </div>
 
-<!-- ============ 공식 추정 ============ -->
+<!-- ============ 公式推定 ============ -->
 <div class="panel" id="panel-fit" hidden>
   <section>
-    <h2>지금까지 알아낸 규칙</h2>
-    <p class="note">내 기록 데이터에서 확인된 것들이에요. 확실한 것과 추정은 구분해서 적었어요.</p>
+    <h2>目前已发现的规则</h2>
+    <p class="note">这些是从我的记录数据中确认的内容。已确定的与推测的内容分开记录。</p>
     <ol class="rules">
-      <li><b>기본 단위</b> B = 글자 수 × 글자값 합. 모든 능력 수치는 B에 비례해요.</li>
-      <li><b>점유율 모델</b> 능력 수치 = 기준 계수 × B × 점유율. <b>한 단어가 가진 점유율 합은 1.0</b>이에요. 능력이 하나면 점유율 1.0을 다 쓰고(예: FANJET 방어력 1.0), 여러 개면 나눠 가져요(예: MEZUZAHS 방어력 0.4 + 치유 오라 0.6). 아래 표에서 단어별로 확인할 수 있어요. 계수를 확실히 아는 능력만 따지면 내 기록에서 타워 27개 전부, 파츠 23개 전부 합 1.0이에요(오타를 고친 뒤 기준, 추정 계수로 맞춘 일부는 OK*). <span class="muted">(확실)</span></li>
-      <li><b>파츠</b>는 대부분 효과 하나가 점유율 1.0이라 "기준 계수 × B"가 정확히 나와요. 나눠 갖는 파츠도 있어요(ALTERCATING: 슬로우 0.6 + 넉백 0.4). <span class="muted">(확실)</span></li>
-      <li><b>패널티</b> 한 능력의 점유율이 1을 살짝 넘으면 다른 스탯이 정해진 양만큼 깎여요. 공격력 −2.2(3번 확인), 공격속도 −0.37, HP −40. 어떤 규칙으로 정해지는지는 아직 몰라요. <span class="muted">(추정)</span></li>
-      <li><b>방어력</b> 피해 감소 = A ÷ (A + K), K ≈ 6.7. 기록 4개를 모두 만족하는 범위는 6.62~6.74예요.</li>
-      <li><b>공격속도</b> 파츠의 "×1.29" 같은 배율은 곱셈이고 아우라와도 곱해져요(FAIN: 1 + 0.0105×B). 화면 공속은 1 + 1/공격간격이라서 기본 초당 공격은 공속 − 1이에요(DIGITIZER 8.46 → 7.46/s, FOOTWORK 8.87 → 7.87/s). 아우라가 붙으면 (1+아우라)<sup>0.78</sup>배로 줄어든 효과가 나와요(48% → 약 1.36배). <span class="muted">(수치표로 확인)</span></li>
-      <li><b>렐릭</b> 화면 공격력 = 1.1 × (게임 수치표 공격력 + 10 + 렐릭). 그래서 SHARPENED +20이 +22로 보여요. 계산 순서는 (본체 + 렐릭) × 아우라. <span class="muted">(확인됨)</span></li>
-      <li><b>슬로우 오라</b> 오라 계수는 다른 오라와 같은 0.21이에요(UNACCUSTOMEDLY 70.56 = 0.21 × 336). 느려지는 %는 일반 슬로우 식과 달라요(70.56 → 66%).</li>
-      <li><b>메타 단어</b> 이웃한 타워들의 첫 글자가 가로/세로로 3글자 이상 단어를 이루고 배치가 맞으면 보너스가 붙어요(2글자는 안 됨, 게임이 알려줌). 지금까지 본 3건은 B에 비례하고 HP형은 계수의 약 0.4, 오라형은 약 0.5예요. 어떤 단어가 어떤 효과를 주는지는 아직 몰라요. <span class="muted">(관측)</span></li>
-      <li><b>슬로우</b> 슬로우% = 1 − (1 + 수치/124)<sup>−1.4</sup>, 상한 80%. 기록 6개가 모두 맞아요(수치 약 267 이상은 80%). <span class="muted">(거의 확실)</span></li>
-      <li><b>버프는 곱셈</b> 아우라와 의미 보너스는 서로 곱해져요(34.6 = 16.5 × 1.398 × 1.5). 오렌지색 수치는 아우라가 이미 반영된 값이에요.</li>
-      <li><b>크리티컬</b> 수치는 확률×배율이 아니에요. 확률과 배율은 수치에서 따로 정해져요(포화되는 모양). 수치 자체는 점유율 모델을 따라요.</li>
-      <li><b>클래스</b> 능력 수치가 임계값을 넘으면 붙는 보너스 등급이에요(Sniper, Shredder, Aurabot, Artillery). 아래 확인기에서 볼 수 있어요.</li>
+      <li><b>基本单位</b> B = 字母数 × 字母值和。所有能力数值与 B 成正比。</li>
+      <li><b>占比模型</b> 能力数值 = 基准系数 × B × 占比。<b>一个单词的各占比合计为 1.0</b>。只有一种能力时占用全部 1.0(例如: FANJET 防御力 1.0)，有多种能力时按比例分摊(例如: MEZUZAHS 防御力 0.4 + 治疗光环 0.6)。可在下方表格中按单词查看。只考虑系数确切已知的能力，我的记录中 27 个塔、23 个部件全部合计 1.0(修正输入错误后；按推定系数凑齐的部分标为 OK*)。<span class="muted">(确定)</span></li>
+      <li><b>部件</b>大多由一种效果占满 1.0 占比，因此"基准系数 × B"精确成立。也有分摊的部件(ALTERCATING: 减速 0.6 + 击退 0.4)。<span class="muted">(确定)</span></li>
+      <li><b>惩罚</b> 当一种能力的占比略超过 1 时，其他属性会被削减固定数值。攻击力 −2.2(已确认 3 次)、攻击速度 −0.37、HP −40。具体规则尚不清楚。<span class="muted">(推定)</span></li>
+      <li><b>防御力</b> 伤害减免 = A ÷ (A + K), K ≈ 6.7。同时满足 4 条记录的范围是 6.62~6.74。</li>
+      <li><b>攻击速度</b> 部件的 "×1.29" 之类倍率是乘法，且与光环相乘(FAIN: 1 + 0.0105×B)。界面攻速为 1 + 1/攻击间隔，因此基础每秒攻击 = 攻速 − 1(DIGITIZER 8.46 → 7.46/s, FOOTWORK 8.87 → 7.87/s)。附带光环时，效果按 (1+光环)<sup>0.78</sup> 倍衰减(48% → 约 1.36 倍)。<span class="muted">(已由数值表确认)</span></li>
+      <li><b>遗物</b> 界面攻击力 = 1.1 × (游戏数值表攻击力 + 10 + 遗物)。因此 SHARPENED +20 显示为 +22。计算顺序为 (本体 + 遗物) × 光环。<span class="muted">(已确认)</span></li>
+      <li><b>减速光环</b> 光环系数与其他光环相同，为 0.21(UNACCUSTOMEDLY 70.56 = 0.21 × 336)。减速百分比与普通减速公式不同(70.56 → 66%)。</li>
+      <li><b>元单词</b> 相邻塔的首字母横向/纵向组成 3 个字母以上的单词且布局正确时获得加成(2 个字母不行，游戏会提示)。目前观察到的 3 例与 B 成正比，HP 型约为系数的 0.4，光环型约为 0.5。哪些单词产生什么效果尚不清楚。<span class="muted">(观测)</span></li>
+      <li><b>减速</b> 减速% = 1 − (1 + 数值/124)<sup>−1.4</sup>, 上限 80%。6 条记录全部吻合(数值约 267 以上为 80%)。<span class="muted">(几乎确定)</span></li>
+      <li><b>增益为乘法</b> 光环与语义加成彼此相乘(34.6 = 16.5 × 1.398 × 1.5)。橙色数值是已包含光环的值。</li>
+      <li><b>暴击</b> 数值不是概率×倍率。概率和倍率分别由数值决定(呈饱和趋势)。数值本身遵循占比模型。</li>
+      <li><b>职业</b> 能力数值超过阈值时获得的加成等级(Sniper, Shredder, Aurabot, Artillery)。可在下方确认器中查看。</li>
     </ol>
   </section>
   <section>
-    <h2>단어별 점유율 점검</h2>
-    <p class="note">도감에 적은 수치를 기준 계수로 나눠서, 각 능력이 단어의 몇 %를 차지하는지 계산해요. 합이 1.0에서 벗어나면 ⚠로 표시해요. 흔한 원인은 ① 오타, ② 기록하지 않은 능력(수치가 올랐는데 안 적음), ③ 파츠 값이 섞인 수치예요. 빨간 항목은 패널티로 깎인 값이에요.</p>
+    <h2>各单词占比检查</h2>
+    <p class="note">将图鉴中记录的数值除以基准系数，计算各能力占单词的百分之几。合计偏离 1.0 时以 ⚠ 标记。常见原因是 ① 输入错误、② 未记录的能力(数值提升但未记录)、③ 混入部件值的数值。红色项目是被惩罚削减的值。</p>
     <p id="shareSummary"></p>
-    <label class="note"><input type="checkbox" id="shareOnly"> ⚠ 있는 것만 보기</label>
+    <label class="note"><input type="checkbox" id="shareOnly"> 仅查看有 ⚠ 的</label>
     <div id="shareTable" class="scroll"></div>
   </section>
   <section>
-    <h2>항목별 공식 추정</h2>
-    <p class="note">기준 계수를 이미 아는 항목(대부분)은 위 점유율 모델로 계산하니 따로 추정할 필요가 없어요. 아래는 계수를 모르는 항목(채취 스탯 등)과 항목별 평균 점유율이에요. 기준 계수를 모르는 항목은 기록한 수치로 "배율 × 길이 × 글자합" 식을 맞춰요. 먼저 길이·글자합 지수를 1로 고정해 보고(파츠 효과는 대부분 이렇게 정확히 맞아요), 안 맞으면 지수까지 같이 추정해요(서로 다른 길이 2개 이상, 글자합까지는 4개 이상). 체력·공격력처럼 기본값이 있는 항목은 <b>기본값을 넘는 분</b>만 단어 효과로 계산해요(기본값은 설정 · 백업 탭). 추정한 식은 계산기의 "정렬 기준"에서 쓰여요.</p>
+    <h2>各项目的公式推定</h2>
+    <p class="note">基准系数已知的项目(大部分)由上方占比模型计算，无需另行推定。下方是系数未知的项目(采集属性等)和各项目的平均占比。基准系数未知的项目用记录到的数值拟合"倍率 × 长度 × 字母和"公式。先将长度·字母和指数固定为 1(部件效果大多能这样精确匹配)，不匹配时再连指数一起推定(需要 2 个以上不同长度，字母和则需要 4 个以上)。体力·攻击力等有基础值的项目，只将<b>超出基础值的部分</b>按单词效果计算(基础值在 设置 · 备份 标签页)。推定的公式用于计算器的"排序标准"。</p>
     <div id="fitTable" class="scroll"></div>
-    <p class="row"><button id="fitAll" class="primary">기록 있는 항목 전부 추정</button></p>
+    <p class="row"><button id="fitAll" class="primary">推定所有有记录的项目</button></p>
   </section>
   <section>
-    <h2>수치 → 효과 환산 기록</h2>
-    <p class="note">스페셜 기능은 게임 화면에 단일 수치(예: 슬로우 242.55)로 적히고, 상세 설명에서 실제 효과(예: 78% 느려짐)로 풀어 줘요. 그 짝을 모아 두면 환산 식을 찾을 수 있어요. 효과 칸을 비우고 상세 문구만 적어도 돼요(예: 크리티컬 90.72 → "(14%*6.4)").</p>
+    <h2>数值 → 效果换算记录</h2>
+    <p class="note">特殊能力在游戏界面以单一数值记录(例如: 减速 242.55)，并在详细说明中解释为实际效果(例如: 减速 78%)。收集这些配对就能找到换算公式。也可以留空效果栏只记录详细文字(例如: 暴击 90.72 → "(14%*6.4)")。</p>
     <div class="row">
       <select id="cvKey"></select>
-      <input id="cvX" type="number" min="0" step="any" placeholder="수치" style="width:110px">
-      <input id="cvE" type="number" min="0" step="any" placeholder="효과 %" style="width:100px">
-      <input id="cvT" type="text" maxlength="80" placeholder="상세 문구 (선택)" style="flex:1;min-width:160px">
-      <button id="cvAdd" class="primary">추가</button>
+      <input id="cvX" type="number" min="0" step="any" placeholder="数值" style="width:110px">
+      <input id="cvE" type="number" min="0" step="any" placeholder="效果 %" style="width:100px">
+      <input id="cvT" type="text" maxlength="80" placeholder="详细文字 (可选)" style="flex:1;min-width:160px">
+      <button id="cvAdd" class="primary">添加</button>
     </div>
     <div id="cvTable" class="scroll"></div>
   </section>
   <section>
-    <h2>클래스 확인기</h2>
-    <p class="note">타워 상세 화면 SPECIAL 줄의 <b>합계</b>(파츠 포함) 수치를 넣으면 어떤 클래스가 붙는지, 얼마나 모자란지 알려줘요. 도감의 클래스 배지는 단어 본체 수치만 기준이라 파츠가 붙으면 더 높아질 수 있어요.</p>
+    <h2>职业确认器</h2>
+    <p class="note">输入塔详情界面 SPECIAL 行的<b>合计</b>(含部件)数值，即可查看会获得什么职业、还差多少。图鉴中的职业徽章仅以单词本体数值为基准，附加部件后可能更高。</p>
     <div class="grid">
       <label>Range<input id="clRange" type="number" min="0" step="any"></label>
       <label>Splash<input id="clSplash" type="number" min="0" step="any"></label>
       <label>Pierce<input id="clPierce" type="number" min="0" step="any"></label>
       <label>Shred<input id="clShred" type="number" min="0" step="any"></label>
-      <label>공격력 오라(Dmg Aura)<input id="clAtkAura" type="number" min="0" step="any"></label>
-      <label>공속 오라(Atk Spd Aura)<input id="clAspdAura" type="number" min="0" step="any"></label>
+      <label>攻击力光环(Dmg Aura)<input id="clAtkAura" type="number" min="0" step="any"></label>
+      <label>攻速光环(Atk Spd Aura)<input id="clAspdAura" type="number" min="0" step="any"></label>
     </div>
     <div id="clOut" style="margin-top:10px"></div>
   </section>
   <section>
-    <h2>메타 단어 (이웃 타워 첫 글자가 만드는 단어)</h2>
-    <p class="note">타워를 격자에 놓았을 때 첫 글자들이 가로/세로로 3글자 이상 단어가 되면 붙는 보너스예요. 게임이 알려 주는 보너스를 기록해 두면 규칙을 찾을 수 있어요. "수치÷(계수×B)"는 점유율처럼 본 값이에요.</p>
+    <h2>元单词 (相邻塔首字母组成的单词)</h2>
+    <p class="note">塔放在网格上、首字母横向/纵向组成 3 个字母以上的单词时获得的加成。记录游戏提示的加成就能找到规则。"数值÷(系数×B)"可视为类似占比的值。</p>
     <div class="row">
-      <input id="mtWord" type="text" maxlength="12" placeholder="단어 (예: herd)" style="width:120px">
-      <select id="mtDir"><option value="across">가로</option><option value="down">세로</option></select>
-      <select id="mtEff"><option value="t_hp">HP</option><option value="t_atk">공격력</option><option value="t_aspd">공격속도</option><option value="t_armor">방어력</option><option value="t_range">사거리</option><option value="sp:aura_atk">공격력 오라</option><option value="sp:aura_aspd">공속 오라</option><option value="sp:aura_heal">치유 오라</option><option value="other">기타</option></select>
-      <input id="mtVal" type="number" min="0" step="any" placeholder="수치" style="width:90px">
-      <input id="mtTw" type="text" maxlength="120" placeholder="참여 타워 (선택)" style="flex:1;min-width:160px">
-      <button id="mtAdd" class="primary">추가</button>
+      <input id="mtWord" type="text" maxlength="12" placeholder="单词 (例如: herd)" style="width:120px">
+      <select id="mtDir"><option value="across">横向</option><option value="down">纵向</option></select>
+      <select id="mtEff"><option value="t_hp">HP</option><option value="t_atk">攻击力</option><option value="t_aspd">攻击速度</option><option value="t_armor">防御力</option><option value="t_range">射程</option><option value="sp:aura_atk">攻击力光环</option><option value="sp:aura_aspd">攻速光环</option><option value="sp:aura_heal">治疗光环</option><option value="other">其他</option></select>
+      <input id="mtVal" type="number" min="0" step="any" placeholder="数值" style="width:90px">
+      <input id="mtTw" type="text" maxlength="120" placeholder="参与塔 (可选)" style="flex:1;min-width:160px">
+      <button id="mtAdd" class="primary">添加</button>
     </div>
     <div id="mtTable" class="scroll"></div>
-    <h3>배치 도우미 <span class="hint">한 줄(가로/세로)에서 빈칸 _ 을 채울 첫 글자 찾기</span></h3>
+    <h3>布局助手 <span class="hint">在一行(横向/纵向)中寻找可填入空格 _ 的首字母</span></h3>
     <div class="row">
-      <input id="bdPat" type="text" maxlength="12" placeholder="예: re_d" style="width:140px">
-      <button id="bdGo" class="primary">후보 찾기</button>
-      <label class="note"><input type="checkbox" id="bdOwn" checked> 내 도감 타워 첫 글자만</label>
+      <input id="bdPat" type="text" maxlength="12" placeholder="例如: re_d" style="width:140px">
+      <button id="bdGo" class="primary">查找候选</button>
+      <label class="note"><input type="checkbox" id="bdOwn" checked> 仅限我图鉴中塔的首字母</label>
     </div>
     <div id="bdOut" class="scroll"></div>
-    <h3>공속 → 초당 공격 횟수 <span class="hint">두 후보식 비교</span></h3>
-    <div class="row"><input id="asIn" type="number" min="0" step="any" placeholder="공속 값" style="width:110px"> <span id="asOut" class="note"></span></div>
+    <h3>攻速 → 每秒攻击次数 <span class="hint">比较两个候选公式</span></h3>
+    <div class="row"><input id="asIn" type="number" min="0" step="any" placeholder="攻速值" style="width:110px"> <span id="asOut" class="note"></span></div>
   </section>
   <section>
-    <h2>관측 기록 (의미 보너스 · 메타 단어 · 공속 환산 등)</h2>
-    <p class="note">공식을 아직 모르는 현상을 모아 두는 곳이에요. 예: SEMANTIC QUERY +50% damage, META-WORDS HERD(across) +79.5 HP, 공격속도 2.79 → 초당 1.3회. 쌓이면 규칙을 찾을 수 있어요.</p>
+    <h2>观测记录 (语义加成 · 元单词 · 攻速换算等)</h2>
+    <p class="note">用于收集尚不知道公式的现象。例如: SEMANTIC QUERY +50% damage, META-WORDS HERD(across) +79.5 HP, 攻击速度 2.79 → 每秒 1.3 次。积累后就能找到规律。</p>
     <div class="row">
-      <select id="obsKind"><option value="semantic">의미 보너스</option><option value="meta">메타 단어</option><option value="aspd">공속→초당</option><option value="aura">아우라</option><option value="relic">렐릭</option><option value="etc">기타</option></select>
-      <input id="obsA" type="text" maxlength="40" placeholder="A (예: 파츠 단어)" style="width:150px">
-      <input id="obsB" type="text" maxlength="40" placeholder="B (예: 타워 단어)" style="width:150px">
-      <input id="obsT" type="text" maxlength="160" placeholder="내용 (예: 공격력 +50%)" style="flex:1;min-width:180px">
-      <button id="obsAdd" class="primary">추가</button>
+      <select id="obsKind"><option value="semantic">语义加成</option><option value="meta">元单词</option><option value="aspd">攻速→每秒</option><option value="aura">光环</option><option value="relic">遗物</option><option value="etc">其他</option></select>
+      <input id="obsA" type="text" maxlength="40" placeholder="A (例如: 部件单词)" style="width:150px">
+      <input id="obsB" type="text" maxlength="40" placeholder="B (例如: 塔单词)" style="width:150px">
+      <input id="obsT" type="text" maxlength="160" placeholder="内容 (例如: 攻击力 +50%)" style="flex:1;min-width:180px">
+      <button id="obsAdd" class="primary">添加</button>
     </div>
     <div id="obsTable" class="scroll"></div>
   </section>
   <section>
-    <h2>방어력 (점근적 피해 감소)</h2>
-    <p class="note">피해 감소율 = A ÷ (A + K). 방어력 A가 커질수록 100%에 가까워지지만 넘지는 않아요. "원래 피해 대비 실제로 받은 피해 %"를 방어력별로 기록하면 K를 추정해요.</p>
-    <div class="row"><input id="arA" type="number" min="0" step="any" placeholder="방어력 A" style="width:120px"><input id="arT" type="number" min="0" max="100" step="any" placeholder="받은 피해 %" style="width:130px"><button id="arAdd">기록 추가</button><button id="arFit" class="primary">K 추정</button></div>
+    <h2>防御力 (渐进伤害减免)</h2>
+    <p class="note">伤害减免率 = A ÷ (A + K)。防御力 A 越大越接近 100%，但不会超过。按防御力记录"实际受到伤害相对原伤害的 %"即可推定 K。</p>
+    <div class="row"><input id="arA" type="number" min="0" step="any" placeholder="防御力 A" style="width:120px"><input id="arT" type="number" min="0" max="100" step="any" placeholder="受到伤害 %" style="width:130px"><button id="arAdd">添加记录</button><button id="arFit" class="primary">K 推定</button></div>
     <div id="arTable" class="scroll"></div>
     <div id="arOut"></div>
   </section>
 </div>
 
-<!-- ============ 설정 · 백업 ============ -->
+<!-- ============ 设置 · 备份 ============ -->
 <div class="panel" id="panel-set" hidden>
   <section id="settings">
-    <h2>점수 공식 (기본)</h2>
-    <p class="note">점수 = 배율 × 길이<sup>길이 지수</sup> × 글자합<sup>글자합 지수</sup>. 기록해 둔 파츠 효과가 거의 정확히 "상수 × 길이 × 글자합"이어서 기본 지수를 1·1로 두었어요. 공식 추정 탭에서 항목별로 맞춰 가면 이 기본값 대신 쓰여요.</p>
+    <h2>分数公式 (默认)</h2>
+    <p class="note">分数 = 倍率 × 长度<sup>长度指数</sup> × 字母和<sup>字母和指数</sup>。记录到的部件效果几乎恰好是"常数 × 长度 × 字母和"，因此默认指数设为 1·1。在公式推定标签页按项目调整后，将取代此默认值。</p>
     <div class="grid">
-      <label>길이 지수<input id="pa" type="number" step="0.05" class="setctl"></label>
-      <label>글자합 지수<input id="pb" type="number" step="0.05" class="setctl"></label>
-      <label>배율<input id="pk" type="number" step="0.1" min="0.0001" class="setctl"></label>
-      <label>방어력 상수 K (피해 감소 = A÷(A+K))<input id="armorK" type="number" step="0.1" min="0.1" class="setctl"></label>
-      <label class="chk"><input id="unk" type="checkbox" class="setctl"> 품사 미분류 단어 포함</label>
-      <label class="chk"><input id="needNoun" type="checkbox" class="setctl"> 조합에 명사 1개 이상 필수</label>
+      <label>长度指数<input id="pa" type="number" step="0.05" class="setctl"></label>
+      <label>字母和指数<input id="pb" type="number" step="0.05" class="setctl"></label>
+      <label>倍率<input id="pk" type="number" step="0.1" min="0.0001" class="setctl"></label>
+      <label>防御常数 K (伤害减免 = A÷(A+K))<input id="armorK" type="number" step="0.1" min="0.1" class="setctl"></label>
+      <label class="chk"><input id="unk" type="checkbox" class="setctl"> 包含未分类词性的单词</label>
+      <label class="chk"><input id="needNoun" type="checkbox" class="setctl"> 组合中至少需要 1 个名词</label>
     </div>
-    <h3>항목별 기본값 (단어 효과가 없을 때의 값)</h3>
-    <p class="note">기록에서 가장 흔한 값으로 채워 둔 추정치예요. 게임과 다르면 고치세요. INTERVAL은 기본값에서 줄어든 만큼이 효과예요.</p>
+    <h3>各项目默认值 (单词无效果时的值)</h3>
+    <p class="note">以记录中最常见的值填写的预估值。与游戏不符时请修改。INTERVAL 相对默认值减少的部分就是效果。</p>
     <div id="bases"></div>
-    <h3>기준 계수 (한 능력이 단어 점유율 1.0을 다 가졌을 때의 값 ÷ B)</h3>
-    <p class="note">기록에서 구한 값이에요. (추정)이라고 적힌 것은 기록이 적어 불확실해요. 게임과 다르면 고치세요. 계산기의 예상 점수와 점유율 점검이 이 값을 써요.</p>
+    <h3>基准系数 (一种能力占满单词 1.0 占比时的值 ÷ B)</h3>
+    <p class="note">从记录中求出的值。标注 (推定) 的因记录较少而不确定。与游戏不符时请修改。计算器的预估分数和占比检查会使用这些值。</p>
     <div id="c0grid"></div>
-    <p><button id="c0Reset">기준 계수 되돌리기</button></p>
-    <h3>글자별 가중치 (기본: 표준 스크래블 점수)</h3>
+    <p><button id="c0Reset">恢复基准系数</button></p>
+    <h3>各字母权重 (默认: 标准拼字游戏分数)</h3>
     <div id="values"></div>
-    <p><button id="resetSet">기본값으로 되돌리기</button></p>
+    <p><button id="resetSet">恢复默认值</button></p>
   </section>
   <section>
-    <h2>제외 단어 (게임에서 안 된 단어)</h2>
-    <p class="note">이 브라우저에 저장돼요. 다른 PC로 옮기려면 아래 백업을 쓰거나, 이 텍스트를 복사해서 붙여넣고 "불러오기"를 누르세요.</p>
+    <h2>排除单词 (游戏中无效的单词)</h2>
+    <p class="note">保存在此浏览器中。要转移到其他电脑，请使用下方备份，或复制粘贴这段文本后点击"加载"。</p>
     <div id="blackList"></div>
     <textarea id="blackBox" spellcheck="false"></textarea>
-    <p class="row"><button id="blackLoad">불러오기</button><button id="blackClear">전부 비우기</button></p>
+    <p class="row"><button id="blackLoad">加载</button><button id="blackClear">全部清空</button></p>
   </section>
     <section>
-    <h2>수치표에 없는 단어 정리</h2>
-    <p class="note">게임 수치표에 없는 단어는 게임에서 쓸 수 없어요(저주 단어는 수치표 단어로 취급해요). 내 기록(타워 도감·파츠 도감·제외 단어) 중 수치표에 없는 항목을 찾아 지울 수 있어요. 먼저 목록을 확인한 뒤 삭제를 눌러요. 계산기는 설정의 "수치표에 없는 단어 제외"가 켜져 있으면 이런 단어를 결과에서 빼요.</p>
-    <p class="row"><button id="purgeScan" class="primary">수치표에 없는 기록 찾기</button><button data-purgeundo="1">직전 삭제 되돌리기</button></p>
+    <h2>整理数值表中没有的单词</h2>
+    <p class="note">游戏数值表中没有的单词无法在游戏中使用(诅咒单词视为数值表单词)。可查找并删除我的记录(塔图鉴·部件图鉴·排除单词)中数值表里没有的项目。请先确认列表再点击删除。计算器在设置的"排除数值表中没有的单词"开启时会从结果中剔除这些单词。</p>
+    <p class="row"><button id="purgeScan" class="primary">查找数值表中没有的记录</button><button data-purgeundo="1">撤销上次删除</button></p>
     <div id="purgeOut"></div>
   </section>
 
   <section>
-    <h2>전체 백업 / 복원</h2>
-    <p class="note">타워 도감·파츠 도감·추정식·환산 기록·방어력 기록·제외 단어가 한 덩어리로 들어 있어요. 파일로 저장해 두면 브라우저를 바꾸거나 다른 PC로 옮겨도 복원할 수 있어요. 불러오면 현재 기록은 파일 내용으로 바뀌어요. 이전 버전 백업도 불러오면 자동으로 새 형식으로 바뀌어요.</p>
-    <p class="row"><button id="bkDownload" class="primary">백업 파일 내려받기</button><button id="bkPick">백업 파일 불러오기</button><input id="bkFile" type="file" accept=".json,application/json,text/plain" hidden></p>
+    <h2>完整备份 / 恢复</h2>
+    <p class="note">塔图鉴·部件图鉴·推定式·换算记录·防御记录·排除单词打包在一起。保存为文件后，更换浏览器或转移到其他电脑也能恢复。加载后当前记录会被文件内容替换。加载旧版本备份也会自动转换为新格式。</p>
+    <p class="row"><button id="bkDownload" class="primary">下载备份文件</button><button id="bkPick">加载备份文件</button><input id="bkFile" type="file" accept=".json,application/json,text/plain" hidden></p>
     <p id="bkMsg" class="note"></p>
-    <details><summary>텍스트로 복사 · 붙여넣기</summary>
+    <details><summary>文本复制 · 粘贴</summary>
       <textarea id="cdBox" spellcheck="false"></textarea>
-      <p class="row"><button id="cdLoad">텍스트에서 불러오기</button></p>
+      <p class="row"><button id="cdLoad">从文本加载</button></p>
     </details>
   </section>
-  <p class="note">단어 분류(명사·동사·형용사·부사)는 WordNet 기준이라 게임의 분류와 다를 수 있어요. 사전에 있어도 게임에서 안 되는 단어는 "안 됨"으로 제외하세요.</p>
+  <p class="note">单词分类(名词·动词·形容词·副词)基于 WordNet，可能与游戏内的分类不同。词典中有但游戏中无效的单词请用"无效"排除。</p>
 </div>
 </main>
 
@@ -277633,37 +277633,37 @@ function fitFixed(points) {
   const clone = o => JSON.parse(JSON.stringify(o));
   const dict = makeDict(document.getElementById('dict').textContent.trim());
   const LET = 'abcdefghijklmnopqrstuvwxyz';
-  const POS = [[1, '명사'], [2, '동사'], [4, '형용사'], [8, '부사']];
+  const POS = [[1, '名词'], [2, '动词'], [4, '形容词'], [8, '副词']];
   const VER = 6;
 
   // ---------- game vocabulary ----------
   const STATS = [
-    { key: 't_hp', label: '타워 체력', short: '체력', role: 'tower' },
-    { key: 't_atk', label: '타워 공격력', short: '공격', role: 'tower' },
-    { key: 't_aspd', label: '타워 공격속도', short: '공속', role: 'tower' },
-    { key: 't_armor', label: '타워 방어력(ARMOR)', short: '방어', role: 'tower' },
-    { key: 't_range', label: '타워 공격 범위', short: '범위', role: 'tower' },
-    { key: 'h_hp', label: '채취 체력', short: '체력', role: 'harvester' },
-    { key: 'h_armor', label: '채취 방어력(ARMOR)', short: '방어', role: 'harvester' },
-    { key: 'h_harvest', label: '채취 HARVEST(1회 수확량)', short: 'HARVEST', role: 'harvester' },
-    { key: 'h_interval', label: '채취 INTERVAL(왕복 시간)', short: 'INTERVAL', role: 'harvester' },
-    { key: 'h_range', label: '채취 수집 범위', short: '범위', role: 'harvester' }
+    { key: 't_hp', label: '塔体力', short: '体力', role: 'tower' },
+    { key: 't_atk', label: '塔攻击力', short: '攻击', role: 'tower' },
+    { key: 't_aspd', label: '塔攻击速度', short: '攻速', role: 'tower' },
+    { key: 't_armor', label: '塔防御力(ARMOR)', short: '防御', role: 'tower' },
+    { key: 't_range', label: '塔攻击范围', short: '范围', role: 'tower' },
+    { key: 'h_hp', label: '采集体力', short: '体力', role: 'harvester' },
+    { key: 'h_armor', label: '采集防御力(ARMOR)', short: '防御', role: 'harvester' },
+    { key: 'h_harvest', label: '采集 HARVEST(单次收获量)', short: 'HARVEST', role: 'harvester' },
+    { key: 'h_interval', label: '采集 INTERVAL(往返时间)', short: 'INTERVAL', role: 'harvester' },
+    { key: 'h_range', label: '采集收集范围', short: '范围', role: 'harvester' }
   ];
   // value shown when a word adds nothing (estimated from recorded data; editable in settings)
   const BASE_DEF = { t_hp: 100, t_atk: 16.5, t_aspd: 2, t_armor: 1, t_range: 5.32, h_hp: 120, h_range: 3, h_interval: 3.2 };
   const LOWER_BETTER = { h_interval: true };
   const SP_BASE = {
-    stun: '스턴', chain: '체인(튕김)', splash: '스플래시', slow: '슬로우', pierce: '관통', poison: '독', knockback: '넉백', crit: '크리티컬',
-    shred: '방어력 감소(Shred)', multishot: '멀티샷',
-    aura_burn: '오라: 화상(적 피해)', aura_heal: '오라: 체력 회복', aura_armor: '오라: 방어력 버프',
-    aura_slow: '오라: 슬로우', aura_aspd: '오라: 공격속도 버프', aura_atk: '오라: 공격력 버프', aura_range: '오라: 범위 버프',
-    multi: '다중 채집', area: '범위 채집', harvest_aura: '오라: 수확 버프', curse: '저주(Curse)'
+    stun: '眩晕', chain: '连锁(弹跳)', splash: '溅射', slow: '减速', pierce: '穿透', poison: '毒', knockback: '击退', crit: '暴击',
+    shred: '防御削减(Shred)', multishot: '多重射击',
+    aura_burn: '光环: 灼烧(敌人受伤)', aura_heal: '光环: 体力回复', aura_armor: '光环: 防御加成',
+    aura_slow: '光环: 减速', aura_aspd: '光环: 攻击速度加成', aura_atk: '光环: 攻击力加成', aura_range: '光环: 范围加成',
+    multi: '多重采集', area: '范围采集', harvest_aura: '光环: 收获加成', curse: '诅咒(Curse)'
   };
   const T_SP = ['stun', 'chain', 'splash', 'slow', 'pierce', 'shred', 'multishot', 'poison', 'knockback', 'crit', 'aura_burn', 'aura_slow', 'aura_heal', 'aura_armor', 'aura_aspd', 'aura_atk', 'aura_range'];
   // custom specials the user added earlier that are now built in (label -> built-in key)
-  const LABEL_TO_BUILTIN = { 'shred': 'shred', '쉬레드': 'shred', '방어력 감소': 'shred', '멀티샷': 'multishot', 'multishot': 'multishot', '다중 발사': 'multishot' };
+  const LABEL_TO_BUILTIN = { 'shred': 'shred', '쉬레드': 'shred', '방어력 감소': 'shred', '멀티샷': 'multishot', 'multishot': 'multishot', '다중 발사': 'multishot', '撕碎': 'shred', '防御削减': 'shred', '多重射击': 'multishot', '多重发射': 'multishot' };
 
-  // ---------- reference coefficients ("점유율 모델") ----------
+  // ---------- reference coefficients ("占比模型") ----------
   // value = c0 x (length x letter-sum) x share.  A word's shares add up to ~1.0, so c0 is what one effect gets if it takes the whole word.
   // derived from the user's own records (parts with a single effect fit these exactly)
   const DEF_C0 = {
@@ -277675,41 +277675,41 @@ function fitFixed(points) {
   const C0_GUESS = { 'sp:multishot': 1, 'mod:t_aspd:pct': 1, 'mod:h_harvest:pct': 1, 'mod:h_harvest:flat': 1, t_aspd: 1 };
   // special tiers ("CLASS") shown in the game's detail view; thresholds are on the tower's total incl. parts
   const CLASSES = [
-    { name: 'Sniper', need: { shred: 10, pierce: 4 }, text: '정예·미니보스·보스에게 100% 추가 피해' },
-    { name: 'Shredder', need: { shred: 25 }, text: '방어력을 음수까지 깎아 적이 받는 피해가 늘어남' },
-    { name: 'Aurabot', need: { aura_atk: 4, aura_aspd: 4 }, text: '이 타워의 모든 오라 범위 +66%' },
-    { name: 'Artillery', need: { range: 14, splash: 5 }, text: '적과의 거리에 따라 최대 +100% 피해' }
+    { name: 'Sniper', need: { shred: 10, pierce: 4 }, text: '对精英·小头目·头目造成 100% 额外伤害' },
+    { name: 'Shredder', need: { shred: 25 }, text: '将防御削至负数，使敌人受到更多伤害' },
+    { name: 'Aurabot', need: { aura_atk: 4, aura_aspd: 4 }, text: '此塔的所有光环范围 +66%' },
+    { name: 'Artillery', need: { range: 14, splash: 5 }, text: '根据与敌人的距离最多 +100% 伤害' }
   ];
-  const NEED_LABEL = { shred: 'Shred', pierce: 'Pierce', splash: 'Splash', range: 'Range', aura_atk: '공격력 오라', aura_aspd: '공속 오라' };
+  const NEED_LABEL = { shred: 'Shred', pierce: 'Pierce', splash: 'Splash', range: 'Range', aura_atk: '攻击力光环', aura_aspd: '攻速光环' };
   const SLOW = { K: 124, n: 1.4, cap: 80 };
   const slowEff = x => Math.min(SLOW.cap, 100 * (1 - Math.pow(1 + x / SLOW.K, -SLOW.n)));
   const SEED_OBS = [
-    { kind: 'semantic', a: 'query', b: 'heptahedron', text: '공격력 +50% (곱셈: 16.5 × 1.398(아우라) × 1.5 = 34.6)' },
-    { kind: 'aspd', a: '2', b: '1.0/sec', text: '공격속도 2 → 초당 1.0회' },
-    { kind: 'aspd', a: '2.79', b: '1.3/sec', text: '공격속도 2.79(아우라 +39.32% 반영) → 초당 1.3회. 단순 비례(1.4)가 아님' },
-    { kind: 'aura', a: 'captain + witty', b: '주변 타워', text: '공속 오라 13.48 + 공격 오라 9.63 → 받는 타워에 +39.32% Atk Spd, +39.8% Dmg (다른 출처 섞였을 수 있음)' }
+    { kind: 'semantic', a: 'query', b: 'heptahedron', text: '攻击力 +50% (乘法: 16.5 × 1.398(光环) × 1.5 = 34.6)' },
+    { kind: 'aspd', a: '2', b: '1.0/sec', text: '攻击速度 2 → 每秒 1.0 次' },
+    { kind: 'aspd', a: '2.79', b: '1.3/sec', text: '攻击速度 2.79(已包含光环 +39.32%) → 每秒 1.3 次。不是简单比例(1.4)' },
+    { kind: 'aura', a: 'captain + witty', b: '周围塔', text: '攻速光环 13.48 + 攻击光环 9.63 → 受影响塔 +39.32% Atk Spd, +39.8% Dmg (可能混有其他来源)' }
   ];
   const SEED_OBS2 = [
-    { kind: 'relic', a: 'sharpened', b: 'unaccustomedly', text: '렐릭 +20 공격력 → 실제 +22 (16.5→38.5). 게임 수치표로 확인: 화면 공격력 = 1.1 × (기본 5 + 보너스 + 10), 그래서 +20이 +22' },
-    { kind: 'relic', a: '계산 순서', b: '', text: '(본체 + 렐릭) × 아우라 × 의미 보너스' },
-    { kind: 'aspd', a: 'fain ×1.29', b: 'B=28', text: '공속 곱셈 파츠: 1 + 0.0105 × B (실제 ≈1.294). 아우라와는 곱셈' },
-    { kind: 'aura', a: 'unaccustomedly 슬로우 오라', b: '70.56', text: '슬로우 오라 계수 0.21 × 336. 70.56 → 66% 느려짐(일반 슬로우 공식이면 47%라 별도 환산)' },
-    { kind: 'etc', a: '메타 단어 규칙', b: '', text: '칸은 격자로 자유(장애물 있음). 3글자 이상만 적용, 2글자는 안 됨. 단어가 생기면 게임이 알려주고, 배치가 맞아야 적용' }
+    { kind: 'relic', a: 'sharpened', b: 'unaccustomedly', text: '遗物 +20 攻击力 → 实际 +22 (16.5→38.5)。已由游戏数值表确认: 界面攻击力 = 1.1 × (基础 5 + 加成 + 10)，因此 +20 变 +22' },
+    { kind: 'relic', a: '计算顺序', b: '', text: '(本体 + 遗物) × 光环 × 语义加成' },
+    { kind: 'aspd', a: 'fain ×1.29', b: 'B=28', text: '攻速乘法部件: 1 + 0.0105 × B (实际 ≈1.294)。与光环为乘法' },
+    { kind: 'aura', a: 'unaccustomedly 减速光环', b: '70.56', text: '减速光环系数 0.21 × 336。70.56 → 减速 66%(普通减速公式为 47%，需单独换算)' },
+    { kind: 'etc', a: '元单词规则', b: '', text: '格子可自由放置(有障碍物)。仅 3 个字母以上生效，2 个字母不行。组成单词时游戏会提示，且布局正确才生效' }
   ];
   const SEED_OBS3 = [
-    { kind: 'aspd', a: '화면 ATK SPD', b: '1 + 1/간격', text: '게임 수치표: 화면 공속 = 1 + 1/공격간격, 즉 기본 초당 공격 = 공속 − 1. DIGITIZER 8.46 → 7.46/s, FOOTWORK 8.87 → 7.87/s. 아우라는 따로 곱해짐(48% → 초당 1.36배, (1+아우라)^0.78)' },
-    { kind: 'etc', a: 'Word Value', b: '합 + 1.5×길이', text: '레벨 난이도 값. 25.5 이하까지가 Hard, 26부터 Very Hard(데모는 Hard까지). 레벨 이름 단어는 타워/수확 종류만 가능' },
-    { kind: 'etc', a: 'incubating', b: '수확 속도 +3.15', text: '게임 수치표: INCUBATING은 수확 속도 +3.15(계수 0.021×B). 수확량은 harvest_amount(CIVILIZE +8.2 = 0.0466×B)' }
+    { kind: 'aspd', a: '界面 ATK SPD', b: '1 + 1/间隔', text: '游戏数值表: 界面攻速 = 1 + 1/攻击间隔，即基础每秒攻击 = 攻速 − 1。DIGITIZER 8.46 → 7.46/s, FOOTWORK 8.87 → 7.87/s。光环另行相乘(48% → 每秒 1.36 倍, (1+光环)^0.78)' },
+    { kind: 'etc', a: 'Word Value', b: '和 + 1.5×长度', text: '等级难度值。25.5 以下为 Hard，26 起为 Very Hard(演示版到 Hard)。等级名称单词只能是塔/收获类型' },
+    { kind: 'etc', a: 'incubating', b: '收获速度 +3.15', text: '游戏数值表: INCUBATING 收获速度 +3.15(系数 0.021×B)。收获量为 harvest_amount(CIVILIZE +8.2 = 0.0466×B)' }
   ];
   const SEED_META = [
     { word: 'herd', dir: 'across', eff: 't_hp', val: 79.5, towers: 'HEPTAHEDRON, ECHOER, RENOVATOR, DEFENDER', note: '' },
     { word: 'ecu', dir: 'down', eff: 't_hp', val: 38.5, towers: 'ECHOER, CAPTAIN, UNACCUSTOMEDLY', note: '' },
     { word: 'mux', dir: 'across', eff: 'sp:aura_atk', val: 3.15, towers: 'MEGADEATH, UNACCUSTOMEDLY, XENOGRAFT', note: '' }
   ];
-  const META_EFF = { t_hp: 'HP', t_atk: '공격력', t_aspd: '공격속도', t_armor: '방어력', t_range: '사거리', 'sp:aura_atk': '공격력 오라', 'sp:aura_aspd': '공속 오라', 'sp:aura_heal': '치유 오라', other: '기타' };
-  const OBS_KINDS = { semantic: '의미 보너스', meta: '메타 단어', aspd: '공속→초당', aura: '아우라', relic: '렐릭', etc: '기타' };
+  const META_EFF = { t_hp: 'HP', t_atk: '攻击力', t_aspd: '攻击速度', t_armor: '防御力', t_range: '射程', 'sp:aura_atk': '攻击力光环', 'sp:aura_aspd': '攻速光环', 'sp:aura_heal': '治疗光环', other: '其他' };
+  const OBS_KINDS = { semantic: '语义加成', meta: '元单词', aspd: '攻速→每秒', aura: '光环', relic: '遗物', etc: '其他' };
   const H_SP = ['multi', 'area', 'harvest_aura'];
-  const RES = [['crystal', '크리스탈'], ['wood', '나무'], ['ore', '광석']];
+  const RES = [['crystal', '水晶'], ['wood', '木头'], ['ore', '矿石']];
 
   // custom specials that match a now built-in one are folded into it (records using them are re-keyed on load)
   const spRemap = {}, remapLog = [];
@@ -277732,28 +277732,28 @@ function fitFixed(points) {
   const resName = k => (RES.find(r => r[0] === k) || [])[1] || k;
 
   const METRICS = [
-    ['base', '기본 공식 (길이·글자합)', []],
-    ['t_atk', '타워 공격력', ['t_atk']], ['t_aspd', '타워 공격속도', ['t_aspd']],
-    ['dps', '타워 DPS (공격력×공격속도)', ['t_atk', 't_aspd']],
-    ['t_hp', '타워 체력', ['t_hp']], ['t_armor', '타워 방어력', ['t_armor']],
-    ['ehp', '타워 유효체력 (체력×(1+A/K))', ['t_hp', 't_armor']],
-    ['t_range', '타워 공격 범위', ['t_range']],
-    ['power', '타워 종합 (DPS×유효체력)', ['t_atk', 't_aspd', 't_hp', 't_armor']],
-    ['yield', '채취 효율 (HARVEST÷INTERVAL)', ['h_harvest', 'h_interval']],
-    ['h_harvest', '채취 HARVEST (1회 수확량)', ['h_harvest']],
-    ['h_interval', '채취 왕복 속도 (1÷INTERVAL, 클수록 빠름)', ['h_interval']],
-    ['h_range', '채취 수집 범위', ['h_range']], ['h_hp', '채취 체력', ['h_hp']], ['h_armor', '채취 방어력', ['h_armor']]
+    ['base', '基础公式 (长度·字母和)', []],
+    ['t_atk', '塔攻击力', ['t_atk']], ['t_aspd', '塔攻击速度', ['t_aspd']],
+    ['dps', '塔 DPS (攻击力×攻击速度)', ['t_atk', 't_aspd']],
+    ['t_hp', '塔体力', ['t_hp']], ['t_armor', '塔防御力', ['t_armor']],
+    ['ehp', '塔有效体力 (体力×(1+A/K))', ['t_hp', 't_armor']],
+    ['t_range', '塔攻击范围', ['t_range']],
+    ['power', '塔综合 (DPS×有效体力)', ['t_atk', 't_aspd', 't_hp', 't_armor']],
+    ['yield', '采集效率 (HARVEST÷INTERVAL)', ['h_harvest', 'h_interval']],
+    ['h_harvest', '采集 HARVEST (单次收获量)', ['h_harvest']],
+    ['h_interval', '采集往返速度 (1÷INTERVAL, 越大越快)', ['h_interval']],
+    ['h_range', '采集收集范围', ['h_range']], ['h_hp', '采集体力', ['h_hp']], ['h_armor', '采集防御力', ['h_armor']]
   ];
 
   // official examples (developer posts / store page); no numbers are known
   const SEEDS = [
-    { word: 'axe', role: 'harvester', res: ['wood'], sp: [], stats: {}, note: '공식 소개: 나무 채집', src: 'official' },
-    { word: 'fort', role: 'tower', res: [], sp: [], stats: {}, note: '공식 소개: 체력·방어력이 높은 타워', src: 'official' },
-    { word: 'doctor', role: 'tower', res: [], sp: [{ k: 'aura_heal' }], stats: {}, note: '공식 소개: 약한 타워, 주변 건물 치유 오라', src: 'official' },
-    { word: 'rain', role: 'tower', res: [], sp: [{ k: 'splash' }], stats: {}, note: '개발자 글: 스플래시 피해', src: 'official' },
-    { word: 'fire', role: 'tower', res: [], sp: [{ k: 'aura_burn' }], stats: {}, note: '개발자 글: 화상 오라', src: 'official' },
-    { word: 'snake', role: 'tower', res: [], sp: [{ k: 'poison' }], stats: {}, note: '개발자 인터뷰: 슬로우 대신 독', src: 'official' },
-    { word: 'dodecahedron', role: 'tower', res: [], sp: [], stats: {}, note: '개발자 글: 체력·방어력이 높은 큰 타워', src: 'official' }
+    { word: 'axe', role: 'harvester', res: ['wood'], sp: [], stats: {}, note: '官方介绍: 采集木头', src: 'official' },
+    { word: 'fort', role: 'tower', res: [], sp: [], stats: {}, note: '官方介绍: 体力·防御力高的塔', src: 'official' },
+    { word: 'doctor', role: 'tower', res: [], sp: [{ k: 'aura_heal' }], stats: {}, note: '官方介绍: 弱塔, 治疗周围建筑的光环', src: 'official' },
+    { word: 'rain', role: 'tower', res: [], sp: [{ k: 'splash' }], stats: {}, note: '开发者文章: 溅射伤害', src: 'official' },
+    { word: 'fire', role: 'tower', res: [], sp: [{ k: 'aura_burn' }], stats: {}, note: '开发者文章: 灼烧光环', src: 'official' },
+    { word: 'snake', role: 'tower', res: [], sp: [{ k: 'poison' }], stats: {}, note: '开发者访谈: 用毒代替减速', src: 'official' },
+    { word: 'dodecahedron', role: 'tower', res: [], sp: [], stats: {}, note: '开发者文章: 体力·防御力高的大型塔', src: 'official' }
   ];
 
   // ---------- migration / normalisers ----------
@@ -277803,7 +277803,7 @@ function fitFixed(points) {
       if (k === 'h_speed') { if (stats.h_harvest === undefined) stats.h_harvest = n; moved = n; MIG.hs.push(c.word); }
       else if (STATS.some(s => s.key === k)) stats[k] = n;
     });
-    if (moved !== null && !/구 수집속도/.test(note)) note = (note ? note + ' · ' : '') + `구 수집속도 ${moved}→HARVEST로 옮김(확인 필요)`;
+    if (moved !== null && !/(구 수집속도|旧收集速度)/.test(note)) note = (note ? note + ' · ' : '') + `旧收集速度 ${moved}→已转移到 HARVEST(需确认)`;
     return { word: c.word, role: c.role, stats, res: (Array.isArray(c.res) ? c.res : []).filter(r => RES.some(x => x[0] === r)), sp: normSp(c.sp), note: note.slice(0, 200), src: c.src };
   }
   function normMod(m) {
@@ -277813,7 +277813,7 @@ function fitFixed(points) {
       .filter(e => e && typeof e.stat === 'string' && (e.kind === 'pct' || e.kind === 'flat') && e.value > 0)
       .map(e => { if (e.stat === 'h_speed') { moved = true; MIG.hsm.push(m.word); } return { stat: migTarget(e.stat), kind: e.kind, value: +e.value }; })
       .filter(e => validTarget(e.stat));
-    if (moved && !/구 수집속도/.test(note)) note = (note ? note + ' · ' : '') + '구 수집속도 효과→HARVEST로 옮김(확인 필요)';
+    if (moved && !/(구 수집속도|旧收集速度)/.test(note)) note = (note ? note + ' · ' : '') + '旧收集速度效果→已转移到 HARVEST(需确认)';
     return { word: m.word, effects, grants: normSp(m.grants), note: note.slice(0, 200) };
   }
   const validArmor = r => r && r.A > 0 && r.taken > 0 && r.taken < 1;
@@ -277878,7 +277878,7 @@ function fitFixed(points) {
     addArmorRow(22.8, 0.23); addArmorRow(62, 0.10); addArmorRow(1, 0.87); addArmorRow(47.2, 0.12);
     [[11.88, 12], [223, 76], [218.4, 76], [242.55, 78], [326.55, 80], [381.15, 80]].forEach(([x, e]) => addConvRow('slow', x, e, ''));
     [[90.72, '(14%*6.4)'], [40.32, '12%*4.3'], [380.8, '25%*12'], [492.8, '30%*12.9']].forEach(([x, t]) => addConvRow('crit', x, null, t));
-    addConvRow('aura_slow', 70.56, 66, 'UNACCUSTOMEDLY (일반 슬로우 공식이면 47%)');
+    addConvRow('aura_slow', 70.56, 66, 'UNACCUSTOMEDLY (普通减速公式为 47%)');
     if (!obs.length) obs = clone(SEED_OBS);
     obs = obs.filter(o => !(o.kind === 'meta' && o.a === 'herd (across)'));
     obs = obs.filter(o => !(o.kind === 'relic' && o.a === 'sharpened'));
@@ -277916,42 +277916,42 @@ function fitFixed(points) {
   function esc(s) { return String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c])); }
   function posBadges(i) {
     const f = dict.flags[i];
-    if (!f) return '<span class="b u">미분류</span>';
+    if (!f) return '<span class="b u">未分类</span>';
     return POS.filter(p => f & p[0]).map(p => `<span class="b p${p[0]}">${p[1]}</span>`).join('');
   }
   function fmt(x) {
     if (!isFinite(x)) return '-';
     const a = Math.abs(x);
-    if (a >= 100) return Math.round(x).toLocaleString('ko-KR');
+    if (a >= 100) return Math.round(x).toLocaleString('zh-CN');
     if (a >= 10) return x.toFixed(1);
     return x.toFixed(2);
   }
   function up(s) { return s.toUpperCase(); }
   function migText() {
     const p = [];
-    if (MIG.hs.length) p.push(`수집 속도 ${MIG.hs.length}건(${MIG.hs.map(up).join(', ')})을 HARVEST로 옮겼어요`);
-    if (MIG.hsm.length) p.push(`파츠 ${MIG.hsm.map(up).join(', ')}의 수집 속도 효과를 HARVEST로 옮겼어요`);
-    if (MIG.sp) p.push(`스페셜 기능 ${MIG.sp}건을 단일 수치로 합쳤어요`);
-    if (remapLog.length) p.push(`직접 만들었던 기능(${[...new Set(remapLog)].join(', ')})을 기본 기능으로 합쳤어요`);
+    if (MIG.hs.length) p.push(`收集速度 ${MIG.hs.length} 条(${MIG.hs.map(up).join(', ')}) 已转移到 HARVEST`);
+    if (MIG.hsm.length) p.push(`部件 ${MIG.hsm.map(up).join(', ')} 的收集速度效果已转移到 HARVEST`);
+    if (MIG.sp) p.push(`特殊能力 ${MIG.sp} 条已合并为单一数值`);
+    if (remapLog.length) p.push(`自建功能(${[...new Set(remapLog)].join(', ')})已合并为内置功能`);
     return p.join(' · ');
   }
   function showBanner(msg) {
     const b = $('#migBanner');
     if (!msg) { b.hidden = true; b.innerHTML = ''; return; }
     b.hidden = false;
-    b.innerHTML = `<b>기록을 새 형식으로 옮겼어요.</b> ${esc(msg)}. 옮긴 건 해당 단어의 메모에 표시했으니 도감에서 확인해 주세요. <button class="x" data-migdismiss="1">닫기</button>`;
+    b.innerHTML = `<b>已迁移记录到新格式。</b> ${esc(msg)}。迁移内容已标注在相应单词的备注中，请在图鉴中确认。 <button class="x" data-migdismiss="1">关闭</button>`;
   }
 
   // ---------- labels for stat / special / mod keys ----------
   function targetLabel(t) {
-    if (t.startsWith('sp:')) return spLabel(t.slice(3)) + ' 수치';
+    if (t.startsWith('sp:')) return spLabel(t.slice(3)) + ' 数值';
     const s = STATS.find(x => x.key === t);
     return s ? s.label : t;
   }
   function keyLabel(key) {
-    if (key.startsWith('mod:')) { const i = key.lastIndexOf(':'); return `파츠 · ${targetLabel(key.slice(4, i))} ${key.slice(i + 1) === 'pct' ? '(% 증가)' : '(+고정)'}`; }
-    if (key.startsWith('msp:')) return '파츠 부여 · ' + spLabel(key.slice(4)) + ' 수치';
-    if (key.startsWith('sp:')) return spLabel(key.slice(3)) + ' 수치';
+    if (key.startsWith('mod:')) { const i = key.lastIndexOf(':'); return `部件 · ${targetLabel(key.slice(4, i))} ${key.slice(i + 1) === 'pct' ? '(% 增加)' : '(+固定)'}`; }
+    if (key.startsWith('msp:')) return '部件赋予 · ' + spLabel(key.slice(4)) + ' 数值';
+    if (key.startsWith('sp:')) return spLabel(key.slice(3)) + ' 数值';
     return targetLabel(key);
   }
   function groupOf(key) { return key.startsWith('mod:') || key.startsWith('msp:') ? 3 : key.startsWith('sp:') ? 2 : 1; }
@@ -278021,20 +278021,20 @@ function fitFixed(points) {
     });
     mods.forEach(m => {
       const parts = [];
-      m.effects.forEach(e => parts.push({ key: `mod:${e.stat}:${e.kind}`, label: targetLabel(e.stat).replace(/ 수치$/, '') + (e.kind === 'pct' ? '(%)' : ''), value: e.value, c0: c0For(`mod:${e.stat}:${e.kind}`) }));
-      m.grants.forEach(g => { if (g.x > 0) parts.push({ key: 'msp:' + g.k, label: '부여·' + spLabel(g.k), value: g.x, c0: c0For('msp:' + g.k) }); });
+      m.effects.forEach(e => parts.push({ key: `mod:${e.stat}:${e.kind}`, label: targetLabel(e.stat).replace(/ 数值$/, '') + (e.kind === 'pct' ? '(%)' : ''), value: e.value, c0: c0For(`mod:${e.stat}:${e.kind}`) }));
+      m.grants.forEach(g => { if (g.x > 0) parts.push({ key: 'msp:' + g.k, label: '赋予·' + spLabel(g.k), value: g.x, c0: c0For('msp:' + g.k) }); });
       finish(m.word, 'mod', parts);
     });
     return out;
   }
   function shareHint(r) {
-    if (r.status === 'ok') return '총량 1.0 ✓';
-    if (r.status === 'okguess') return '합은 1.0이지만 기준 계수가 추정값(이 가정에서 구한 값)이라 확인으로 치지 않아요';
-    if (r.status === 'unk') return '기준 계수를 모르는 능력이 있어 합을 판정할 수 없어요';
+    if (r.status === 'ok') return '总量 1.0 ✓';
+    if (r.status === 'okguess') return '合计为 1.0，但基准系数是推定值(由此假设求得)，不算作确认';
+    if (r.status === 'unk') return '存在基准系数未知的能力，无法判定合计';
     const diff = Math.abs(1 - r.sum).toFixed(2);
     return r.status === 'low'
-      ? `합이 1보다 ${diff} 모자라요 → 기록하지 않은 능력이 있거나(점유율 ${diff}만큼) 수치 오타일 수 있어요`
-      : `합이 1보다 ${diff} 넘쳐요 → 파츠가 붙은 수치가 섞였거나 오타일 수 있어요`;
+      ? `合计比 1 少 ${diff} → 可能有未记录的能力(占比 ${diff})或数值输入错误`
+      : `合计比 1 多 ${diff} → 可能混入了附加部件的数值或输入错误`;
   }
   function classesFor(v) {
     return CLASSES.filter(c => Object.keys(c.need).every(k => (v[k] || 0) >= c.need[k]));
@@ -278068,7 +278068,7 @@ function fitFixed(points) {
     const sel = $('#metric');
     const list = metricList();
     if (!list.some(m => m[0] === st.metric)) st.metric = 'base';
-    sel.innerHTML = list.map((m, i) => (i === (U.ready ? 14 : METRICS.length) ? '<option disabled>── 스페셜 · 파츠 효과 ──</option>' : '') + `<option value="${esc(m[0])}">${esc(m[1])}</option>`).join('');
+    sel.innerHTML = list.map((m, i) => (i === (U.ready ? 14 : METRICS.length) ? '<option disabled>── 特殊 · 部件效果 ──</option>' : '') + `<option value="${esc(m[0])}">${esc(m[1])}</option>`).join('');
     sel.value = st.metric;
   }
   function modelVal(key, l, s) {
@@ -278119,16 +278119,16 @@ function fitFixed(points) {
   // ---------- game table (units): real stats for every word ----------
   const U = { ready: false, err: '', map: new Map(), idx: null, n: 0 };
   const U_SP = { harvest_aura: 'harvest_aura', crit: 'crit', splash: 'splash', pierce: 'pierce', slow: 'slow', knockback: 'knockback', multi_harvest: 'multi', armor_buff_aura: 'aura_armor', burn_aura: 'aura_burn', multishot: 'multishot', slow_aura: 'aura_slow', stun: 'stun', dmg_buff_aura: 'aura_atk', heal_aura: 'aura_heal', armor_shred: 'shred', poison: 'poison', firerate_buff_aura: 'aura_aspd', chain: 'chain' };
-  const U_FX = { toughness: '체력', armor: '방어력', damage: '공격력', attack_speed: '공격속도', range: '사거리', harvest_speed: '수확 속도', harvest_amount: '수확량' };
-  const U_KIND = { T: '타워', H: '수확', Q: '파츠(품질)', A: '파츠(동작)' };
+  const U_FX = { toughness: '体力', armor: '防御力', damage: '攻击力', attack_speed: '攻击速度', range: '射程', harvest_speed: '收获速度', harvest_amount: '收获量' };
+  const U_KIND = { T: '塔', H: '收获', Q: '部件(品质)', A: '部件(动作)' };
   // cursed words: special level/tower words that ignore the units table (default stats + one Curse special)
   const CURSED = ('shit shitty bullshit bullshitter horseshit batshit shithead shitface shitbag shitshow fuck fucked fucking fucker fuckface fuckwit motherfucker motherfuckers motherfucking goddamn goddammit asshole assholes asshat asshats asswipe asswipes dumbass dumbasses jackass jackasses douchebag douchebags gigachad gigachads soyjak soyjaks wojak wojaks coomer coom cooms coomers goon goons gooner gooners gooning sus sussy bofa ligma sugma mald malding copium maxxing delulu rizzler rizzlord gyatt yeet yeets pog pogging poggers pogchamp pogchamps uwu cunt cunty unc bitch bitchy bitches brainrot bussin bussy chungus chud').split(' ');
-  const CURSE_NEG = ['기본 사거리 1', '기본 HP 1', '치유를 받을 수 없음', '파츠 슬롯 1개뿐', '아군 건물 사거리 안에 설치 불가', '자원 노드 사거리 안에 설치 불가'];
+  const CURSE_NEG = ['基础射程 1', '基础 HP 1', '无法受到治疗', '仅 1 个部件槽', '无法安装在友方建筑射程内', '无法安装在资源节点射程内'];
   const curseOf = w => { const B = 1.05 * wordSum(w, SCRABBLE_ARR) * w.length; return Math.max(5, Math.round(35 * Math.pow(Math.max(0.01, B / 9.45), 0.66) / 5) * 5); };
   function addCursed(map) {
     CURSED.forEach(w => map.set(w, { k: 'T', cursed: true, atk: 16.5, range: 5.32, itv: 1, rate: 1, aspd: 2, hp: 100, ar: 1, sp: { curse: curseOf(w) } }));
   }
-  const fxLabel = (stat, op) => (U_FX[stat] || (U_SP[stat] ? spLabel(U_SP[stat]) : stat)) + (op === 'mult' ? ' ×배율' : op === 'grant' ? ' 부여' : ' 증가');
+  const fxLabel = (stat, op) => (U_FX[stat] || (U_SP[stat] ? spLabel(U_SP[stat]) : stat)) + (op === 'mult' ? ' ×倍率' : op === 'grant' ? ' 赋予' : ' 增加');
   const wordValue = w => wordSum(w, st.values) + 1.5 * w.length;
   function parseSpStr(s) {
     const o = {};
@@ -278157,8 +278157,8 @@ function fitFixed(points) {
   }
   async function loadUnits() {
     const el = document.getElementById('udata');
-    if (!el || !el.textContent.trim()) { U.err = '수치표가 들어 있지 않아요'; return; }
-    if (typeof DecompressionStream === 'undefined') { U.err = '이 브라우저는 압축 해제를 지원하지 않아요(최신 Chrome·Edge·Safari 필요)'; return; }
+    if (!el || !el.textContent.trim()) { U.err = '没有内置数值表'; return; }
+    if (typeof DecompressionStream === 'undefined') { U.err = '此浏览器不支持解压(需要最新版 Chrome·Edge·Safari)'; return; }
     try {
       const bin = atob(el.textContent.trim());
       const bytes = new Uint8Array(bin.length);
@@ -278205,17 +278205,17 @@ function fitFixed(points) {
     return 0;
   }
   const U_METRICS = [
-    ['dps', '타워 DPS (공격력 × 초당 공격)'], ['ehp', '타워 유효체력 (체력×(1+방어력/K))'], ['power', '타워 종합 (DPS×유효체력)'],
-    ['t_atk', '타워 공격력'], ['rate', '타워 초당 공격 횟수'], ['t_hp', '타워 체력'], ['t_armor', '타워 방어력'], ['t_range', '타워 사거리'],
-    ['yield', '수확 효율 (수확량÷간격)'], ['h_harvest', '수확량'], ['h_interval', '수확 속도 (1÷간격)'], ['h_range', '수확 범위'], ['h_hp', '수확 타워 체력'], ['nsp', '스페셜 개수']
+    ['dps', '塔 DPS (攻击力 × 每秒攻击)'], ['ehp', '塔有效体力 (体力×(1+防御力/K))'], ['power', '塔综合 (DPS×有效体力)'],
+    ['t_atk', '塔攻击力'], ['rate', '塔每秒攻击次数'], ['t_hp', '塔体力'], ['t_armor', '塔防御力'], ['t_range', '塔射程'],
+    ['yield', '收获效率 (收获量÷间隔)'], ['h_harvest', '收获量'], ['h_interval', '收获速度 (1÷间隔)'], ['h_range', '收获范围'], ['h_hp', '收获塔体力'], ['nsp', '特殊能力数量']
   ];
   function uMetricList() {
-    const list = [['base', '기본 공식 (길이·글자합)']];
-    U_METRICS.forEach(m => list.push([m[0], m[1] + ' · 실측']));
-    Object.keys(SP_BASE).filter(k => k !== 'area').forEach(k => list.push(['sp:' + k, '스페셜 · ' + SP_BASE[k] + ' · 실측']));
+    const list = [['base', '基础公式 (长度·字母和)']];
+    U_METRICS.forEach(m => list.push([m[0], m[1] + ' · 实测']));
+    Object.keys(SP_BASE).filter(k => k !== 'area').forEach(k => list.push(['sp:' + k, '特殊 · ' + SP_BASE[k] + ' · 实测']));
     const fxs = new Set();
     for (const r of U.map.values()) if (r.fx) for (const k in r.fx) fxs.add(k);
-    [...fxs].sort().forEach(k => { const [s, o] = k.split(':'); list.push(['fx:' + k, '파츠 · ' + fxLabel(s, o) + ' · 실측']); });
+    [...fxs].sort().forEach(k => { const [s, o] = k.split(':'); list.push(['fx:' + k, '部件 · ' + fxLabel(s, o) + ' · 实测']); });
     return list;
   }
   function uText(r) {
@@ -278223,22 +278223,22 @@ function fitFixed(points) {
     const f = fmt;
     if (r.k === 'T') {
       const sp = Object.keys(r.sp).map(k => spLabel(k) + ' ' + f(r.sp[k])).join(', ');
-      return [r.cursed ? '저주 단어(기본 스탯)' : '', 'HP ' + f(r.hp), '방어 ' + f(r.ar), '공격 ' + f(r.atk), '초당 ' + f(r.rate), '사거리 ' + f(r.range), sp, r.cursed ? '⚠ 랜덤 부작용 1개' : ''].filter(Boolean).join(' · ');
+      return [r.cursed ? '诅咒单词(基础属性)' : '', 'HP ' + f(r.hp), '防御 ' + f(r.ar), '攻击 ' + f(r.atk), '每秒 ' + f(r.rate), '射程 ' + f(r.range), sp, r.cursed ? '⚠ 随机副作用 1 个' : ''].filter(Boolean).join(' · ');
     }
     if (r.k === 'H') {
       const sp = Object.keys(r.sp).map(k => spLabel(k) + ' ' + f(r.sp[k])).join(', ');
-      return ['수확 ' + f(r.amt), '간격 ' + f(r.itv) + 's', '범위 ' + f(r.range), 'HP ' + f(r.hp), [...r.res].map(c => ({ c: '크리스탈', o: '광석', w: '나무' }[c])).join('/'), sp].filter(Boolean).join(' · ');
+      return ['收获 ' + f(r.amt), '间隔 ' + f(r.itv) + 's', '范围 ' + f(r.range), 'HP ' + f(r.hp), [...r.res].map(c => ({ c: '水晶', o: '矿石', w: '木头' }[c])).join('/'), sp].filter(Boolean).join(' · ');
     }
     return Object.keys(r.fx).map(k => { const [s, o] = k.split(':'); const v = r.fx[k]; return fxLabel(s, o) + ' ' + (o === 'mult' ? '×' + f(v) : o === 'add' ? '+' + f(v) : f(v)); }).join(' · ');
   }
   function uBadge(w) {
     const r = U.ready ? U.map.get(w) : null;
     if (!U.ready) return '';
-    if (r && r.cursed) return ' <span class="b no" title="저주 단어: 기본 스탯 + Curse, 생성 시 랜덤 부작용 1개">저주</span>';
-    return r ? ' <span class="b ' + (r.k === 'T' || r.k === 'H' ? 'card' : 'mod') + '" title="게임 수치표 종류">' + U_KIND[r.k] + '</span>' : ' <span class="b u" title="게임 수치표에 없는 단어">표에 없음</span>';
+    if (r && r.cursed) return ' <span class="b no" title="诅咒单词: 基础属性 + Curse, 生成时随机附带 1 个副作用">诅咒</span>';
+    return r ? ' <span class="b ' + (r.k === 'T' || r.k === 'H' ? 'card' : 'mod') + '" title="游戏数值表类型">' + U_KIND[r.k] + '</span>' : ' <span class="b u" title="游戏数值表中没有的单词">表中没有</span>';
   }
   function updateUInfo() {
-    $('#uInfo').textContent = U.ready ? '· 게임 수치표 ' + U.n.toLocaleString('ko-KR') + '단어' : U.err ? '· 수치표 불러오기 실패: ' + U.err : '· 수치표 불러오는 중…';
+    $('#uInfo').textContent = U.ready ? '· 游戏数值表 ' + U.n.toLocaleString('zh-CN') + ' 个单词' : U.err ? '· 数值表加载失败: ' + U.err : '· 数值表加载中…';
     $('#uNote').hidden = !U.ready;
   }
 
@@ -278251,8 +278251,8 @@ function fitFixed(points) {
       const best = {};
       for (const i of S.sorted) { const c = dict.words[i][0]; if (!best[c]) best[c] = i; }
       const letters = Object.keys(best).sort();
-      out.innerHTML = letters.length ? '<p class="note">시작 철자별 최고 단어예요(현재 글자·필터·정렬 기준). 위 칸에 철자를 넣으면 그 철자로 시작하는 단어만 순위로 보여 줘요.</p><table><thead><tr><th>시작</th><th>단어</th><th>점수</th><th>게임 수치</th></tr></thead><tbody>' +
-        letters.map(c => { const i = best[c]; return '<tr><td><b>' + up(c) + '</b></td><td><span class="w">' + up(dict.words[i]) + '</span>' + uBadge(dict.words[i]) + '</td><td class="num">' + fmt(S.pre.score[i]) + '</td><td class="meta">' + (U.ready && U.idx[i] ? esc(uText(U.idx[i])) : '') + '</td></tr>'; }).join('') + '</tbody></table>' : '<p class="muted">가능한 단어가 없어요.</p>';
+      out.innerHTML = letters.length ? '<p class="note">各开头字母的最佳单词(按当前字母·筛选·排序标准)。在上方输入字母后，仅按排行显示以该字母开头的单词。</p><table><thead><tr><th>开头</th><th>单词</th><th>分数</th><th>游戏数值</th></tr></thead><tbody>' +
+        letters.map(c => { const i = best[c]; return '<tr><td><b>' + up(c) + '</b></td><td><span class="w">' + up(dict.words[i]) + '</span>' + uBadge(dict.words[i]) + '</td><td class="num">' + fmt(S.pre.score[i]) + '</td><td class="meta">' + (U.ready && U.idx[i] ? esc(uText(U.idx[i])) : '') + '</td></tr>'; }).join('') + '</tbody></table>' : '<p class="muted">没有可拼出的单词。</p>';
       return;
     }
     const acc = new Uint8Array(dict.n);
@@ -278264,9 +278264,9 @@ function fitFixed(points) {
     const list = sortByScore(feasibleWords(dict, S.cnt, S.rack.length, acc, 2), S.pre.score, dict);
     const rows = list.slice(0, 40).map((i, n) => {
       const w = dict.words[i], ls = countsToString(leftover(dict, i, S.cnt));
-      return '<tr><td>' + (n + 1) + '</td><td><span class="w">' + up(w) + '</span>' + posBadges(i) + cardBadge(w) + '</td><td>' + w.length + '</td><td class="num">' + fmt(S.pre.score[i]) + '</td><td class="meta">' + (U.ready && U.idx[i] ? esc(uText(U.idx[i])) : '') + '</td><td class="meta">' + (ls ? up(ls) : '-') + '</td><td><button class="x" data-ban="' + w + '">안 됨</button> ' + recBtns(w) + '</td></tr>';
+      return '<tr><td>' + (n + 1) + '</td><td><span class="w">' + up(w) + '</span>' + posBadges(i) + cardBadge(w) + '</td><td>' + w.length + '</td><td class="num">' + fmt(S.pre.score[i]) + '</td><td class="meta">' + (U.ready && U.idx[i] ? esc(uText(U.idx[i])) : '') + '</td><td class="meta">' + (ls ? up(ls) : '-') + '</td><td><button class="x" data-ban="' + w + '">无效</button> ' + recBtns(w) + '</td></tr>';
     }).join('');
-    out.innerHTML = list.length ? '<p class="note">조건에 맞고 현재 글자로 만들 수 있는 단어 ' + list.length.toLocaleString('ko-KR') + '개 중 상위 40개 (위의 결과 필터·정렬 기준 그대로)</p><table><thead><tr><th>#</th><th>단어</th><th>길이</th><th>점수</th><th>게임 수치</th><th>남는 글자</th><th></th></tr></thead><tbody>' + rows + '</tbody></table>' : '<p class="muted">현재 글자로 만들 수 있는 단어가 없어요. 결과 필터(수치표 기준·레벨 단어값 상한)와 최소 길이도 확인해 보세요.</p>';
+    out.innerHTML = list.length ? '<p class="note">符合条件且可用当前字母拼出的 ' + list.length.toLocaleString('zh-CN') + ' 个单词中的前 40 个 (结果筛选·排序标准保持不变)</p><table><thead><tr><th>#</th><th>单词</th><th>长度</th><th>分数</th><th>游戏数值</th><th>剩余字母</th><th></th></tr></thead><tbody>' + rows + '</tbody></table>' : '<p class="muted">没有可用当前字母拼出的单词。请同时确认结果筛选(按数值表·等级单词值上限)和最小长度。</p>';
   }
 
   // ---------- remove codex / part / banned entries whose word is not in the game table ----------
@@ -278276,12 +278276,12 @@ function fitFixed(points) {
   }
   function purgeScan() {
     const out = $('#purgeOut');
-    if (!U.ready) { out.innerHTML = '<p class="muted">수치표가 아직 불러와지지 않았어요.</p>'; return; }
+    if (!U.ready) { out.innerHTML = '<p class="muted">数值表尚未加载完成。</p>'; return; }
     const p = purgeLists();
-    const tags = arr => arr.length ? arr.map(x => '<span class="tag">' + up(x) + '</span>').join('') : '<span class="muted">없음</span>';
+    const tags = arr => arr.length ? arr.map(x => '<span class="tag">' + up(x) + '</span>').join('') : '<span class="muted">无</span>';
     const total = p.cards.length + p.mods.length + p.black.length;
-    out.innerHTML = '<p><b>타워 도감</b> ' + p.cards.length + '개</p><div>' + tags(p.cards.map(c => c.word)) + '</div><p><b>파츠 도감</b> ' + p.mods.length + '개</p><div>' + tags(p.mods.map(m => m.word)) + '</div><p><b>제외 단어(안 됨 목록)</b> ' + p.black.length + '개</p><div>' + tags(p.black) + '</div>' +
-      (total ? '<p class="row"><button class="primary" data-purgedo="1">위 ' + total + '개 삭제</button></p><p class="note">삭제 직후에는 "되돌리기"로 한 번 복구할 수 있어요.</p>' : '<p class="muted">수치표에 없는 기록이 없어요.</p>');
+    out.innerHTML = '<p><b>塔图鉴</b> ' + p.cards.length + ' 个</p><div>' + tags(p.cards.map(c => c.word)) + '</div><p><b>部件图鉴</b> ' + p.mods.length + ' 个</p><div>' + tags(p.mods.map(m => m.word)) + '</div><p><b>排除单词(无效列表)</b> ' + p.black.length + ' 个</p><div>' + tags(p.black) + '</div>' +
+      (total ? '<p class="row"><button class="primary" data-purgedo="1">删除上述 ' + total + ' 个</button></p><p class="note">删除后可用"撤销"恢复一次。</p>' : '<p class="muted">没有数值表中不存在的记录。</p>');
   }
   function purgeDo() {
     const p = purgeLists();
@@ -278291,17 +278291,17 @@ function fitFixed(points) {
     black = new Set([...black].filter(w => !p.black.includes(w)));
     store.set('babble.black', [...black]);
     saveCards(); saveMods(); renderBlack(); refreshAll();
-    $('#purgeOut').innerHTML = '<p>삭제했어요 (타워 도감 ' + p.cards.length + ' · 파츠 도감 ' + p.mods.length + ' · 제외 단어 ' + p.black.length + '개).</p><p class="row"><button data-purgeundo="1">되돌리기</button></p>';
+    $('#purgeOut').innerHTML = '<p>已删除 (塔图鉴 ' + p.cards.length + ' · 部件图鉴 ' + p.mods.length + ' · 排除单词 ' + p.black.length + ' 个)。</p><p class="row"><button data-purgeundo="1">撤销</button></p>';
   }
   function purgeUndo() {
     const u = store.get('babble.purgeUndo', null);
-    if (!u) { $('#purgeOut').innerHTML = '<p class="muted">되돌릴 기록이 없어요.</p>'; return; }
+    if (!u) { $('#purgeOut').innerHTML = '<p class="muted">没有可撤销的记录。</p>'; return; }
     cards = cards.concat((u.cards || []).map(normCard).filter(Boolean));
     mods = mods.concat((u.mods || []).map(normMod).filter(Boolean));
     (u.black || []).forEach(w => black.add(String(w)));
     store.set('babble.black', [...black]); store.del('babble.purgeUndo');
     saveCards(); saveMods(); renderBlack(); refreshAll();
-    $('#purgeOut').innerHTML = '<p>되돌렸어요.</p>';
+    $('#purgeOut').innerHTML = '<p>已撤销。</p>';
   }
 
   // ---------- tabs ----------
@@ -278340,7 +278340,7 @@ function fitFixed(points) {
       return `<label class="vcell"><span>${esc(s.label)}</span><input type="number" step="any" min="0" data-base="${k}" value="${st.bases[k]}" class="setctl"></label>`;
     }).join('');
     $('#c0grid').innerHTML = Object.keys(DEF_C0).map(k =>
-      `<label class="vcell"><span>${esc(keyLabel(k))}${C0_GUESS[k] ? ' (추정)' : ''}</span><input type="number" step="any" min="0" data-c0="${esc(k)}" value="${st.c0[k]}" class="setctl"></label>`).join('');
+      `<label class="vcell"><span>${esc(keyLabel(k))}${C0_GUESS[k] ? ' (推定)' : ''}</span><input type="number" step="any" min="0" data-c0="${esc(k)}" value="${st.c0[k]}" class="setctl"></label>`).join('');
     updateMetricNote();
   }
   function readSettings() {
@@ -278375,10 +278375,10 @@ function fitFixed(points) {
     const need = U.ready ? [] : metricInfo()[2];
     const missing = need.filter(k => !st.models[k] && !c0For(k));
     const isMod = st.metric.startsWith('mod:') || st.metric.startsWith('msp:');
-    $('#metricNote').textContent = st.metric === 'base' ? '' : U.ready ? '게임 수치표의 실제 값으로 계산해요. 이 종류가 아닌 단어(예: 타워 점수에서 파츠 단어)는 0점이에요.' :
-      missing.length ? `주의: ${missing.map(keyLabel).join(', ')}은(는) 기준 계수를 아직 몰라 기본 공식으로 대신하고 있어요. 도감에 기록한 뒤 공식 추정 탭에서 추정해 주세요.`
-        : isMod ? '파츠 효과는 한 효과가 단어 전체를 쓰므로 이 값이 그대로 나와요(실측과 거의 일치).'
-          : '타워 본체 값은 "그 능력 하나에 점유율 1.0을 몰빵했을 때"의 최대치예요. 실제 타워는 능력이 여러 개면 합 1.0을 나눠 가져서 이보다 낮아요.';
+    $('#metricNote').textContent = st.metric === 'base' ? '' : U.ready ? '按游戏数值表的实际值计算。不属于该类型的单词(例如: 塔分数中的部件单词)计 0 分。' :
+      missing.length ? `注意: ${missing.map(keyLabel).join(', ')} 的基准系数未知，暂以基础公式代替。请在图鉴中记录后在公式推定标签页进行推定。`
+        : isMod ? '部件效果由一种效果占用整个单词，因此会直接得到该值(与实测几乎一致)。'
+          : '塔本体值是"某一能力独占 1.0 占比"时的最大值。实际塔若有多个能力会分摊合计 1.0，因此低于此值。';
   }
   function afterDataChange() {
     buildMetricOptions();
@@ -278438,22 +278438,22 @@ function fitFixed(points) {
   // ---------- rendering: calculator ----------
   function cardBadge(w) {
     const c = cardMap.get(w), m = modMap.get(w);
-    return uBadge(w) + (c ? ` <span class="b card" title="타워 도감에 있는 단어">도감·${c.role === 'tower' ? '타워' : '채취'}</span>` : '') +
-      (m ? ' <span class="b mod" title="파츠 도감에 있는 단어">파츠</span>' : '');
+    return uBadge(w) + (c ? ` <span class="b card" title="塔图鉴中的单词">图鉴·${c.role === 'tower' ? '塔' : '采集'}</span>` : '') +
+      (m ? ' <span class="b mod" title="部件图鉴中的单词">部件</span>' : '');
   }
   // meaning lookup: links to online dictionaries (needs internet; nothing is sent from this page)
   function dictLinks(w) {
     const e = encodeURIComponent(w);
     const a = (href, label, tip) => `<a href="${href}" target="_blank" rel="noopener noreferrer" title="${tip}">${label}</a>`;
-    return `<span class="lk">뜻 ${a('https://en.dict.naver.com/#/search?query=' + e, '네이버', '네이버 영어사전 (한국어 뜻)')}${a('https://translate.google.com/?sl=en&tl=ko&op=translate&text=' + e, '구글', '구글 번역 (한국어)')}${a('https://en.wiktionary.org/wiki/' + e, '위키', '영어 위키낱말사전 — 게임의 뜻 설명과 문장 스타일이 비슷해요')}</span>`;
+    return `<span class="lk">释义 ${a('https://en.dict.naver.com/#/search?query=' + e, 'Naver', 'Naver 英语词典 (韩语释义)')}${a('https://translate.google.com/?sl=en&tl=zh-CN&op=translate&text=' + e, 'Google', 'Google 翻译 (中文)')}${a('https://en.wiktionary.org/wiki/' + e, '维基', '英语维基词典 — 与游戏中的释义说明和句子风格相似')}</span>`;
   }
   function recBtns(w) {
     if (U.ready) return dictLinks(w);
-    return `<button class="x" data-addcard="${w}" title="타워 도감에 기록">도감</button> <button class="x" data-addmod="${w}" title="파츠 도감에 기록">파츠</button> ${dictLinks(w)}`;
+    return `<button class="x" data-addcard="${w}" title="记录到塔图鉴">图鉴</button> <button class="x" data-addmod="${w}" title="记录到部件图鉴">部件</button> ${dictLinks(w)}`;
   }
   function wordCell(i) {
     const w = dict.words[i];
-    return `<span class="w">${up(w)}</span> <span class="meta">${w.length}자 · 글자합 ${S.pre.sums[i]} · 레벨값 ${fmt(S.pre.sums[i] + 1.5 * w.length)}</span> ${posBadges(i)}${cardBadge(w)}${U.ready && U.idx[i] ? '<div class="meta">' + esc(uText(U.idx[i])) + '</div>' : ''}`;
+    return `<span class="w">${up(w)}</span> <span class="meta">${w.length} 字母 · 字母和 ${S.pre.sums[i]} · 等级值 ${fmt(S.pre.sums[i] + 1.5 * w.length)}</span> ${posBadges(i)}${cardBadge(w)}${U.ready && U.idx[i] ? '<div class="meta">' + esc(uText(U.idx[i])) + '</div>' : ''}`;
   }
   function render() {
     $('#results').hidden = false;
@@ -278463,7 +278463,7 @@ function fitFixed(points) {
     const label = metricInfo()[1];
     const bestBox = $('#bestBox');
     if (!S.best) {
-      bestBox.innerHTML = '<p class="muted">조건에 맞는 단어가 없어요. 최소 길이나 품사 필터를 풀어 보세요.</p>';
+      bestBox.innerHTML = '<p class="muted">没有符合条件的单词。请尝试放宽最小长度或词性筛选。</p>';
       $('#comboList').innerHTML = ''; $('#wordTable').innerHTML = '';
       return;
     }
@@ -278473,18 +278473,18 @@ function fitFixed(points) {
     const leftStr = countsToString(left);
     bestBox.innerHTML = `
       <div class="bestwords">${S.best.map(i => `<div class="bw">${wordCell(i)}
-        <button class="x" data-ban="${dict.words[i]}" title="게임에서 안 되는 단어면 눌러서 제외">안 됨</button> ${recBtns(dict.words[i])}</div>`).join('')}</div>
-      <div class="bestscore">예상 ${esc(label)} <b>${fmt(total)}</b> <span class="muted">· 남는 글자 ${leftStr ? up(leftStr) : '없음'}</span></div>`;
+        <button class="x" data-ban="${dict.words[i]}" title="游戏中无效的单词请点击排除">无效</button> ${recBtns(dict.words[i])}</div>`).join('')}</div>
+      <div class="bestscore">预估 ${esc(label)} <b>${fmt(total)}</b> <span class="muted">· 剩余字母 ${leftStr ? up(leftStr) : '无'}</span></div>`;
 
     const cl = $('#comboList');
     if (S.combos.length) {
-      cl.innerHTML = '<h3>여러 단어로 나눠 쓰는 조합</h3>' + S.combos.map((c, n) => {
+      cl.innerHTML = '<h3>拆分为多个单词的组合</h3>' + S.combos.map((c, n) => {
         const l = Int16Array.from(S.cnt);
         for (const i of c.idxs) for (let k = 0; k < 26; k++) l[k] -= dict.counts[i * 26 + k];
         const ls = countsToString(l);
         return `<div class="combo"><span class="rank">${n + 1}</span>
           ${c.idxs.map(i => `<span class="w">${up(dict.words[i])}</span> ${dictLinks(dict.words[i])}`).join(' + ')}
-          <span class="meta">합계 ${fmt(c.total)} · 남는 글자 ${ls ? up(ls) : '없음'}</span></div>`;
+          <span class="meta">合计 ${fmt(c.total)} · 剩余字母 ${ls ? up(ls) : '无'}</span></div>`;
       }).join('');
     } else cl.innerHTML = '';
 
@@ -278497,10 +278497,10 @@ function fitFixed(points) {
         <td>${S.pre.sums[i]}</td><td class="num">${fmt(S.pre.score[i])}</td><td class="${U.ready ? 'meta' : 'num'}">${U.ready ? esc(gs) : act === null ? '<span class="muted">-</span>' : fmt(act)}</td>
         <td>${posBadges(i)}${cardBadge(w)}</td>
         <td class="meta">${ls ? up(ls) : '-'}</td>
-        <td><button class="x" data-ban="${w}">안 됨</button> ${recBtns(w)}</td></tr>`;
+        <td><button class="x" data-ban="${w}">无效</button> ${recBtns(w)}</td></tr>`;
     }).join('');
-    $('#wordTable').innerHTML = `<table><thead><tr><th>#</th><th>단어</th><th>길이</th><th>글자합</th><th>${esc(label)}</th><th>${U.ready ? '게임 수치' : '내 실측'}</th><th>품사</th><th>남는 글자</th><th></th></tr></thead><tbody>${rows}</tbody></table>
-      <p class="muted">가능한 단어 ${S.sorted.length.toLocaleString('ko-KR')}개 중 상위 40개</p>`;
+    $('#wordTable').innerHTML = `<table><thead><tr><th>#</th><th>单词</th><th>长度</th><th>字母和</th><th>${esc(label)}</th><th>${U.ready ? '游戏数值' : '我的实测'}</th><th>词性</th><th>剩余字母</th><th></th></tr></thead><tbody>${rows}</tbody></table>
+      <p class="muted">可用单词 ${S.sorted.length.toLocaleString('zh-CN')} 个中的前 40 个</p>`;
     $('#simOut').innerHTML = '';
     $('#candOut').innerHTML = '';
   }
@@ -278522,7 +278522,7 @@ function fitFixed(points) {
   async function simulateLocks() {
     if (!S.rack) return;
     const out = $('#simOut');
-    out.innerHTML = '<p class="muted">계산 중…</p>';
+    out.innerHTML = '<p class="muted">计算中…</p>';
     await new Promise(r => setTimeout(r, 20));
     const order = makeOrder(dict, S.accept, S.pre.score);
     const lc = lockedCounts();
@@ -278532,16 +278532,16 @@ function fitFixed(points) {
     const a = simulateReroll(dict, order, S.pre.score, lc, nDraw, 200, bag, rng);
     const all = simulateReroll(dict, order, S.pre.score, new Int16Array(26), S.rack.length, 200, bag, rng);
     const pCur = r => Math.round(100 * r.vals.filter(v => v >= cur).length / r.vals.length);
-    out.innerHTML = `<table><thead><tr><th></th><th>평균</th><th>중앙값</th><th>상위 10%</th><th>지금 최고(${fmt(cur)}) 이상일 확률</th></tr></thead><tbody>
-      <tr><td>선택한 ${nLock}글자 잠그고 ${nDraw}글자 리롤</td><td class="num">${fmt(a.mean)}</td><td class="num">${fmt(a.median)}</td><td class="num">${fmt(a.p90)}</td><td>${pCur(a)}%</td></tr>
-      <tr><td>전부 리롤</td><td class="num">${fmt(all.mean)}</td><td class="num">${fmt(all.median)}</td><td class="num">${fmt(all.p90)}</td><td>${pCur(all)}%</td></tr></tbody></table>
-      <p class="muted">새 글자는 표준 스크래블 글자 주머니 분포로 뽑는다고 가정했어요(200회 시뮬레이션). 게임의 실제 분포와 다를 수 있어요.</p>`;
+    out.innerHTML = `<table><thead><tr><th></th><th>平均</th><th>中位数</th><th>前 10%</th><th>不低于当前最高(${fmt(cur)})的概率</th></tr></thead><tbody>
+      <tr><td>锁定所选 ${nLock} 个字母并重掷 ${nDraw} 个字母</td><td class="num">${fmt(a.mean)}</td><td class="num">${fmt(a.median)}</td><td class="num">${fmt(a.p90)}</td><td>${pCur(a)}%</td></tr>
+      <tr><td>全部重掷</td><td class="num">${fmt(all.mean)}</td><td class="num">${fmt(all.median)}</td><td class="num">${fmt(all.p90)}</td><td>${pCur(all)}%</td></tr></tbody></table>
+      <p class="muted">假设新字母按标准拼字游戏字母袋分布抽取(200 次模拟)。可能与游戏的实际分布不同。</p>`;
   }
 
   async function recommendLocks() {
     if (!S.rack || !S.sorted.length) return;
     const out = $('#candOut');
-    out.innerHTML = '<p class="muted">후보별로 시뮬레이션 중… (몇 초 걸려요)</p>';
+    out.innerHTML = '<p class="muted">正在逐候选模拟… (需要几秒)</p>';
     await new Promise(r => setTimeout(r, 20));
     const order = makeOrder(dict, S.accept, S.pre.score);
     const seen = new Set(), cands = [];
@@ -278560,10 +278560,10 @@ function fitFixed(points) {
       await new Promise(r2 => setTimeout(r2, 0));
     }
     rows.sort((x, y) => y.mean - x.mean);
-    out.innerHTML = `<table><thead><tr><th>잠글 단어</th><th>리롤할 글자</th><th>최소 보장</th><th>리롤 후 평균 최고점</th><th>상위 10%</th></tr></thead><tbody>
-      ${rows.map(r => `<tr><td><span class="w">${up(dict.words[r.i])}</span></td><td class="meta">${r.left ? up(r.left) : '-'} (${r.nDraw}개)</td>
+    out.innerHTML = `<table><thead><tr><th>锁定的单词</th><th>重掷的字母</th><th>最低保证</th><th>重掷后平均最高分</th><th>前 10%</th></tr></thead><tbody>
+      ${rows.map(r => `<tr><td><span class="w">${up(dict.words[r.i])}</span></td><td class="meta">${r.left ? up(r.left) : '-'} (${r.nDraw} 个)</td>
         <td class="num">${fmt(r.floor)}</td><td class="num">${fmt(r.mean)}</td><td class="num">${fmt(r.p90)}</td></tr>`).join('')}</tbody></table>
-      <p class="muted">단어를 통째로 잠그고 나머지를 리롤했을 때, 새 글자까지 써서 만들 수 있는 최고 단어 점수의 기댓값이에요(항상 최소 보장 이상).</p>`;
+      <p class="muted">锁定整个单词并重掷其余字母时，用上新字母后能拼出的最高单词分数的期望值(不低于最低保证)。</p>`;
   }
 
   // ---------- word checker ----------
@@ -278577,18 +278577,18 @@ function fitFixed(points) {
     if (!dict.index) { dict.index = new Map(); dict.words.forEach((x, i) => dict.index.set(x, i)); }
     if (dict.index.has(w)) idx = dict.index.get(w);
     const canMake = S.cnt ? (() => { const c = rackCounts(w); for (let k = 0; k < 26; k++) if (c[k] > S.cnt[k]) return false; return true; })() : null;
-    out.innerHTML = `<div class="bw"><span class="w">${up(w)}</span> <span class="meta">${w.length}자 · 글자합 ${sum} · ${esc(metricInfo()[1])} ${fmt(p)}</span>
-      ${idx >= 0 ? posBadges(idx) : '<span class="b u">내장 사전에 없음</span>'}${cardBadge(w)}${U.ready && U.map.get(w) ? '<div class="meta">레벨값 ' + fmt(wordValue(w)) + ' · ' + esc(uText(U.map.get(w))) + '</div>' : ''}${U.ready && U.map.get(w) && U.map.get(w).cursed ? '<div class="meta">저주: 이 타워에 맞은 적은 5초 동안 모든 출처의 피해를 ' + U.map.get(w).sp.curse + '% 더 받아요(중첩 안 됨). 생성할 때 부작용 하나가 무작위로 붙어요: ' + esc(CURSE_NEG.join(' / ')) + '</div>' : ''}
-      ${canMake === null ? '' : canMake ? '<span class="b ok">현재 글자로 가능</span>' : '<span class="b no">현재 글자로 불가</span>'}
-      ${black.has(w) ? '<button class="x" data-unban="' + w + '">제외 해제</button>' : '<button class="x" data-ban="' + w + '">안 됨</button>'} ${recBtns(w)}</div>`;
+    out.innerHTML = `<div class="bw"><span class="w">${up(w)}</span> <span class="meta">${w.length} 字母 · 字母和 ${sum} · ${esc(metricInfo()[1])} ${fmt(p)}</span>
+      ${idx >= 0 ? posBadges(idx) : '<span class="b u">内置词典中没有</span>'}${cardBadge(w)}${U.ready && U.map.get(w) ? '<div class="meta">等级值 ' + fmt(wordValue(w)) + ' · ' + esc(uText(U.map.get(w))) + '</div>' : ''}${U.ready && U.map.get(w) && U.map.get(w).cursed ? '<div class="meta">诅咒: 被此塔击中的敌人 5 秒内受到的所有来源伤害 +' + U.map.get(w).sp.curse + '%(不可叠加)。生成时会随机附带一个副作用: ' + esc(CURSE_NEG.join(' / ')) + '</div>' : ''}
+      ${canMake === null ? '' : canMake ? '<span class="b ok">可用当前字母拼出</span>' : '<span class="b no">无法用当前字母拼出</span>'}
+      ${black.has(w) ? '<button class="x" data-unban="' + w + '">取消排除</button>' : '<button class="x" data-ban="' + w + '">无效</button>'} ${recBtns(w)}</div>`;
   }
 
   // ---------- blacklist ----------
   function renderBlack() {
     const arr = [...black].sort();
     $('#blackList').innerHTML = arr.length
-      ? arr.map(w => `<span class="tag">${up(w)} <button data-unban="${w}" title="해제">×</button></span>`).join('')
-      : '<span class="muted">아직 없어요. 게임에서 인식되지 않은 단어는 "안 됨"을 눌러 제외하세요.</span>';
+      ? arr.map(w => `<span class="tag">${up(w)} <button data-unban="${w}" title="解除">×</button></span>`).join('')
+      : '<span class="muted">还没有。游戏中无法识别的单词请点击"无效"排除。</span>';
     $('#blackBox').value = JSON.stringify(arr);
     updateBackupBox();
   }
@@ -278599,8 +278599,8 @@ function fitFixed(points) {
   function buildSpRows(container, keys) {
     container.innerHTML = keys.map(k => `<div class="sprow" data-sp="${k}">
       <label><input type="checkbox" class="spchk"> ${esc(spLabel(k))}</label>
-      <span class="spp"><input type="number" step="any" min="0" data-x placeholder="수치" disabled>
-      <input type="text" data-txt maxlength="80" placeholder="상세 문구 (예: ${k === 'crit' ? '(14%*6.4)' : k === 'slow' ? '78% 느려짐' : '게임 상세 설명 그대로'})" disabled></span></div>`).join('');
+      <span class="spp"><input type="number" step="any" min="0" data-x placeholder="数值" disabled>
+      <input type="text" data-txt maxlength="80" placeholder="详细文字 (例如: ${k === 'crit' ? '(14%*6.4)' : k === 'slow' ? '减速 78%' : '与游戏详细说明一致'})" disabled></span></div>`).join('');
   }
   function readSp(container) {
     const out = [];
@@ -278633,27 +278633,27 @@ function fitFixed(points) {
 
   // ---------- forms: rebuild whenever the special list changes ----------
   function statOptionsHtml() {
-    const sp = allSp().map(k => `<option value="sp:${k}">${esc(spLabel(k))} · 수치</option>`).join('');
+    const sp = allSp().map(k => `<option value="sp:${k}">${esc(spLabel(k))} · 数值</option>`).join('');
     const grp = (role, name) => `<optgroup label="${name}">${STATS.filter(s => s.role === role).map(s => `<option value="${s.key}">${s.label}</option>`).join('')}</optgroup>`;
-    return grp('tower', '타워 스탯') + grp('harvester', '채취 스탯') + `<optgroup label="스페셜 기능 수치">${sp}</optgroup>`;
+    return grp('tower', '塔属性') + grp('harvester', '采集属性') + `<optgroup label="特殊能力数值">${sp}</optgroup>`;
   }
   function buildSpForms() {
     const keep = { t: readSp($('#cdTSp')), h: readSp($('#cdHSp')), m: readSp($('#mdSp')) };
     buildSpRows($('#cdTSp'), allT()); buildSpRows($('#cdHSp'), allH()); buildSpRows($('#mdSp'), allSp());
     fillSp($('#cdTSp'), keep.t); fillSp($('#cdHSp'), keep.h); fillSp($('#mdSp'), keep.m);
-    $('#cdFilterSp').innerHTML = '<option value="">전체</option>' + allSp().map(k => `<option value="${k}">${esc(spLabel(k))}</option>`).join('') + RES.map(r => `<option value="${r[0]}">${r[1]}</option>`).join('');
+    $('#cdFilterSp').innerHTML = '<option value="">全部</option>' + allSp().map(k => `<option value="${k}">${esc(spLabel(k))}</option>`).join('') + RES.map(r => `<option value="${r[0]}">${r[1]}</option>`).join('');
     $$('#mdEff .eff-stat').forEach(sel => { const v = sel.value; sel.innerHTML = statOptionsHtml(); sel.value = v; });
     $('#cvKey').innerHTML = allSp().map(k => `<option value="${k}">${esc(spLabel(k))}</option>`).join('');
     renderSpMgr();
   }
   function renderSpMgr() {
-    $('#spList').innerHTML = customSp.length ? customSp.map(c => `<span class="tag">${esc(c.label)} <button data-spdel="${c.k}" title="삭제">×</button></span>`).join('')
-      : '<span class="muted">직접 추가한 기능이 없어요.</span>';
+    $('#spList').innerHTML = customSp.length ? customSp.map(c => `<span class="tag">${esc(c.label)} <button data-spdel="${c.k}" title="删除">×</button></span>`).join('')
+      : '<span class="muted">没有手动添加的功能。</span>';
   }
   function addCustomSp() {
     const label = ($('#spNew').value || '').trim().slice(0, 12);
     if (!label) return;
-    if (allSp().some(k => spLabel(k) === label)) { alert('이미 있는 기능 이름이에요.'); return; }
+    if (allSp().some(k => spLabel(k) === label)) { alert('已存在同名功能。'); return; }
     customSp.push({ k: 'x' + Date.now(), label });
     store.set('babble.customsp', customSp);
     $('#spNew').value = '';
@@ -278661,7 +278661,7 @@ function fitFixed(points) {
   }
   function delCustomSp(k) {
     const used = cards.some(c => c.sp.some(g => g.k === k)) || mods.some(m => m.grants.some(g => g.k === k) || m.effects.some(e => e.stat === 'sp:' + k)) || conv.some(c => c.k === k);
-    if (used) { alert('이 기능을 쓰는 기록이 있어서 지울 수 없어요. 기록을 먼저 정리해 주세요.'); return; }
+    if (used) { alert('存在使用该功能的记录，无法删除。请先清理相关记录。'); return; }
     customSp = customSp.filter(c => c.k !== k);
     store.set('babble.customsp', customSp);
     buildSpForms(); updateBackupBox();
@@ -278685,7 +278685,7 @@ function fitFixed(points) {
   }
   function readCardForm() {
     const word = ($('#cdWord').value || '').toLowerCase().replace(/[^a-z]/g, '');
-    if (word.length < 2 || word.length > 15) { alert('2~15글자 영단어를 입력해 주세요.'); return null; }
+    if (word.length < 2 || word.length > 15) { alert('请输入 2~15 个字母的英语单词。'); return null; }
     const role = $('#cdRole').value;
     const stats = {};
     STATS.filter(s => s.role === role).forEach(s => {
@@ -278728,15 +278728,15 @@ function fitFixed(points) {
       const stats = STATS.filter(s => s.role === c.role && c.stats && c.stats[s.key] !== undefined).map(s => `${s.short} ${c.stats[s.key]}`).join(' · ');
       const tags = (c.res || []).map(k => `<span class="b sp">${esc(resName(k))}</span>`).join(' ') + ' ' + c.sp.map(spText).join(' ');
       const sh = shareBy.get(c.word);
-      const shBadge = sh && sh.status !== 'unk' ? ` <span class="b ${sh.status === 'ok' ? 'ok' : sh.status === 'okguess' ? '' : 'no'}" title="${esc(shareHint(sh))}">점유율 합 ${sh.sum.toFixed(2)}${sh.status === 'ok' ? '' : sh.status === 'okguess' ? '*' : ' ⚠'}</span>` : '';
-      const cls = c.role === 'tower' ? classesFor(cardClassVals(c)).map(k => `<span class="b mod" title="${esc(k.text)} (이 단어 본체 수치만 기준)">${k.name}</span>`).join(' ') : '';
-      return `<tr><td><span class="w" style="font-size:16px">${up(c.word)}</span><div class="meta">${c.word.length}자 · 글자합 ${sum}${shBadge}</div><div>${dictLinks(c.word)}</div></td>
-        <td>${c.role === 'tower' ? '타워' : '채취'}</td>
-        <td class="cdstats">${stats || '<span class="muted">수치 없음</span>'}<div>${tags} ${cls}</div>${c.note ? `<div class="meta">${esc(c.note)}</div>` : ''}</td>
-        <td><button class="x" data-cedit="${c.word}">수정</button> <button class="x" data-cdel="${c.word}">삭제</button></td></tr>`;
+      const shBadge = sh && sh.status !== 'unk' ? ` <span class="b ${sh.status === 'ok' ? 'ok' : sh.status === 'okguess' ? '' : 'no'}" title="${esc(shareHint(sh))}">占比合计 ${sh.sum.toFixed(2)}${sh.status === 'ok' ? '' : sh.status === 'okguess' ? '*' : ' ⚠'}</span>` : '';
+      const cls = c.role === 'tower' ? classesFor(cardClassVals(c)).map(k => `<span class="b mod" title="${esc(k.text)} (仅以该单词本体数值为基准)">${k.name}</span>`).join(' ') : '';
+      return `<tr><td><span class="w" style="font-size:16px">${up(c.word)}</span><div class="meta">${c.word.length} 字母 · 字母和 ${sum}${shBadge}</div><div>${dictLinks(c.word)}</div></td>
+        <td>${c.role === 'tower' ? '塔' : '采集'}</td>
+        <td class="cdstats">${stats || '<span class="muted">无数值</span>'}<div>${tags} ${cls}</div>${c.note ? `<div class="meta">${esc(c.note)}</div>` : ''}</td>
+        <td><button class="x" data-cedit="${c.word}">编辑</button> <button class="x" data-cdel="${c.word}">删除</button></td></tr>`;
     }).join('');
-    $('#cdTable').innerHTML = rows ? `<table><thead><tr><th>단어</th><th>역할</th><th>수치 · 기능</th><th></th></tr></thead><tbody>${rows}</tbody></table>`
-      : '<p class="muted">조건에 맞는 기록이 없어요.</p>';
+    $('#cdTable').innerHTML = rows ? `<table><thead><tr><th>单词</th><th>角色</th><th>数值 · 功能</th><th></th></tr></thead><tbody>${rows}</tbody></table>`
+      : '<p class="muted">没有符合条件的记录。</p>';
   }
 
   // ---------- parts (mods) codex ----------
@@ -278744,9 +278744,9 @@ function fitFixed(points) {
     const row = document.createElement('div');
     row.className = 'effrow';
     row.innerHTML = `<select class="eff-stat">${statOptionsHtml()}</select>
-      <select class="eff-kind"><option value="pct">% 증가</option><option value="flat">+고정값</option></select>
-      <input class="eff-val" type="number" min="0" step="any" placeholder="값">
-      <button class="x" data-effdel="1">삭제</button>`;
+      <select class="eff-kind"><option value="pct">% 增加</option><option value="flat">+固定值</option></select>
+      <input class="eff-val" type="number" min="0" step="any" placeholder="值">
+      <button class="x" data-effdel="1">删除</button>`;
     $('#mdEff').appendChild(row);
     if (e) { row.querySelector('.eff-stat').value = e.stat; row.querySelector('.eff-kind').value = e.kind; row.querySelector('.eff-val').value = e.value; }
   }
@@ -278757,11 +278757,11 @@ function fitFixed(points) {
   }
   function saveMod() {
     const word = ($('#mdWord').value || '').toLowerCase().replace(/[^a-z]/g, '');
-    if (word.length < 2 || word.length > 15) { alert('2~15글자 영단어를 입력해 주세요.'); return; }
+    if (word.length < 2 || word.length > 15) { alert('请输入 2~15 个字母的英语单词。'); return; }
     const effects = $$('#mdEff .effrow').map(r => ({ stat: r.querySelector('.eff-stat').value, kind: r.querySelector('.eff-kind').value, value: parseFloat(r.querySelector('.eff-val').value) }))
       .filter(e => isFinite(e.value) && e.value > 0);
     const grants = readSp($('#mdSp'));
-    if (!effects.length && !grants.length) { alert('효과 값이나 부여 기능을 하나 이상 적어 주세요.'); return; }
+    if (!effects.length && !grants.length) { alert('请至少填写一个效果值或赋予功能。'); return; }
     const m = { word, effects, grants, note: ($('#mdNote').value || '').trim().slice(0, 200) };
     const i = mods.findIndex(x => x.word === word);
     if (i >= 0) mods[i] = m; else mods.push(m);
@@ -278786,13 +278786,13 @@ function fitFixed(points) {
       const eff = m.effects.map(e => `<span class="b sp">${esc(targetLabel(e.stat))} ${e.kind === 'pct' ? '+' + e.value + '%' : '+' + e.value}</span>`).join(' ');
       const gr = m.grants.map(spText).join(' ');
       const sh = shareBy.get(m.word);
-      const shBadge = sh && sh.status !== 'unk' ? ` <span class="b ${sh.status === 'ok' ? 'ok' : sh.status === 'okguess' ? '' : 'no'}" title="${esc(shareHint(sh))}">점유율 합 ${sh.sum.toFixed(2)}${sh.status === 'ok' ? '' : sh.status === 'okguess' ? '*' : ' ⚠'}</span>` : '';
-      return `<tr><td><span class="w" style="font-size:16px">${up(m.word)}</span><div class="meta">${m.word.length}자 · 글자합 ${sum}${shBadge}</div><div>${dictLinks(m.word)}</div></td>
-        <td class="cdstats">${eff}${gr ? `<div>부여: ${gr}</div>` : ''}${m.note ? `<div class="meta">${esc(m.note)}</div>` : ''}</td>
-        <td><button class="x" data-medit="${m.word}">수정</button> <button class="x" data-mdel="${m.word}">삭제</button></td></tr>`;
+      const shBadge = sh && sh.status !== 'unk' ? ` <span class="b ${sh.status === 'ok' ? 'ok' : sh.status === 'okguess' ? '' : 'no'}" title="${esc(shareHint(sh))}">占比合计 ${sh.sum.toFixed(2)}${sh.status === 'ok' ? '' : sh.status === 'okguess' ? '*' : ' ⚠'}</span>` : '';
+      return `<tr><td><span class="w" style="font-size:16px">${up(m.word)}</span><div class="meta">${m.word.length} 字母 · 字母和 ${sum}${shBadge}</div><div>${dictLinks(m.word)}</div></td>
+        <td class="cdstats">${eff}${gr ? `<div>赋予: ${gr}</div>` : ''}${m.note ? `<div class="meta">${esc(m.note)}</div>` : ''}</td>
+        <td><button class="x" data-medit="${m.word}">编辑</button> <button class="x" data-mdel="${m.word}">删除</button></td></tr>`;
     }).join('');
-    $('#mdTable').innerHTML = rows ? `<table><thead><tr><th>파츠</th><th>효과</th><th></th></tr></thead><tbody>${rows}</tbody></table>`
-      : '<p class="muted">아직 기록한 파츠가 없어요.</p>';
+    $('#mdTable').innerHTML = rows ? `<table><thead><tr><th>部件</th><th>效果</th><th></th></tr></thead><tbody>${rows}</tbody></table>`
+      : '<p class="muted">还没有记录部件。</p>';
   }
 
   // ---------- per-item fits ----------
@@ -278809,35 +278809,35 @@ function fitFixed(points) {
     return false;
   }
   function modelText(m) {
-    if (m.fixed) return `${m.k} × 길이 × 글자합 <span class="muted">(지수 1·1 고정${m.n === 1 ? ' · 기록 1개라 검증 불가' : ''}${m.loose ? ' · 단어마다 점유율이 달라 오차 큼' : ''})</span>`;
-    return `${m.k} × 길이<sup>${m.a}</sup> × 글자합<sup>${m.b}</sup>${m.full ? '' : ' <span class="muted">(글자합 지수 고정)</span>'}`;
+    if (m.fixed) return `${m.k} × 长度 × 字母和 <span class="muted">(指数 1·1 固定${m.n === 1 ? ' · 仅 1 条记录无法验证' : ''}${m.loose ? ' · 各单词占比不同，误差较大' : ''})</span>`;
+    return `${m.k} × 长度<sup>${m.a}</sup> × 字母和<sup>${m.b}</sup>${m.full ? '' : ' <span class="muted">(字母和指数固定)</span>'}`;
   }
   function renderFit() {
     const keys = allFitKeys();
-    const names = { 1: '기본 스탯', 2: '스페셜 기능 수치', 3: '파츠 효과' };
+    const names = { 1: '基础属性', 2: '特殊能力数值', 3: '部件效果' };
     let last = 0, rows = '';
     keys.forEach(key => {
       const g = groupOf(key);
       if (g !== last) { rows += `<tr class="grp"><td colspan="5">${names[g]}</td></tr>`; last = g; }
       const pts = statPoints(key), m = st.models[key], c0 = c0For(key);
       const b = st.bases[key];
-      const baseNote = b === undefined ? '' : ` <span class="muted">(${LOWER_BETTER[key] ? `기본값 ${b} 대비 감소분` : `기본값 ${b} 초과분`})</span>`;
+      const baseNote = b === undefined ? '' : ` <span class="muted">(${LOWER_BETTER[key] ? `相对默认值 ${b} 的减少部分` : `超出默认值 ${b} 的部分`})</span>`;
       if (c0) {
         const sh = pts.map(p => p.power / (c0 * p.len * p.sum));
         const avg = sh.length ? sh.reduce((a, x) => a + x, 0) / sh.length : null;
-        const tail = key.startsWith('mod:') || key.startsWith('msp:') ? '(파츠는 보통 점유율 1.0이라 정확히 맞아요)' : '(단어마다 점유율이 달라 실측은 이 값 이하)';
+        const tail = key.startsWith('mod:') || key.startsWith('msp:') ? '(部件通常占比 1.0，因此精确匹配)' : '(各单词占比不同，实测值 ≤ 此值)';
         rows += `<tr><td>${esc(keyLabel(key))}${baseNote}</td><td>${pts.length}</td>
-          <td>${c0} × 길이 × 글자합 × 점유율 <span class="muted">${tail}</span></td>
-          <td>${avg === null ? '-' : '평균 점유율 ' + avg.toFixed(2)}</td><td><span class="muted">설정에서 계수 수정</span></td></tr>`;
+          <td>${c0} × 长度 × 字母和 × 占比 <span class="muted">${tail}</span></td>
+          <td>${avg === null ? '-' : '平均占比 ' + avg.toFixed(2)}</td><td><span class="muted">在设置中修改系数</span></td></tr>`;
         return;
       }
       const err = m && pts.length ? mapeOf(pts, m) : null;
       rows += `<tr><td>${esc(keyLabel(key))}${baseNote}</td><td>${pts.length}</td>
-        <td>${m ? modelText(m) : '<span class="muted">기본 공식 사용</span>'}</td>
+        <td>${m ? modelText(m) : '<span class="muted">使用基础公式</span>'}</td>
         <td>${err === null ? '-' : (err < 0.0005 ? '0%' : (err * 100).toFixed(err < 0.1 ? 1 : 0) + '%')}</td>
-        <td><button class="x" data-fit="${esc(key)}">추정</button> ${m ? `<button class="x" data-fitreset="${esc(key)}">초기화</button>` : ''}</td></tr>`;
+        <td><button class="x" data-fit="${esc(key)}">推定</button> ${m ? `<button class="x" data-fitreset="${esc(key)}">重置</button>` : ''}</td></tr>`;
     });
-    $('#fitTable').innerHTML = `<table><thead><tr><th>항목</th><th>기록 수</th><th>식</th><th>평균 오차 · 점유율</th><th></th></tr></thead><tbody>${rows}</tbody></table>`;
+    $('#fitTable').innerHTML = `<table><thead><tr><th>项目</th><th>记录数</th><th>公式</th><th>平均误差 · 占比</th><th></th></tr></thead><tbody>${rows}</tbody></table>`;
     updateMetricNote();
   }
 
@@ -278850,21 +278850,21 @@ function fitFixed(points) {
     const guessN = all.filter(r => r.status === 'okguess').length;
     const t = all.filter(r => r.kind === 'tower'), m = all.filter(r => r.kind === 'mod');
     const cnt = arr => arr.filter(r => r.status === 'ok').length + '/' + arr.filter(judged).length;
-    $('#shareSummary').innerHTML = `점유율 합이 1.0(±${SHARE_TOL})인 단어: <b>타워 ${cnt(t)}</b> · <b>파츠 ${cnt(m)}</b> ${bad ? `<span class="muted">· 아래 ⚠ ${bad}개는 오타나 빠진 기록 후보예요</span>` : ''}${guessN ? `<span class="muted"> · 추정 계수가 들어 있어 판정에서 뺀 단어 ${guessN}개(OK*)</span>` : ''}`;
+    $('#shareSummary').innerHTML = `占比合计为 1.0(±${SHARE_TOL})的单词: <b>塔 ${cnt(t)}</b> · <b>部件 ${cnt(m)}</b> ${bad ? `<span class="muted">· 下方 ⚠ ${bad} 个可能是输入错误或遗漏记录</span>` : ''}${guessN ? `<span class="muted"> · 包含推定系数、未参与判定的单词 ${guessN} 个(OK*)</span>` : ''}`;
     const list = all.filter(r => !only || r.status === 'low' || r.status === 'high' || r.status === 'unk');
     const rows = list.map(r => {
       const parts = r.parts.map(p => {
         if (p.share === undefined) return `<span class="b sp">${esc(p.label)} ?</span>`;
         const neg = p.share < 0;
-        return `<span class="b ${neg ? 'no' : 'sp'}" title="${neg ? '패널티: 이 값만큼 깎임' : ''}">${esc(p.label)} ${p.share.toFixed(2)}${neg ? ` (${fmt(p.value)})` : ''}</span>`;
+        return `<span class="b ${neg ? 'no' : 'sp'}" title="${neg ? '惩罚: 被削减此数值' : ''}">${esc(p.label)} ${p.share.toFixed(2)}${neg ? ` (${fmt(p.value)})` : ''}</span>`;
       }).join(' ');
       const cls = r.status === 'ok' ? 'ok' : r.status === 'unk' || r.status === 'okguess' ? '' : 'no';
-      const tag = { ok: 'OK', okguess: 'OK*', unk: '판정불가' }[r.status] || '⚠';
-      return `<tr><td><span class="w" style="font-size:16px">${up(r.word)}</span><div class="meta">${r.kind === 'tower' ? '타워' : '파츠'} · B=${r.B}</div></td>
+      const tag = { ok: 'OK', okguess: 'OK*', unk: '无法判定' }[r.status] || '⚠';
+      return `<tr><td><span class="w" style="font-size:16px">${up(r.word)}</span><div class="meta">${r.kind === 'tower' ? '塔' : '部件'} · B=${r.B}</div></td>
         <td>${parts}</td><td class="num">${r.status === 'unk' ? '-' : r.sum.toFixed(2)}</td>
         <td><span class="b ${cls}">${tag}</span> <span class="meta">${esc(shareHint(r))}</span></td></tr>`;
     }).join('');
-    $('#shareTable').innerHTML = rows ? `<table><thead><tr><th>단어</th><th>능력별 점유율</th><th>합</th><th>판정</th></tr></thead><tbody>${rows}</tbody></table>` : '<p class="muted">표시할 기록이 없어요.</p>';
+    $('#shareTable').innerHTML = rows ? `<table><thead><tr><th>单词</th><th>各能力占比</th><th>合计</th><th>判定</th></tr></thead><tbody>${rows}</tbody></table>` : '<p class="muted">没有可显示的记录。</p>';
   }
 
   // ---------- class (tier) checker ----------
@@ -278874,21 +278874,21 @@ function fitFixed(points) {
     Object.keys(ids).forEach(k => { const n = parseFloat($(ids[k]).value); v[k] = isFinite(n) ? n : 0; });
     const got = classesFor(v);
     const near = CLASSES.filter(c => !got.includes(c)).map(c => {
-      const lack = Object.keys(c.need).filter(k => (v[k] || 0) < c.need[k]).map(k => `${NEED_LABEL[k]} ${fmt(c.need[k] - (v[k] || 0))} 부족`);
+      const lack = Object.keys(c.need).filter(k => (v[k] || 0) < c.need[k]).map(k => `${NEED_LABEL[k]} ${fmt(c.need[k] - (v[k] || 0))} 不足`);
       return `${c.name}(${Object.keys(c.need).map(k => `${NEED_LABEL[k]} ${c.need[k]}+`).join(' & ')}): ${lack.join(', ')}`;
     });
-    $('#clOut').innerHTML = (got.length ? got.map(c => `<div><span class="b mod">${c.name}</span> ${esc(c.text)}</div>`).join('') : '<div class="muted">지금 수치로 붙는 클래스가 없어요.</div>')
+    $('#clOut').innerHTML = (got.length ? got.map(c => `<div><span class="b mod">${c.name}</span> ${esc(c.text)}</div>`).join('') : '<div class="muted">当前数值下不会获得任何职业。</div>')
       + `<div class="meta" style="margin-top:6px">${near.map(esc).join('<br>')}</div>`;
   }
 
   // ---------- observation notes (semantic / meta words / aspd conversion ...) ----------
   function renderObs() {
-    const rows = obs.map((o, i) => `<tr><td>${esc(OBS_KINDS[o.kind])}</td><td>${esc(o.a)}</td><td>${esc(o.b)}</td><td>${esc(o.text)}</td><td><button class="x" data-obsdel="${i}">삭제</button></td></tr>`).join('');
-    $('#obsTable').innerHTML = rows ? `<table><thead><tr><th>종류</th><th>A</th><th>B</th><th>내용</th><th></th></tr></thead><tbody>${rows}</tbody></table>` : '<p class="muted">아직 기록이 없어요.</p>';
+    const rows = obs.map((o, i) => `<tr><td>${esc(OBS_KINDS[o.kind])}</td><td>${esc(o.a)}</td><td>${esc(o.b)}</td><td>${esc(o.text)}</td><td><button class="x" data-obsdel="${i}">删除</button></td></tr>`).join('');
+    $('#obsTable').innerHTML = rows ? `<table><thead><tr><th>类型</th><th>A</th><th>B</th><th>内容</th><th></th></tr></thead><tbody>${rows}</tbody></table>` : '<p class="muted">还没有记录。</p>';
   }
   function addObs() {
     const o = normObs({ kind: $('#obsKind').value, a: $('#obsA').value, b: $('#obsB').value, text: $('#obsT').value });
-    if (!o) { alert('내용을 적어 주세요.'); return; }
+    if (!o) { alert('请填写内容。'); return; }
     obs.push(o); store.set('babble.obs', obs);
     $('#obsA').value = ''; $('#obsB').value = ''; $('#obsT').value = '';
     renderObs(); updateBackupBox();
@@ -278899,13 +278899,13 @@ function fitFixed(points) {
     const rows = metas.map((m, i) => {
       const B = metaB(m.word), c = st.c0[m.eff];
       const sh = c > 0 && m.val > 0 ? m.val / (c * B) : null;
-      return `<tr><td><b>${up(m.word)}</b></td><td>${m.dir === 'down' ? '세로' : '가로'}</td><td>${esc(META_EFF[m.eff])}</td><td class="num">+${fmt(m.val)}</td><td class="num">${B}</td><td class="num">${sh === null ? '-' : fmt(sh)}</td><td>${esc(m.towers)}</td><td><button class="x" data-mtdel="${i}">삭제</button></td></tr>`;
+      return `<tr><td><b>${up(m.word)}</b></td><td>${m.dir === 'down' ? '纵向' : '横向'}</td><td>${esc(META_EFF[m.eff])}</td><td class="num">+${fmt(m.val)}</td><td class="num">${B}</td><td class="num">${sh === null ? '-' : fmt(sh)}</td><td>${esc(m.towers)}</td><td><button class="x" data-mtdel="${i}">删除</button></td></tr>`;
     }).join('');
-    $('#mtTable').innerHTML = rows ? `<table><thead><tr><th>단어</th><th>방향</th><th>효과</th><th>수치</th><th>B</th><th>수치÷(계수×B)</th><th>참여 타워(첫 글자)</th><th></th></tr></thead><tbody>${rows}</tbody></table>` : '<p class="muted">아직 기록이 없어요.</p>';
+    $('#mtTable').innerHTML = rows ? `<table><thead><tr><th>单词</th><th>方向</th><th>效果</th><th>数值</th><th>B</th><th>数值÷(系数×B)</th><th>参与塔(首字母)</th><th></th></tr></thead><tbody>${rows}</tbody></table>` : '<p class="muted">还没有记录。</p>';
   }
   function addMeta() {
     const m = normMeta({ word: $('#mtWord').value, dir: $('#mtDir').value, eff: $('#mtEff').value, val: parseFloat($('#mtVal').value), towers: $('#mtTw').value });
-    if (!m) { alert('3글자 이상 영어 단어를 적어 주세요.'); return; }
+    if (!m) { alert('请输入 3 个字母以上的英语单词。'); return; }
     metas.push(m); store.set('babble.metas', metas);
     ['#mtWord', '#mtVal', '#mtTw'].forEach(s => { $(s).value = ''; });
     renderMetas(); updateBackupBox();
@@ -278914,8 +278914,8 @@ function fitFixed(points) {
   function runBoard() {
     const raw = ($('#bdPat').value || '').toLowerCase().replace(/[^a-z_?]/g, '').replace(/\?/g, '_');
     const out = $('#bdOut');
-    if (raw.length < 3) { out.innerHTML = '<p class="muted">3칸 이상 적어 주세요. 예: re_d (빈칸은 _)</p>'; return; }
-    if (!raw.includes('_')) { out.innerHTML = `<p class="muted">빈칸이 없어요. ${dict.words.includes(raw) ? '이미 사전에 있는 단어예요.' : '사전에 없는 글자 조합이에요.'}</p>`; return; }
+    if (raw.length < 3) { out.innerHTML = '<p class="muted">请输入 3 格以上。例如: re_d (空格用 _)</p>'; return; }
+    if (!raw.includes('_')) { out.innerHTML = `<p class="muted">没有空格。${dict.words.includes(raw) ? '该单词已在词典中。' : '词典中没有的字母组合。'}</p>`; return; }
     const own = $('#bdOwn').checked;
     const towers = cards.filter(c => c.role === 'tower');
     const byInit = {};
@@ -278935,36 +278935,36 @@ function fitFixed(points) {
     res.sort((x, y) => metaB(y) - metaB(x));
     const rows = res.slice(0, 30).map(w => {
       const B = metaB(w);
-      const fill = [...w].map((ch, k) => raw[k] === '_' ? `${up(ch)}: ${(byInit[ch] || ['(도감에 없음)']).map(up).join('/')}` : '').filter(Boolean).join(' · ');
-      return `<tr><td><b>${up(w)}</b> ${dictLinks(w)}</td><td class="num">${B}</td><td class="num">HP +${fmt(st.c0.t_hp * B * 0.4)} / 공격 오라 +${fmt(st.c0['sp:aura_atk'] * B * 0.5)}</td><td>${fill}</td></tr>`;
+      const fill = [...w].map((ch, k) => raw[k] === '_' ? `${up(ch)}: ${(byInit[ch] || ['(图鉴中没有)']).map(up).join('/')}` : '').filter(Boolean).join(' · ');
+      return `<tr><td><b>${up(w)}</b> ${dictLinks(w)}</td><td class="num">${B}</td><td class="num">HP +${fmt(st.c0.t_hp * B * 0.4)} / 攻击光环 +${fmt(st.c0['sp:aura_atk'] * B * 0.5)}</td><td>${fill}</td></tr>`;
     }).join('');
-    out.innerHTML = res.length ? `<p class="note">${res.length}개 후보 (B 큰 순, 상위 30개). 보너스는 기록 3건에서 본 비율(HP형 계수의 약 0.4, 오라형 약 0.5)로 어림한 값이고, 어떤 효과가 붙는지는 단어마다 달라서 <b>추정</b>이에요.</p><table><thead><tr><th>완성 단어</th><th>B</th><th>보너스 어림</th><th>빈칸에 둘 타워 첫 글자</th></tr></thead><tbody>${rows}</tbody></table>` : '<p class="muted">맞는 단어가 없어요.' + (own ? ' "내 타워 첫 글자만" 체크를 풀면 더 보여요.' : '') + '</p>';
+    out.innerHTML = res.length ? `<p class="note">${res.length} 个候选 (按 B 从大到小, 前 30 个)。加成是按 3 条记录中观察到的比例(HP 型系数的约 0.4, 光环型约 0.5)估算的值，实际附带哪种效果因单词而异，属于<b>推定</b>。</p><table><thead><tr><th>完整单词</th><th>B</th><th>加成估算</th><th>可填入空格的塔首字母</th></tr></thead><tbody>${rows}</tbody></table>` : '<p class="muted">没有匹配的单词。' + (own ? ' 取消勾选"仅限我图鉴中塔的首字母"可显示更多。' : '') + '</p>';
   }
   // attacks per second from attack-speed value: two candidate shapes (both fit the 3 recorded pairs)
   const aspsRate = x => x - 1;
   function runAsps() {
     const x = parseFloat($('#asIn').value);
-    $('#asOut').innerHTML = x > 0 ? `공속 ${fmt(x)} → 아우라 없이 초당 <b>${aspsRate(x).toFixed(2)}</b>회 (공격 간격 ${x > 1 ? (1 / (x - 1)).toFixed(3) : '-'}초)` : '';
+    $('#asOut').innerHTML = x > 0 ? `攻速 ${fmt(x)} → 无光环时每秒 <b>${aspsRate(x).toFixed(2)}</b> 次 (攻击间隔 ${x > 1 ? (1 / (x - 1)).toFixed(3) : '-'} 秒)` : '';
   }
   // ---------- find tab: filter the whole game table ----------
   const FIND_PRESETS = [
-    { n: '탱커', k: 'T', m: 'ehp' }, { n: '딜러 DPS', k: 'T', m: 'dps' }, { n: '힐러', k: 'T', m: 'sp:aura_heal' }, { n: '공속 버퍼', k: 'T', m: 'sp:aura_aspd' }, { n: '화력 버퍼', k: 'T', m: 'sp:aura_atk' },
-    { n: '스플래시', k: 'T', m: 'sp:splash' }, { n: '체인', k: 'T', m: 'sp:chain' }, { n: '멀티샷', k: 'T', m: 'sp:multishot' }, { n: '슬로우', k: 'T', m: 'sp:slow' }, { n: '슬로우 오라', k: 'T', m: 'sp:aura_slow' },
-    { n: '방어력 감소', k: 'T', m: 'sp:shred' }, { n: '저주 단어', k: 'T', m: 'sp:curse', cur: 'only' }, { n: '수확량', k: 'H', m: 'h_harvest' }, { n: '수확 효율', k: 'H', m: 'yield' },
-    { n: '독+체인', k: 'T', m: 'dps', has: ['poison', 'chain'] }, { n: '스플래시+체인', k: 'T', m: 'dps', has: ['splash', 'chain'] }, { n: '독+스플래시', k: 'T', m: 'dps', has: ['poison', 'splash'] },
-    { n: '체인+스턴', k: 'T', m: 'dps', has: ['chain', 'stun'] }, { n: '슬로우+스플래시', k: 'T', m: 'dps', has: ['slow', 'splash'] }, { n: '관통+멀티샷', k: 'T', m: 'dps', has: ['pierce', 'multishot'] },
-    { n: '탱커+힐 오라', k: 'T', m: 'ehp', has: ['aura_heal'] }, { n: '스페셜 3개↑', k: 'T', m: 'dps', nsp: 3 }, { n: '체력 500↑ 사거리 8↑', k: 'T', m: 'dps', conds: [['t_hp', 'ge', 500], ['t_range', 'ge', 8]] }
+    { n: '坦克', k: 'T', m: 'ehp' }, { n: '输出 DPS', k: 'T', m: 'dps' }, { n: '治疗', k: 'T', m: 'sp:aura_heal' }, { n: '攻速增益', k: 'T', m: 'sp:aura_aspd' }, { n: '火力增益', k: 'T', m: 'sp:aura_atk' },
+    { n: '溅射', k: 'T', m: 'sp:splash' }, { n: '连锁', k: 'T', m: 'sp:chain' }, { n: '多重射击', k: 'T', m: 'sp:multishot' }, { n: '减速', k: 'T', m: 'sp:slow' }, { n: '减速光环', k: 'T', m: 'sp:aura_slow' },
+    { n: '防御削减', k: 'T', m: 'sp:shred' }, { n: '诅咒单词', k: 'T', m: 'sp:curse', cur: 'only' }, { n: '收获量', k: 'H', m: 'h_harvest' }, { n: '收获效率', k: 'H', m: 'yield' },
+    { n: '毒+连锁', k: 'T', m: 'dps', has: ['poison', 'chain'] }, { n: '溅射+连锁', k: 'T', m: 'dps', has: ['splash', 'chain'] }, { n: '毒+溅射', k: 'T', m: 'dps', has: ['poison', 'splash'] },
+    { n: '连锁+眩晕', k: 'T', m: 'dps', has: ['chain', 'stun'] }, { n: '减速+溅射', k: 'T', m: 'dps', has: ['slow', 'splash'] }, { n: '穿透+多重射击', k: 'T', m: 'dps', has: ['pierce', 'multishot'] },
+    { n: '坦克+治疗光环', k: 'T', m: 'ehp', has: ['aura_heal'] }, { n: '特殊能力 3 个↑', k: 'T', m: 'dps', nsp: 3 }, { n: '体力 500↑ 射程 8↑', k: 'T', m: 'dps', conds: [['t_hp', 'ge', 500], ['t_range', 'ge', 8]] }
   ];
   const fdClean = s => String(s || '').toLowerCase().replace(/[^a-z]/g, '');
   let fdOptsHtml = '';
   function fdOpts() {
-    if (!fdOptsHtml) fdOptsHtml = [['wv', '레벨 단어값'], ['len', '글자 수'], ['B', 'B (길이×글자합)']].concat(uMetricList().slice(1)).map(m => '<option value="' + esc(m[0]) + '">' + esc(m[1]) + '</option>').join('');
+    if (!fdOptsHtml) fdOptsHtml = [['wv', '等级单词值'], ['len', '字母数'], ['B', 'B (长度×字母和)']].concat(uMetricList().slice(1)).map(m => '<option value="' + esc(m[0]) + '">' + esc(m[1]) + '</option>').join('');
     return fdOptsHtml;
   }
   function addFdCond(key, op, val) {
     const row = document.createElement('div');
     row.className = 'fdc';
-    row.innerHTML = '<select class="fdc-m">' + fdOpts() + '</select><select class="fdc-o"><option value="ge">이상 (≥)</option><option value="le">이하 (≤)</option><option value="has">있음 (&gt;0)</option><option value="none">없음 (=0)</option></select><input class="fdc-v" type="number" step="any" placeholder="값"><button class="x" data-fdcdel="1" title="조건 삭제">×</button>';
+    row.innerHTML = '<select class="fdc-m">' + fdOpts() + '</select><select class="fdc-o"><option value="ge">以上 (≥)</option><option value="le">以下 (≤)</option><option value="has">有 (&gt;0)</option><option value="none">无 (=0)</option></select><input class="fdc-v" type="number" step="any" placeholder="值"><button class="x" data-fdcdel="1" title="删除条件">×</button>';
     if (key) row.querySelector('.fdc-m').value = key;
     if (op) row.querySelector('.fdc-o').value = op;
     if (val !== undefined) row.querySelector('.fdc-v').value = val;
@@ -278981,7 +278981,7 @@ function fitFixed(points) {
     return uVal(key, r);
   }
   function buildFind() {
-    if (!U.ready) { $('#findOut').innerHTML = '<p class="muted">게임 수치표를 불러오는 중이거나 불러오지 못했어요.</p>'; return; }
+    if (!U.ready) { $('#findOut').innerHTML = '<p class="muted">正在加载游戏数值表，或加载失败。</p>'; return; }
     const sel = $('#fdMetric');
     if (!sel.options.length) sel.innerHTML = uMetricList().slice(1).map(m => '<option value="' + esc(m[0]) + '">' + esc(m[1]) + '</option>').join('');
     $('#fdPresets').innerHTML = FIND_PRESETS.map((p, i) => '<button class="x" data-fdpre="' + i + '">' + esc(p.n) + '</button>').join(' ');
@@ -279053,16 +279053,16 @@ function fitFixed(points) {
     const rows = out.slice(0, limit).map((o, n) => {
       const w = o[0], B = w.length * wordSum(w, st.values);
       const d = cmpV > 0 ? ((o[1] / cmpV - 1) * 100) : null;
-      return '<tr><td>' + (n + 1) + '</td><td><span class="w">' + up(w) + '</span>' + uBadge(w) + ' <button class="x" data-ban="' + w + '">안 됨</button></td><td>' + U_KIND[o[2].k] + '</td><td class="num">' + B + '</td><td class="num">' + fmt(wordValue(w)) + '</td><td class="num"><b>' + fmt(o[1]) + '</b></td>' +
+      return '<tr><td>' + (n + 1) + '</td><td><span class="w">' + up(w) + '</span>' + uBadge(w) + ' <button class="x" data-ban="' + w + '">无效</button></td><td>' + U_KIND[o[2].k] + '</td><td class="num">' + B + '</td><td class="num">' + fmt(wordValue(w)) + '</td><td class="num"><b>' + fmt(o[1]) + '</b></td>' +
         (cmpV > 0 ? '<td class="num ' + (d >= 0 ? 'ok' : 'no') + '">' + (d >= 0 ? '+' : '') + d.toFixed(1) + '%</td>' : '') + '<td class="meta">' + esc(uText(o[2])) + '</td></tr>';
     }).join('');
     const fl = [];
-    if (pS) fl.push('시작 ' + up(pS)); if (pE) fl.push('끝 ' + up(pE)); if (pH) fl.push('포함 ' + up(pH));
-    has.forEach(k => fl.push(spLabel(k) + ' 있음')); not.forEach(k => fl.push(spLabel(k) + ' 없음'));
-    if (nsp) fl.push('스페셜 ' + nsp + '개 이상');
-    conds.forEach(c => fl.push(((fdOpts().match(new RegExp('value="' + c.key.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '">([^<]*)<')) || [])[1] || c.key) + ' ' + ({ ge: '≥ ' + c.val, le: '≤ ' + c.val, has: '있음', none: '없음' }[c.op])));
-    if (cur) fl.push(cur === 'only' ? '저주 단어만' : '저주 단어 제외');
-    $('#findOut').innerHTML = out.length ? '<p class="note">조건에 맞는 단어 ' + out.length.toLocaleString('ko-KR') + '개 중 상위 ' + Math.min(limit, out.length) + '개' + (fl.length ? ' · 조건: ' + esc(fl.join(', ')) : '') + (cmp && cmpV > 0 ? ' · 비교 기준 ' + up(cmp) + ' = ' + fmt(cmpV) : cmp ? ' · ' + up(cmp) + (U.map.get(cmp) ? '은(는) 이 점수 기준으로 0이라 비교하지 않았어요' : '은(는) 수치표에 없어요') : '') + '</p><table><thead><tr><th>#</th><th>단어</th><th>종류</th><th>B</th><th>레벨값</th><th>' + esc(($('#fdMetric').selectedOptions[0] || {}).textContent || '') + '</th>' + (cmpV > 0 ? '<th>비교 대비</th>' : '') + '<th>게임 수치</th></tr></thead><tbody>' + rows + '</tbody></table>' : '<p class="muted">조건에 맞는 단어가 없어요.' + (capped ? ' 레벨 단어값 상한(' + cap + ')을 빼면 ' + capped.toLocaleString('ko-KR') + '개가 있어요(예: ' + capEx.map(up).join(', ') + ' → 레벨값 ' + capEx.map(x => fmt(wordValue(x))).join(', ') + ').' : '') + '</p>';
+    if (pS) fl.push('开头 ' + up(pS)); if (pE) fl.push('结尾 ' + up(pE)); if (pH) fl.push('包含 ' + up(pH));
+    has.forEach(k => fl.push(spLabel(k) + ' 有')); not.forEach(k => fl.push(spLabel(k) + ' 无'));
+    if (nsp) fl.push('特殊能力 ' + nsp + ' 个以上');
+    conds.forEach(c => fl.push(((fdOpts().match(new RegExp('value="' + c.key.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '">([^<]*)<')) || [])[1] || c.key) + ' ' + ({ ge: '≥ ' + c.val, le: '≤ ' + c.val, has: '有', none: '无' }[c.op])));
+    if (cur) fl.push(cur === 'only' ? '仅诅咒单词' : '排除诅咒单词');
+    $('#findOut').innerHTML = out.length ? '<p class="note">符合条件的单词 ' + out.length.toLocaleString('zh-CN') + ' 个中的前 ' + Math.min(limit, out.length) + ' 个' + (fl.length ? ' · 条件: ' + esc(fl.join(', ')) : '') + (cmp && cmpV > 0 ? ' · 对比基准 ' + up(cmp) + ' = ' + fmt(cmpV) : cmp ? ' · ' + up(cmp) + (U.map.get(cmp) ? ' 在此分数标准下为 0，未进行比较' : ' 不在数值表中') : '') + '</p><table><thead><tr><th>#</th><th>单词</th><th>类型</th><th>B</th><th>等级值</th><th>' + esc(($('#fdMetric').selectedOptions[0] || {}).textContent || '') + '</th>' + (cmpV > 0 ? '<th>相对对比</th>' : '') + '<th>游戏数值</th></tr></thead><tbody>' + rows + '</tbody></table>' : '<p class="muted">没有符合条件的单词。' + (capped ? ' 去掉等级单词值上限(' + cap + ')后有 ' + capped.toLocaleString('zh-CN') + ' 个(例如: ' + capEx.map(up).join(', ') + ' → 等级值 ' + capEx.map(x => fmt(wordValue(x))).join(', ') + ').' : '') + '</p>';
   }
   function onUnitsReady() {
     buildMetricOptions(); buildFind(); updateUInfo();
@@ -279084,14 +279084,14 @@ function fitFixed(points) {
       let verdict = '';
       if (isSlow) {
         const bad = rows.filter(r => r.eff > 0 && Math.abs(slowEff(r.x) - r.eff) > 1.0);
-        verdict = bad.length ? `공식 1−(1+수치/${SLOW.K})<sup>−${SLOW.n}</sup> (상한 ${SLOW.cap}%)과 ${bad.length}개가 1%p 넘게 달라요(${bad.map(r => r.x).join(', ')}). 기록을 확인해 주세요.`
-          : `기록한 ${rows.filter(r => r.eff > 0).length}개가 모두 공식 <b>슬로우% = 1−(1+수치/${SLOW.K})<sup>−${SLOW.n}</sup>, 상한 ${SLOW.cap}%</b>와 1%p 안에서 맞아요. 수치 약 ${Math.round(SLOW.K * (Math.pow(1 - SLOW.cap / 100, -1 / SLOW.n) - 1))} 이상은 80%로 고정돼요.`;
+        verdict = bad.length ? `与公式 1−(1+数值/${SLOW.K})<sup>−${SLOW.n}</sup> (上限 ${SLOW.cap}%)有 ${bad.length} 个相差超过 1 个百分点(${bad.map(r => r.x).join(', ')}). 请确认记录。`
+          : `记录的 ${rows.filter(r => r.eff > 0).length} 个全部与公式 <b>减速% = 1−(1+数值/${SLOW.K})<sup>−${SLOW.n}</sup>, 上限 ${SLOW.cap}%</b>在 1 个百分点内吻合。数值约 ${Math.round(SLOW.K * (Math.pow(1 - SLOW.cap / 100, -1 / SLOW.n) - 1))} 以上固定为 80%。`;
       } else if (k === 'aura_slow') {
-        verdict = '슬로우 오라는 일반 슬로우 식과 달라요(70.56 → 66%인데 일반 식은 47%). 기록이 더 쌓이면 식을 찾아볼게요. 오라 계수는 0.21(다른 오라와 같음).';
+        verdict = '减速光环与普通减速公式不同(70.56 → 66%，普通公式为 47%)。记录更多后可尝试找出公式。光环系数为 0.21(与其他光环相同)。';
       } else if (Ks.length >= 2) {
         const lo = Math.min(...Ks), hi = Math.max(...Ks);
-        verdict = hi / lo < 1.12 ? `K가 거의 일정(약 ${fmt((lo + hi) / 2)}) → 효과 = 수치÷(수치+K) 모양으로 보여요.`
-          : `K가 일정하지 않아요(${fmt(lo)}~${fmt(hi)}) → 단순 수치÷(수치+K)와 달라요. 상한이 있거나 다른 식일 수 있어요.`;
+        verdict = hi / lo < 1.12 ? `K 几乎恒定(约 ${fmt((lo + hi) / 2)}) → 效果近似数值÷(数值+K) 的形式。`
+          : `K 不恒定(${fmt(lo)}~${fmt(hi)}) → 与简单的数值÷(数值+K)不同。可能有上限或是其他公式。`;
       }
       let critNote = '';
       const body = rows.map(r => {
@@ -279100,23 +279100,23 @@ function fitFixed(points) {
         let hint = '';
         if (m && +m[2] > 0) {
           const prod = +m[1] * +m[2];
-          hint = `<div class="meta">확률 ${m[1]}% × 배율 ${m[2]} = ${fmt(prod)} (수치의 ${Math.round(prod / r.x * 100)}%)</div>`;
+          hint = `<div class="meta">概率 ${m[1]}% × 倍率 ${m[2]} = ${fmt(prod)} (数值的 ${Math.round(prod / r.x * 100)}%)</div>`;
         }
         const form = isSlow ? (r.eff > 0 ? `${slowEff(r.x).toFixed(1)}%` : '-') : kk;
-        return `<tr><td class="num">${r.x}</td><td>${r.eff === null ? '-' : r.eff + '%'}</td><td>${esc(r.txt || '')}${hint}</td><td>${form}</td><td><button class="x" data-cvdel="${r.i}">삭제</button></td></tr>`;
+        return `<tr><td class="num">${r.x}</td><td>${r.eff === null ? '-' : r.eff + '%'}</td><td>${esc(r.txt || '')}${hint}</td><td>${form}</td><td><button class="x" data-cvdel="${r.i}">删除</button></td></tr>`;
       }).join('');
       if (k === 'crit') {
         const ratios = rows.map(r => { const m = /([\d.]+)\s*%\s*[*×xX]\s*([\d.]+)/.exec(r.txt || ''); return m ? +m[1] * +m[2] / r.x : null; }).filter(x => x);
-        if (ratios.length >= 3) critNote = `<p class="note">"확률×배율"은 수치의 ${Math.round(Math.min(...ratios) * 100)}%~${Math.round(Math.max(...ratios) * 100)}%로 들쭉날쭉해서, 수치 = 확률×배율은 아니에요. 확률과 배율이 각각 수치에서 따로(점점 포화되며) 정해지는 것 같아요. 수치 자체는 크리 기준 계수 ${st.c0['sp:crit']} × 길이 × 글자합 × 점유율이에요.</p>`;
+        if (ratios.length >= 3) critNote = `<p class="note">"概率×倍率"在数值的 ${Math.round(Math.min(...ratios) * 100)}%~${Math.round(Math.max(...ratios) * 100)}% 之间波动，因此 数值 ≠ 概率×倍率。概率和倍率似乎分别由数值决定(逐渐饱和)。数值本身遵循 暴击基准系数 ${st.c0['sp:crit']} × 长度 × 字母和 × 占比。</p>`;
       }
-      return `<h3>${esc(spLabel(k))}</h3><table><thead><tr><th>수치</th><th>효과</th><th>상세 문구</th><th>${isSlow ? '공식값' : '수치÷(수치+K)의 K'}</th><th></th></tr></thead><tbody>${body}</tbody></table>${verdict ? `<p class="note">${verdict}</p>` : ''}${critNote}`;
+      return `<h3>${esc(spLabel(k))}</h3><table><thead><tr><th>数值</th><th>效果</th><th>详细文字</th><th>${isSlow ? '公式值' : '数值÷(数值+K) 的 K'}</th><th></th></tr></thead><tbody>${body}</tbody></table>${verdict ? `<p class="note">${verdict}</p>` : ''}${critNote}`;
     }).join('');
-    $('#cvTable').innerHTML = html || '<p class="muted">아직 기록이 없어요.</p>';
+    $('#cvTable').innerHTML = html || '<p class="muted">还没有记录。</p>';
   }
   function addConv() {
     const k = $('#cvKey').value, x = parseFloat($('#cvX').value), eff = parseFloat($('#cvE').value), txt = ($('#cvT').value || '').trim().slice(0, 80);
-    if (!(x > 0)) { alert('수치를 입력해 주세요.'); return; }
-    if (!(eff > 0) && !txt) { alert('효과 %나 상세 문구 중 하나는 적어 주세요.'); return; }
+    if (!(x > 0)) { alert('请输入数值。'); return; }
+    if (!(eff > 0) && !txt) { alert('请至少填写效果 % 或详细文字之一。'); return; }
     conv.push({ k, x, eff: eff > 0 ? eff : null, txt });
     $('#cvX').value = ''; $('#cvE').value = ''; $('#cvT').value = '';
     saveConv(); renderConv();
@@ -279124,26 +279124,26 @@ function fitFixed(points) {
 
   // ---------- armor ----------
   function renderArmor() {
-    $('#arTable').innerHTML = armorRows.length ? `<table><thead><tr><th>방어력 A</th><th>받은 피해</th><th>피해 감소</th><th>이 기록의 K</th><th></th></tr></thead><tbody>${armorRows.map((r, n) =>
-      `<tr><td>${r.A}</td><td>${(r.taken * 100).toFixed(1)}%</td><td>${((1 - r.taken) * 100).toFixed(1)}%</td><td>${fmt(r.A * r.taken / (1 - r.taken))}</td><td><button class="x" data-ardel="${n}">삭제</button></td></tr>`).join('')}</tbody></table>` : '';
+    $('#arTable').innerHTML = armorRows.length ? `<table><thead><tr><th>防御力 A</th><th>受到伤害</th><th>伤害减免</th><th>此记录的 K</th><th></th></tr></thead><tbody>${armorRows.map((r, n) =>
+      `<tr><td>${r.A}</td><td>${(r.taken * 100).toFixed(1)}%</td><td>${((1 - r.taken) * 100).toFixed(1)}%</td><td>${fmt(r.A * r.taken / (1 - r.taken))}</td><td><button class="x" data-ardel="${n}">删除</button></td></tr>`).join('')}</tbody></table>` : '';
     const K = st.armorK;
-    $('#arOut').innerHTML = `<p class="muted">현재 K = <b>${fmt(K)}</b> → 방어력 5 / 10 / 25 / 50 / 100 일 때 피해 감소 ${[5, 10, 25, 50, 100].map(a => (armorReduction(a, K) * 100).toFixed(0) + '%').join(' / ')}</p>`;
+    $('#arOut').innerHTML = `<p class="muted">当前 K = <b>${fmt(K)}</b> → 防御力为 5 / 10 / 25 / 50 / 100 时的伤害减免 ${[5, 10, 25, 50, 100].map(a => (armorReduction(a, K) * 100).toFixed(0) + '%').join(' / ')}</p>`;
   }
   function addArmor() {
     const A = parseFloat($('#arA').value), t = parseFloat($('#arT').value) / 100;
-    if (!(A > 0) || !(t > 0 && t < 1)) { alert('방어력은 0보다 크게, 받은 피해는 0~100% 사이로 넣어 주세요.'); return; }
+    if (!(A > 0) || !(t > 0 && t < 1)) { alert('防御力请输入大于 0 的值，受到伤害请输入 0~100% 之间的值。'); return; }
     armorRows.push({ A, taken: t }); store.set('babble.armor', armorRows);
     $('#arA').value = ''; $('#arT').value = '';
     renderArmor(); updateBackupBox();
   }
   function fitArmor() {
     const f = fitArmorK(armorRows), fe = armorFeasible(armorRows);
-    if (!f) { $('#arOut').innerHTML = '<p class="muted">방어력과 받은 피해 기록이 먼저 필요해요.</p>'; return; }
+    if (!f) { $('#arOut').innerHTML = '<p class="muted">需要先记录防御力和受到伤害。</p>'; return; }
     st.armorK = +(fe ? fe.K : f.K).toPrecision(3); saveSt(); $('#armorK').value = st.armorK; updateBackupBox();
     renderArmor();
     $('#arOut').innerHTML += fe
-      ? `<p>게임이 피해 감소를 정수 %로 반올림해 보여 준다고 보고, 기록 ${f.n}개를 모두 만족하는 K 범위 <b>${fmt(fe.lo)}~${fmt(fe.hi)}</b>의 가운데인 <b>${fmt(fe.K)}</b>로 정했어요.</p>`
-      : `<p>기록 ${f.n}개의 중앙값으로 K를 ${fmt(f.K)}로 정했어요 (기록별 범위 ${fmt(f.min)}~${fmt(f.max)}). 모든 기록을 동시에 만족하는 K가 없어서, 방어력 모델이 A÷(A+K)와 안 맞거나 기록에 오타가 있을 수 있어요.</p>`;
+      ? `<p>假设游戏将伤害减免四舍五入为整数 % 显示，取满足全部 ${f.n} 条记录的 K 范围 <b>${fmt(fe.lo)}~${fmt(fe.hi)}</b> 的中间值 <b>${fmt(fe.K)}</b>。</p>`
+      : `<p>以 ${f.n} 条记录的中位数将 K 定为 ${fmt(f.K)} (各记录范围 ${fmt(f.min)}~${fmt(f.max)})。没有能同时满足所有记录的 K，可能是防御模型与 A÷(A+K) 不符或记录有输入错误。</p>`;
     run();
   }
 
@@ -279177,7 +279177,7 @@ function fitFixed(points) {
       persistAll(); rebuildMaps(); buildSettings(); buildSpForms(); renderBlack(); renderArmor(); afterDataChange(); refreshAll();
       showBanner(migText());
       return true;
-    } catch (e) { alert('백업 형식이 올바르지 않아요.'); return false; }
+    } catch (e) { alert('备份格式不正确。'); return false; }
   }
 
   // ---------- events ----------
@@ -279197,7 +279197,7 @@ function fitFixed(points) {
     else if (d.medit) editMod(d.medit);
     else if (d.mdel) delMod(d.mdel);
     else if (d.effdel) { const rows = $$('#mdEff .effrow'); if (rows.length > 1) t.closest('.effrow').remove(); else t.closest('.effrow').querySelector('.eff-val').value = ''; }
-    else if (d.fit) { const ok = fitStat(d.fit); afterFit(ok ? '' : '추정하려면 기록이 필요해요.'); }
+    else if (d.fit) { const ok = fitStat(d.fit); afterFit(ok ? '' : '推定需要先有记录。'); }
     else if (d.fitreset) { delete st.models[d.fitreset]; afterFit(); }
     else if (d.ardel !== undefined) { armorRows.splice(+d.ardel, 1); store.set('babble.armor', armorRows); renderArmor(); updateBackupBox(); }
     else if (d.cvdel !== undefined) { conv.splice(+d.cvdel, 1); saveConv(); renderConv(); }
@@ -279248,7 +279248,7 @@ function fitFixed(points) {
   $('#candBtn').onclick = recommendLocks;
   $('#chk').addEventListener('input', checkWord);
   $('#blackLoad').onclick = () => {
-    try { const a = JSON.parse($('#blackBox').value); if (Array.isArray(a)) { black = new Set(a.map(x => String(x).toLowerCase()).filter(x => /^[a-z]+$/.test(x))); store.set('babble.black', [...black]); renderBlack(); run(); } } catch (e) { alert('형식이 올바르지 않아요. ["word1","word2"] 형태여야 해요.'); }
+    try { const a = JSON.parse($('#blackBox').value); if (Array.isArray(a)) { black = new Set(a.map(x => String(x).toLowerCase()).filter(x => /^[a-z]+$/.test(x))); store.set('babble.black', [...black]); renderBlack(); run(); } } catch (e) { alert('格式不正确。必须是 ["word1","word2"] 的形式。'); }
   };
   $('#blackClear').onclick = () => { black = new Set(); store.set('babble.black', []); renderBlack(); run(); };
   $('#cdRole').addEventListener('change', toggleRole);
@@ -279264,7 +279264,7 @@ function fitFixed(points) {
   $('#fitAll').onclick = () => {
     let n = 0;
     allFitKeys().forEach(k => { if (statPoints(k).length >= 1 && fitStat(k)) n++; });
-    afterFit(n ? '' : '새로 추정할 항목이 없어요. (기준 계수를 아는 항목은 점유율 모델로 이미 계산돼요.)');
+    afterFit(n ? '' : '没有可新推定的项目。(基准系数已知的项目已由占比模型计算。)');
   };
   $('#arAdd').onclick = addArmor;
   $('#arFit').onclick = fitArmor;
@@ -279278,7 +279278,7 @@ function fitFixed(points) {
     const a = document.createElement('a');
     a.href = url; a.download = name; document.body.appendChild(a); a.click(); a.remove();
     setTimeout(() => URL.revokeObjectURL(url), 2000);
-    $('#bkMsg').textContent = `${name} 로 저장했어요. 다운로드 폴더를 확인해 주세요. (타워 ${cards.length} · 파츠 ${mods.length} · 추정식 ${Object.keys(st.models).length})`;
+    $('#bkMsg').textContent = `已保存为 ${name}。请查看下载文件夹。(塔 ${cards.length} · 部件 ${mods.length} · 推定式 ${Object.keys(st.models).length})`;
   };
   $('#bkPick').onclick = () => $('#bkFile').click();
   $('#bkFile').addEventListener('change', () => {
@@ -279288,11 +279288,11 @@ function fitFixed(points) {
     rd.onload = () => {
       let d;
       try { d = JSON.parse(String(rd.result)); } catch (e) { d = null; }
-      if (!d || typeof d !== 'object' || !('cards' in d || 'mods' in d)) { alert('백업 파일 형식이 올바르지 않아요.'); $('#bkFile').value = ''; return; }
+      if (!d || typeof d !== 'object' || !('cards' in d || 'mods' in d)) { alert('备份文件格式不正确。'); $('#bkFile').value = ''; return; }
       const nc = Array.isArray(d.cards) ? d.cards.length : 0, nm = Array.isArray(d.mods) ? d.mods.length : 0;
-      if (!confirm(`"${f.name}"을(를) 불러올까요?\n지금 기록(타워 ${cards.length} · 파츠 ${mods.length})이 파일 내용(타워 ${nc} · 파츠 ${nm})으로 바뀌어요.`)) { $('#bkFile').value = ''; return; }
+      if (!confirm(`"是否加载 "${f.name}"？\n当前记录(塔 ${cards.length} · 部件 ${mods.length})将被替换为文件内容(塔 ${nc} · 部件 ${nm})。`)) { $('#bkFile').value = ''; return; }
       $('#cdBox').value = String(rd.result);
-      if (loadBackup()) $('#bkMsg').textContent = `${f.name} 에서 불러왔어요. (타워 ${cards.length} · 파츠 ${mods.length} · 추정식 ${Object.keys(st.models).length})${migText() ? ' · ' + migText() : ''}`;
+      if (loadBackup()) $('#bkMsg').textContent = `已从 ${f.name} 加载。(塔 ${cards.length} · 部件 ${mods.length} · 推定式 ${Object.keys(st.models).length})${migText() ? ' · ' + migText() : ''}`;
       $('#bkFile').value = '';
     };
     rd.readAsText(f);
@@ -279303,7 +279303,7 @@ function fitFixed(points) {
   renderBlack(); renderCodex(); renderMods(); renderFit(); renderShares(); renderConv(); renderObs(); renderClassBox(); renderArmor(); renderChips(); updateCounts();
   updateUInfo();
   loadUnits().then(onUnitsReady);
-  $('#dictInfo').textContent = `내장 사전 ${dict.n.toLocaleString('ko-KR')}단어`;
+  $('#dictInfo').textContent = `内置词典 ${dict.n.toLocaleString('zh-CN')} 个单词`;
   if (legacy) {
     persistAll();
     const msg = migText();
