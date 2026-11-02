@@ -2,7 +2,9 @@
 
 用手上的字母块能拼出的单词中，按游戏实际数值找出最强的塔和部件的工具。
 
-- 直接使用：https://sidequest.hcmll0120.workers.dev/apps/towers-of-babble/
+- 直接使用
+  - 原版：https://sidequest.hcmll0120.workers.dev/apps/towers-of-babble/
+  - 翻译版：https://somall-dumpling.github.io/towers-of-babble-solver-zh_CN/
 - 制作过程：https://sidequest.hcmll0120.workers.dev/tools/towers-of-babble/
 
 ## 运行
