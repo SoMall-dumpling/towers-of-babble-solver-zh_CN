@@ -100,8 +100,8 @@ textarea{width:100%;min-height:60px;font:12px/1.4 ui-monospace,Consolas,monospac
     <div class="filters">
       <label>排序标准<select id="metric" class="setctl"></select></label>
       <label>筛选
-        <select id="mode" class="setctl"><option value="all">无限制</option><option value="noun">防御塔，采集塔</option><option value="mod">模组</option><option value="tower">防御塔 (按数值表)</option><option value="harv">采集塔 (按数值表)</option><option value="part">模组 (按数值表)</option></select></label>
-      <label>单词等级上限 (字母权重和 + 1.5倍长度, 留空则无限制)<input id="maxV" type="number" min="0" step="0.5" placeholder="25.5" class="setctl"></label>
+        <select id="mode" class="setctl"><option value="all">无限制</option><option value="noun">名词(塔)</option><option value="mod">动词、形容词、副词(模组)</option><option value="tower">防御塔</option><option value="harv">采集塔</option><option value="part">模组</option></select></label>
+      <label>单词等级上限 (字母和 + 1.5倍长度, 留空则无限制)<input id="maxV" type="number" min="0" step="0.5" placeholder="25.5" class="setctl"></label>
       <label class="chk"><input id="tableOnly" type="checkbox" class="setctl"> 排除不在游戏中的单词</label>
       <label>最短单词长度<input id="minLen" type="number" min="1" max="15" class="setctl"></label>
       <label>拆分使用的最大单词数
@@ -120,7 +120,7 @@ textarea{width:100%;min-height:60px;font:12px/1.4 ui-monospace,Consolas,monospac
     <div id="wordTable" class="scroll"></div>
 
     <h3>按开头字母查找</h3>
-    <p class="note">显示可构造的、以指定字母开头(或结尾、包含)的单词。默认显示各首字母的最佳单词。筛选与排序标准仍然生效。</p>
+    <p class="note">显示可构造的、以指定字母开头(或结尾、包含)的单词。留空则显示各首字母的最佳单词。筛选与排序标准仍然生效。</p>
     <div class="filters">
       <label>开头字母<input id="pfStart" type="text" placeholder="例如: st" autocomplete="off" spellcheck="false"></label>
       <label>结尾字母<input id="pfEnd" type="text" placeholder="例如: er" autocomplete="off" spellcheck="false"></label>
@@ -153,7 +153,7 @@ textarea{width:100%;min-height:60px;font:12px/1.4 ui-monospace,Consolas,monospac
 <div class="panel" id="panel-find" hidden>
   <section>
     <h2>单词搜索 — 在条件下寻找最强的单词</h2>
-    <p class="note">在整个游戏数值表中搜索。以下条件需同时满足(AND)。设置单词等级(字母权重和 + 1.5倍长度)上限后，只剩下可用作初始防御塔的单词(演示版 25.5 以下为 Hard)。排序按"分数标准"进行。</p>
+    <p class="note">在整个游戏数值表中搜索。以下条件需同时满足(AND)。设置单词等级(字母和 + 1.5倍长度)上限后，只剩下可用作初始防御塔的单词(演示版 25.5 以下为 Hard)。排序按"分数标准"进行。</p>
     <div class="row" id="fdPresets"></div>
     <div class="filters">
       <label>类型<select id="fdKind"><option value="T">防御塔</option><option value="H">采集塔</option><option value="P">模组</option></select></label>
@@ -169,7 +169,7 @@ textarea{width:100%;min-height:60px;font:12px/1.4 ui-monospace,Consolas,monospac
       <label>特殊能力数量至少为<input id="fdNsp" type="number" min="0" max="10" placeholder="例如: 2"></label>
       <label>显示数量<select id="fdLimit"><option value="40">40</option><option value="100">100</option><option value="300">300</option></select></label>
       <label>对比单词(当前使用的)<input id="fdCmp" type="text" placeholder="例如: defender" autocomplete="off" spellcheck="false"></label>
-      <label class="chk"><input id="fdRack" type="checkbox"> 仅显示可用计算器中输入的字母拼出的单词</label>
+      <label class="chk"><input id="fdRack" type="checkbox"> 仅显示求解器中输入的字母可构造的单词</label>
     </div>
     <h3>必须具备的特殊能力 (仅显示全部拥有的单词)</h3>
     <div class="chips" id="fdHas"></div>
@@ -183,13 +183,13 @@ textarea{width:100%;min-height:60px;font:12px/1.4 ui-monospace,Consolas,monospac
   </section>
 </div>
 
-<!-- ============ 防御塔图鉴 ============ -->
+<!-- ============ 塔图鉴 ============ -->
 <div class="panel" id="panel-towers" hidden>
   <section>
     <h2>防御塔 · 采集塔建筑记录</h2>
     <p class="note">请记录游戏中建造的建筑数值。只记录<b>单词本体数值</b>最准确。请在详情界面排除以下内容后记录。</p>
     <ul class="note" style="margin:4px 0 8px;padding-left:20px">
-      <li><b>MODS 行</b>中显示的部件值 — SPECIAL 行的数值已包含部件值。请记录减去部件值后的本体数值，部件单独记录到部件图鉴中。</li>
+      <li><b>MODS 行</b>中显示的模组值 — SPECIAL 行的数值已包含模组值。请记录减去模组值后的本体数值，模组单独记录到模组图鉴中。</li>
       <li><b>AURAS</b>·<b>SEMANTIC</b>·<b>META-WORDS</b> 加成 — 即括号内的 % 或 (+79.5) 之类的值。已经包含这些值的橙色·紫色数值请记录剔除后的基础值，加成本身记录到"公式推定"标签页的观测记录中。</li>
     </ul>
     <div class="row">
@@ -201,7 +201,7 @@ textarea{width:100%;min-height:60px;font:12px/1.4 ui-monospace,Consolas,monospac
       <div class="grid">
         <label>生命值<input id="cd_t_hp" type="number" min="0" step="any"></label>
         <label>攻击力<input id="cd_t_atk" type="number" min="0" step="any"></label>
-        <label>攻击速度<input id="cd_t_aspd" type="number" min="0" step="any"></label>
+        <label>攻速<input id="cd_t_aspd" type="number" min="0" step="any"></label>
         <label>防御力<input id="cd_t_armor" type="number" min="0" step="any"></label>
         <label>范围<input id="cd_t_range" type="number" min="0" step="any"></label>
       </div>
@@ -232,19 +232,19 @@ textarea{width:100%;min-height:60px;font:12px/1.4 ui-monospace,Consolas,monospac
   </section>
   <details>
     <summary>特殊能力列表管理 (手动添加缺失的功能)</summary>
-    <p class="note">出现列表中没有的功能时，请输入名称添加。防御塔·采集塔·部件输入界面都会显示。</p>
+    <p class="note">出现列表中没有的功能时，请输入名称添加。防御塔·采集塔·模组输入界面都会显示。</p>
     <div class="row"><input id="spNew" type="text" maxlength="12" placeholder="功能名称 (例如: 连锁爆炸)" style="width:220px"><button id="spAdd">添加</button></div>
     <div id="spList"></div>
   </details>
 </div>
 
-<!-- ============ 部件图鉴 ============ -->
+<!-- ============ 模组图鉴 ============ -->
 <div class="panel" id="panel-mods" hidden>
   <section>
-    <h2>部件(模组)记录</h2>
-    <p class="note">请记录将形容词·动词·副词部件附加到建筑上时的效果。一个部件可能提升多项属性或赋予新功能。"% 增加"是相对原数值的增幅，"+固定"是相加的值。</p>
+    <h2>模组记录</h2>
+    <p class="note">请记录将形容词·动词·副词模组附加到建筑上时的效果。一个模组可能提升多项属性或赋予新功能。"% 增加"是相对原数值的增幅，"+固定"是相加的值。</p>
     <div class="row">
-      <input id="mdWord" type="text" placeholder="部件单词" style="width:170px" autocomplete="off" spellcheck="false">
+      <input id="mdWord" type="text" placeholder="模组单词" style="width:170px" autocomplete="off" spellcheck="false">
       <input id="mdNote" type="text" placeholder="备注 (可选)" style="flex:1;min-width:160px">
     </div>
     <h3>属性效果</h3>
@@ -252,10 +252,10 @@ textarea{width:100%;min-height:60px;font:12px/1.4 ui-monospace,Consolas,monospac
     <p><button id="mdAddEff" class="x">+ 添加效果行</button></p>
     <h3>赋予的特殊能力 <span class="hint">勾选并记录数值和详细文字</span></h3>
     <div id="mdSp" class="sprows"></div>
-    <p class="row"><button id="mdSave" class="primary">保存到部件图鉴</button><button id="mdClear">清空输入</button></p>
+    <p class="row"><button id="mdSave" class="primary">保存到模组图鉴</button><button id="mdClear">清空输入</button></p>
   </section>
   <section>
-    <h2>部件图鉴</h2>
+    <h2>模组图鉴</h2>
     <div id="mdTable" class="scroll"></div>
   </section>
 </div>
@@ -266,12 +266,12 @@ textarea{width:100%;min-height:60px;font:12px/1.4 ui-monospace,Consolas,monospac
     <h2>目前已发现的规则</h2>
     <p class="note">这些是从我的记录数据中确认的内容。已确定的与推测的内容分开记录。</p>
     <ol class="rules">
-      <li><b>基本单位</b> B = 字母数 × 字母权重和。所有能力数值与 B 成正比。</li>
-      <li><b>占比模型</b> 能力数值 = 基准系数 × B × 占比。<b>一个单词的各占比合计为 1.0</b>。只有一种能力时占用全部 1.0(例如: FANJET 防御力 1.0)，有多种能力时按比例分摊(例如: MEZUZAHS 防御力 0.4 + 治疗光环 0.6)。可在下方表格中按单词查看。只考虑系数确切已知的能力，我的记录中 27 个防御塔、23 个部件全部合计 1.0(修正输入错误后；按推定系数凑齐的部分标为 OK*)。<span class="muted">(确定)</span></li>
-      <li><b>部件</b>大多由一种效果占满 1.0 占比，因此"基准系数 × B"精确成立。也有分摊的部件(ALTERCATING: 减速 0.6 + 击退 0.4)。<span class="muted">(确定)</span></li>
-      <li><b>惩罚</b> 当一种能力的占比略超过 1 时，其他属性会被削减固定数值。攻击力 −2.2(已确认 3 次)、攻击速度 −0.37、生命值 −40。具体规则尚不清楚。<span class="muted">(推定)</span></li>
+      <li><b>基本单位</b> B = 字母数 × 字母和。所有能力数值与 B 成正比。</li>
+      <li><b>占比模型</b> 能力数值 = 基准系数 × B × 占比。<b>一个单词的各占比合计为 1.0</b>。只有一种能力时占用全部 1.0(例如: FANJET 防御力 1.0)，有多种能力时按比例分摊(例如: MEZUZAHS 防御力 0.4 + 治疗光环 0.6)。可在下方表格中按单词查看。只考虑系数确切已知的能力，我的记录中 27 个防御塔、23 个模组全部合计 1.0(修正输入错误后；按推定系数凑齐的部分标为 OK*)。<span class="muted">(确定)</span></li>
+      <li><b>模组</b>大多由一种效果占满 1.0 占比，因此"基准系数 × B"精确成立。也有分摊的模组(ALTERCATING: 减速 0.6 + 击退 0.4)。<span class="muted">(确定)</span></li>
+      <li><b>惩罚</b> 当一种能力的占比略超过 1 时，其他属性会被削减固定数值。攻击力 −2.2(已确认 3 次)、攻速 −0.37、生命值 −40。具体规则尚不清楚。<span class="muted">(推定)</span></li>
       <li><b>防御力</b> 伤害减免 = A ÷ (A + K), K ≈ 6.7。同时满足 4 条记录的范围是 6.62~6.74。</li>
-      <li><b>攻击速度</b> 部件的 "×1.29" 之类倍率是乘法，且与光环相乘(FAIN: 1 + 0.0105×B)。界面攻速为 1 + 1/攻击间隔，因此基础每秒攻击 = 攻速 − 1(DIGITIZER 8.46 → 7.46/s, FOOTWORK 8.87 → 7.87/s)。附带光环时，效果按 (1+光环)<sup>0.78</sup> 倍衰减(48% → 约 1.36 倍)。<span class="muted">(已由数值表确认)</span></li>
+      <li><b>攻速</b> 模组的 "×1.29" 之类倍率是乘法，且与光环相乘(FAIN: 1 + 0.0105×B)。界面攻速为 1 + 1/攻击间隔，因此基础每秒攻击次数 = 攻速 − 1(DIGITIZER 8.46 → 7.46/s, FOOTWORK 8.87 → 7.87/s)。附带光环时，效果按 (1+光环)<sup>0.78</sup> 倍衰减(48% → 约 1.36 倍)。<span class="muted">(已由数值表确认)</span></li>
       <li><b>遗物</b> 界面攻击力 = 1.1 × (游戏数值表攻击力 + 10 + 遗物)。因此 SHARPENED +20 显示为 +22。计算顺序为 (本体 + 遗物) × 光环。<span class="muted">(已确认)</span></li>
       <li><b>减速光环</b> 光环系数与其他光环相同，为 0.21(UNACCUSTOMEDLY 70.56 = 0.21 × 336)。减速百分比与普通减速公式不同(70.56 → 66%)。</li>
       <li><b>元单词</b> 相邻防御塔的首字母横向/纵向组成 3 个字母以上的单词且布局正确时获得加成(2 个字母不行，游戏会提示)。目前观察到的 3 例与 B 成正比，生命值型约为系数的 0.4，光环型约为 0.5。哪些单词产生什么效果尚不清楚。<span class="muted">(观测)</span></li>
@@ -283,14 +283,14 @@ textarea{width:100%;min-height:60px;font:12px/1.4 ui-monospace,Consolas,monospac
   </section>
   <section>
     <h2>各单词占比检查</h2>
-    <p class="note">将图鉴中记录的数值除以基准系数，计算各能力占单词的百分之几。合计偏离 1.0 时以 ⚠ 标记。常见原因是 ① 输入错误、② 未记录的能力(数值提升但未记录)、③ 混入部件值的数值。红色项目是被惩罚削减的值。</p>
+    <p class="note">将图鉴中记录的数值除以基准系数，计算各能力占单词的百分之几。合计偏离 1.0 时以 ⚠ 标记。常见原因是 ① 输入错误、② 未记录的能力(数值提升但未记录)、③ 混入模组值的数值。红色项目是被惩罚削减的值。</p>
     <p id="shareSummary"></p>
     <label class="note"><input type="checkbox" id="shareOnly"> 仅查看有 ⚠ 的</label>
     <div id="shareTable" class="scroll"></div>
   </section>
   <section>
     <h2>各项目的公式推定</h2>
-    <p class="note">基准系数已知的项目(大部分)由上方占比模型计算，无需另行推定。下方是系数未知的项目(采集塔属性等)和各项目的平均占比。基准系数未知的项目用记录到的数值拟合"倍率 × 长度 × 字母和"公式。先将长度·字母和指数固定为 1(部件效果大多能这样精确匹配)，不匹配时再连指数一起推定(需要 2 个以上不同长度，字母和则需要 4 个以上)。生命值·攻击力等有基础值的项目，只将<b>超出基础值的部分</b>按单词效果计算(基础值在 设置 · 备份 标签页)。推定的公式用于计算器的"排序标准"。</p>
+    <p class="note">基准系数已知的项目(大部分)由上方占比模型计算，无需另行推定。下方是系数未知的项目(采集塔属性等)和各项目的平均占比。基准系数未知的项目用记录到的数值拟合"倍率 × 长度 × 字母和"公式。先将长度 × 字母和指数固定为 1(模组效果大多能这样精确匹配)，不匹配时再连指数一起推定(需要 2 个以上不同长度，字母和则需要 4 个以上)。生命值·攻击力等有基础值的项目，只将<b>超出基础值的部分</b>按单词效果计算(基础值在 设置 · 备份 标签页)。推定的公式用于计算器的"排序标准"。</p>
     <div id="fitTable" class="scroll"></div>
     <p class="row"><button id="fitAll" class="primary">推定所有有记录的项目</button></p>
   </section>
@@ -308,7 +308,7 @@ textarea{width:100%;min-height:60px;font:12px/1.4 ui-monospace,Consolas,monospac
   </section>
   <section>
     <h2>职业确认器</h2>
-    <p class="note">输入防御塔详情界面 SPECIAL 行的<b>合计</b>(含部件)数值，即可查看会获得什么职业、还差多少。图鉴中的职业徽章仅以单词本体数值为基准，附加部件后可能更高。</p>
+    <p class="note">输入防御塔详情界面 SPECIAL 行的<b>合计</b>(含模组)数值，即可查看会获得什么职业、还差多少。图鉴中的职业徽章仅以单词本体数值为基准，附加模组后可能更高。</p>
     <div class="grid">
       <label>Range<input id="clRange" type="number" min="0" step="any"></label>
       <label>Splash<input id="clSplash" type="number" min="0" step="any"></label>
@@ -325,7 +325,7 @@ textarea{width:100%;min-height:60px;font:12px/1.4 ui-monospace,Consolas,monospac
     <div class="row">
       <input id="mtWord" type="text" maxlength="12" placeholder="单词 (例如: herd)" style="width:120px">
       <select id="mtDir"><option value="across">横向</option><option value="down">纵向</option></select>
-      <select id="mtEff"><option value="t_hp">生命值</option><option value="t_atk">攻击力</option><option value="t_aspd">攻击速度</option><option value="t_armor">防御力</option><option value="t_range">射程</option><option value="sp:aura_atk">攻击力光环</option><option value="sp:aura_aspd">攻速光环</option><option value="sp:aura_heal">治疗光环</option><option value="other">其他</option></select>
+      <select id="mtEff"><option value="t_hp">生命值</option><option value="t_atk">攻击力</option><option value="t_aspd">攻速</option><option value="t_armor">防御力</option><option value="t_range">射程</option><option value="sp:aura_atk">攻击力光环</option><option value="sp:aura_aspd">攻速光环</option><option value="sp:aura_heal">治疗光环</option><option value="other">其他</option></select>
       <input id="mtVal" type="number" min="0" step="any" placeholder="数值" style="width:90px">
       <input id="mtTw" type="text" maxlength="120" placeholder="参与防御塔 (可选)" style="flex:1;min-width:160px">
       <button id="mtAdd" class="primary">添加</button>
@@ -335,7 +335,7 @@ textarea{width:100%;min-height:60px;font:12px/1.4 ui-monospace,Consolas,monospac
     <div class="row">
       <input id="bdPat" type="text" maxlength="12" placeholder="例如: re_d" style="width:140px">
       <button id="bdGo" class="primary">查找候选</button>
-      <label class="note"><input type="checkbox" id="bdOwn" checked> 仅限我图鉴中防御塔的首字母</label>
+      <label class="note"><input type="checkbox" id="bdOwn" checked> 仅限我图鉴中塔的首字母</label>
     </div>
     <div id="bdOut" class="scroll"></div>
     <h3>攻速 → 每秒攻击次数 <span class="hint">比较两个候选公式</span></h3>
@@ -343,10 +343,10 @@ textarea{width:100%;min-height:60px;font:12px/1.4 ui-monospace,Consolas,monospac
   </section>
   <section>
     <h2>观测记录 (语义加成 · 元单词 · 攻速换算等)</h2>
-    <p class="note">用于收集尚不知道公式的现象。例如: SEMANTIC QUERY +50% damage, META-WORDS HERD(across) +79.5 生命值, 攻击速度 2.79 → 每秒 1.3 次。积累后就能找到规律。</p>
+    <p class="note">用于收集尚不知道公式的现象。例如: SEMANTIC QUERY +50% 攻击力, META-WORDS HERD(across) +79.5 生命值, 攻速 2.79 → 每秒 1.3 次。积累后就能找到规律。</p>
     <div class="row">
       <select id="obsKind"><option value="semantic">语义加成</option><option value="meta">元单词</option><option value="aspd">攻速→每秒</option><option value="aura">光环</option><option value="relic">遗物</option><option value="etc">其他</option></select>
-      <input id="obsA" type="text" maxlength="40" placeholder="A (例如: 部件单词)" style="width:150px">
+      <input id="obsA" type="text" maxlength="40" placeholder="A (例如: 模组单词)" style="width:150px">
       <input id="obsB" type="text" maxlength="40" placeholder="B (例如: 防御塔单词)" style="width:150px">
       <input id="obsT" type="text" maxlength="160" placeholder="内容 (例如: 攻击力 +50%)" style="flex:1;min-width:180px">
       <button id="obsAdd" class="primary">添加</button>
@@ -366,7 +366,7 @@ textarea{width:100%;min-height:60px;font:12px/1.4 ui-monospace,Consolas,monospac
 <div class="panel" id="panel-set" hidden>
   <section id="settings">
     <h2>分数公式 (默认)</h2>
-    <p class="note">分数 = 倍率 × 长度<sup>长度指数</sup> × 字母和<sup>字母和指数</sup>。记录到的部件效果几乎恰好是"常数 × 长度 × 字母和"，因此默认指数设为 1·1。在公式推定标签页按项目调整后，将取代此默认值。</p>
+    <p class="note">分数 = 倍率 × 长度<sup>长度指数</sup> × 字母和<sup>字母和指数</sup>。记录到的模组效果几乎恰好是"常数 × 长度 × 字母和"，因此默认指数设为 1·1。在公式推定标签页按项目调整后，将取代此默认值。</p>
     <div class="grid">
       <label>长度指数<input id="pa" type="number" step="0.05" class="setctl"></label>
       <label>字母和指数<input id="pb" type="number" step="0.05" class="setctl"></label>
@@ -395,14 +395,14 @@ textarea{width:100%;min-height:60px;font:12px/1.4 ui-monospace,Consolas,monospac
   </section>
     <section>
     <h2>整理数值表中没有的单词</h2>
-    <p class="note">游戏数值表中没有的单词无法在游戏中使用(诅咒单词视为数值表单词)。可查找并删除我的记录(防御塔图鉴·部件图鉴·排除单词)中数值表里没有的项目。请先确认列表再点击删除。计算器在设置的"排除数值表中没有的单词"开启时会从结果中剔除这些单词。</p>
+    <p class="note">游戏数值表中没有的单词无法在游戏中使用(诅咒单词视为数值表单词)。可查找并删除我的记录(塔图鉴·模组图鉴·排除单词)中数值表里没有的项目。请先确认列表再点击删除。计算器在设置的"排除数值表中没有的单词"开启时会从结果中剔除这些单词。</p>
     <p class="row"><button id="purgeScan" class="primary">查找数值表中没有的记录</button><button data-purgeundo="1">撤销上次删除</button></p>
     <div id="purgeOut"></div>
   </section>
 
   <section>
     <h2>完整备份 / 恢复</h2>
-    <p class="note">防御塔图鉴·部件图鉴·推定式·换算记录·防御记录·排除单词打包在一起。保存为文件后，更换浏览器或转移到其他电脑也能恢复。加载后当前记录会被文件内容替换。加载旧版本备份也会自动转换为新格式。</p>
+    <p class="note">防御塔图鉴·模组图鉴·推定式·换算记录·防御记录·排除单词打包在一起。保存为文件后，更换浏览器或转移到其他电脑也能恢复。加载后当前记录会被文件内容替换。加载旧版本备份也会自动转换为新格式。</p>
     <p class="row"><button id="bkDownload" class="primary">下载备份文件</button><button id="bkPick">加载备份文件</button><input id="bkFile" type="file" accept=".json,application/json,text/plain" hidden></p>
     <p id="bkMsg" class="note"></p>
     <details><summary>文本复制 · 粘贴</summary>
@@ -277640,7 +277640,7 @@ function fitFixed(points) {
   const STATS = [
     { key: 't_hp', label: '防御塔生命值', short: '生命值', role: 'tower' },
     { key: 't_atk', label: '防御塔攻击力', short: '攻击力', role: 'tower' },
-    { key: 't_aspd', label: '防御塔攻击速度', short: '攻速', role: 'tower' },
+    { key: 't_aspd', label: '防御塔攻速', short: '攻速', role: 'tower' },
     { key: 't_armor', label: '防御塔防御力', short: '防御', role: 'tower' },
     { key: 't_range', label: '防御塔攻击范围', short: '范围', role: 'tower' },
     { key: 'h_hp', label: '采集塔生命值', short: '生命值', role: 'harvester' },
@@ -277655,9 +277655,9 @@ function fitFixed(points) {
   const SP_BASE = {
     stun: '眩晕', chain: '连锁', splash: '溅射', slow: '减速', pierce: '穿透', poison: '毒', knockback: '击退', crit: '暴击',
     shred: '破甲', multishot: '多重射击',
-    aura_burn: '光环: 灼烧', aura_heal: '光环: 生命值回复', aura_armor: '光环: 防御加成',
-    aura_slow: '光环: 减速', aura_aspd: '光环: 攻击速度加成', aura_atk: '光环: 攻击力加成', aura_range: '光环: 范围加成',
-    multi: '多重采集', area: '范围采集', harvest_aura: '光环: 采集加成', curse: '诅咒'
+    aura_burn: '灼烧光环', aura_heal: '生命值回复光环', aura_armor: '防御光环',
+    aura_slow: '减速光环', aura_aspd: '攻速光环', aura_atk: '攻击力光环', aura_range: '范围光环',
+    multi: '多重采集', area: '范围采集', harvest_aura: '采集光环', curse: '诅咒'
   };
   const T_SP = ['stun', 'chain', 'splash', 'slow', 'pierce', 'shred', 'multishot', 'poison', 'knockback', 'crit', 'aura_burn', 'aura_slow', 'aura_heal', 'aura_armor', 'aura_aspd', 'aura_atk', 'aura_range'];
   // custom specials the user added earlier that are now built in (label -> built-in key)
@@ -277685,19 +277685,19 @@ function fitFixed(points) {
   const slowEff = x => Math.min(SLOW.cap, 100 * (1 - Math.pow(1 + x / SLOW.K, -SLOW.n)));
   const SEED_OBS = [
     { kind: 'semantic', a: 'query', b: 'heptahedron', text: '攻击力 +50% (乘法: 16.5 × 1.398(光环) × 1.5 = 34.6)' },
-    { kind: 'aspd', a: '2', b: '1.0/sec', text: '攻击速度 2 → 每秒 1.0 次' },
-    { kind: 'aspd', a: '2.79', b: '1.3/sec', text: '攻击速度 2.79(已包含光环 +39.32%) → 每秒 1.3 次。不是简单比例(1.4)' },
-    { kind: 'aura', a: 'captain + witty', b: '周围防御塔', text: '攻速光环 13.48 + 攻击光环 9.63 → 受影响防御塔 +39.32% Atk Spd, +39.8% Dmg (可能混有其他来源)' }
+    { kind: 'aspd', a: '2', b: '1.0/sec', text: '攻速 2 → 每秒 1.0 次' },
+    { kind: 'aspd', a: '2.79', b: '1.3/sec', text: '攻速 2.79(已包含光环 +39.32%) → 每秒 1.3 次。不是简单比例(1.4)' },
+    { kind: 'aura', a: 'captain + witty', b: '周围防御塔', text: '攻速光环 13.48 + 攻击力光环 9.63 → 受影响防御塔 +39.32% Atk Spd, +39.8% Dmg (可能混有其他来源)' }
   ];
   const SEED_OBS2 = [
     { kind: 'relic', a: 'sharpened', b: 'unaccustomedly', text: '遗物 +20 攻击力 → 实际 +22 (16.5→38.5)。已由游戏数值表确认: 界面攻击力 = 1.1 × (基础 5 + 加成 + 10)，因此 +20 变 +22' },
     { kind: 'relic', a: '计算顺序', b: '', text: '(本体 + 遗物) × 光环 × 语义加成' },
-    { kind: 'aspd', a: 'fain ×1.29', b: 'B=28', text: '攻速乘法部件: 1 + 0.0105 × B (实际 ≈1.294)。与光环为乘法' },
+    { kind: 'aspd', a: 'fain ×1.29', b: 'B=28', text: '攻速乘法模组: 1 + 0.0105 × B (实际 ≈1.294)。与光环为乘法' },
     { kind: 'aura', a: 'unaccustomedly 减速光环', b: '70.56', text: '减速光环系数 0.21 × 336。70.56 → 减速 66%(普通减速公式为 47%，需单独换算)' },
     { kind: 'etc', a: '元单词规则', b: '', text: '格子可自由放置(有障碍物)。仅 3 个字母以上生效，2 个字母不行。组成单词时游戏会提示，且布局正确才生效' }
   ];
   const SEED_OBS3 = [
-    { kind: 'aspd', a: '界面 ATK SPD', b: '1 + 1/间隔', text: '游戏数值表: 界面攻速 = 1 + 1/攻击间隔，即基础每秒攻击 = 攻速 − 1。DIGITIZER 8.46 → 7.46/s, FOOTWORK 8.87 → 7.87/s。光环另行相乘(48% → 每秒 1.36 倍, (1+光环)^0.78)' },
+    { kind: 'aspd', a: '界面 ATK SPD', b: '1 + 1/间隔', text: '游戏数值表: 界面攻速 = 1 + 1/攻击间隔，即基础每秒攻击次数 = 攻速 − 1。DIGITIZER 8.46 → 7.46/s, FOOTWORK 8.87 → 7.87/s。光环另行相乘(48% → 每秒 1.36 倍, (1+光环)^0.78)' },
     { kind: 'etc', a: 'Word Value', b: '和 + 1.5×长度', text: '等级难度值。25.5 以下为 Hard，26 起为 Very Hard(演示版到 Hard)。等级名称单词只能是防御塔/采集塔类型' },
     { kind: 'etc', a: 'incubating', b: '采集速度 +3.15', text: '游戏数值表: INCUBATING 采集速度 +3.15(系数 0.021×B)。采集量为 harvest_amount(CIVILIZE +8.2 = 0.0466×B)' }
   ];
@@ -277706,7 +277706,7 @@ function fitFixed(points) {
     { word: 'ecu', dir: 'down', eff: 't_hp', val: 38.5, towers: 'ECHOER, CAPTAIN, UNACCUSTOMEDLY', note: '' },
     { word: 'mux', dir: 'across', eff: 'sp:aura_atk', val: 3.15, towers: 'MEGADEATH, UNACCUSTOMEDLY, XENOGRAFT', note: '' }
   ];
-  const META_EFF = { t_hp: '生命值', t_atk: '攻击力', t_aspd: '攻击速度', t_armor: '防御力', t_range: '射程', 'sp:aura_atk': '攻击力光环', 'sp:aura_aspd': '攻速光环', 'sp:aura_heal': '治疗光环', other: '其他' };
+  const META_EFF = { t_hp: '生命值', t_atk: '攻击力', t_aspd: '攻速', t_armor: '防御力', t_range: '射程', 'sp:aura_atk': '攻击力光环', 'sp:aura_aspd': '攻速光环', 'sp:aura_heal': '治疗光环', other: '其他' };
   const OBS_KINDS = { semantic: '语义加成', meta: '元单词', aspd: '攻速→每秒', aura: '光环', relic: '遗物', etc: '其他' };
   const H_SP = ['multi', 'area', 'harvest_aura'];
   const RES = [['crystal', '水晶'], ['wood', '木头'], ['ore', '矿石']];
@@ -277732,13 +277732,13 @@ function fitFixed(points) {
   const resName = k => (RES.find(r => r[0] === k) || [])[1] || k;
 
   const METRICS = [
-    ['base', '基础公式 (长度·字母权重和)', []],
-    ['t_atk', '防御塔攻击力', ['t_atk']], ['t_aspd', '防御塔攻击速度', ['t_aspd']],
-    ['dps', '防御塔 DPS (攻击力×攻击速度)', ['t_atk', 't_aspd']],
+    ['base', '基础公式 (长度 × 字母和)', []],
+    ['t_atk', '防御塔攻击力', ['t_atk']], ['t_aspd', '防御塔攻速', ['t_aspd']],
+    ['dps', '防御塔 DPS (攻击力×攻速)', ['t_atk', 't_aspd']],
     ['t_hp', '防御塔生命值', ['t_hp']], ['t_armor', '防御塔防御力', ['t_armor']],
-    ['ehp', '防御塔有效生命值 (生命值×(1+A/K))', ['t_hp', 't_armor']],
+    ['ehp', '防御塔等效生命值 (生命值×(1+A/K))', ['t_hp', 't_armor']],
     ['t_range', '防御塔攻击范围', ['t_range']],
-    ['power', '防御塔综合 (DPS×有效生命值)', ['t_atk', 't_aspd', 't_hp', 't_armor']],
+    ['power', '防御塔综合 (DPS×等效生命值)', ['t_atk', 't_aspd', 't_hp', 't_armor']],
     ['yield', '采集效率 (HARVEST÷INTERVAL)', ['h_harvest', 'h_interval']],
     ['h_harvest', '采集量', ['h_harvest']],
     ['h_interval', '采集速度 (1÷INTERVAL, 越大越快)', ['h_interval']],
@@ -277748,12 +277748,12 @@ function fitFixed(points) {
   // official examples (developer posts / store page); no numbers are known
   const SEEDS = [
     { word: 'axe', role: 'harvester', res: ['wood'], sp: [], stats: {}, note: '官方介绍: 采集木头', src: 'official' },
-    { word: 'fort', role: 'tower', res: [], sp: [], stats: {}, note: '官方介绍: 生命值·防御力高的防御塔', src: 'official' },
-    { word: 'doctor', role: 'tower', res: [], sp: [{ k: 'aura_heal' }], stats: {}, note: '官方介绍: 弱防御塔, 治疗周围建筑的光环', src: 'official' },
+    { word: 'fort', role: 'tower', res: [], sp: [], stats: {}, note: '官方介绍: 生命值、防御力高的防御塔', src: 'official' },
+    { word: 'doctor', role: 'tower', res: [], sp: [{ k: 'aura_heal' }], stats: {}, note: '官方介绍: 弱防御塔, 拥有能治疗周围建筑的光环', src: 'official' },
     { word: 'rain', role: 'tower', res: [], sp: [{ k: 'splash' }], stats: {}, note: '开发者文章: 溅射伤害', src: 'official' },
     { word: 'fire', role: 'tower', res: [], sp: [{ k: 'aura_burn' }], stats: {}, note: '开发者文章: 灼烧光环', src: 'official' },
     { word: 'snake', role: 'tower', res: [], sp: [{ k: 'poison' }], stats: {}, note: '开发者访谈: 用毒代替减速', src: 'official' },
-    { word: 'dodecahedron', role: 'tower', res: [], sp: [], stats: {}, note: '开发者文章: 生命值·防御力高的大型防御塔', src: 'official' }
+    { word: 'dodecahedron', role: 'tower', res: [], sp: [], stats: {}, note: '开发者文章: 生命值、防御力高的大型防御塔', src: 'official' }
   ];
 
   // ---------- migration / normalisers ----------
@@ -277930,7 +277930,7 @@ function fitFixed(points) {
   function migText() {
     const p = [];
     if (MIG.hs.length) p.push(`采集速度 ${MIG.hs.length} 条(${MIG.hs.map(up).join(', ')}) 已转移到 HARVEST`);
-    if (MIG.hsm.length) p.push(`部件 ${MIG.hsm.map(up).join(', ')} 的采集速度效果已转移到 HARVEST`);
+    if (MIG.hsm.length) p.push(`模组 ${MIG.hsm.map(up).join(', ')} 的采集速度效果已转移到 HARVEST`);
     if (MIG.sp) p.push(`特殊能力 ${MIG.sp} 条已合并为单一数值`);
     if (remapLog.length) p.push(`自建功能(${[...new Set(remapLog)].join(', ')})已合并为内置功能`);
     return p.join(' · ');
@@ -277949,8 +277949,8 @@ function fitFixed(points) {
     return s ? s.label : t;
   }
   function keyLabel(key) {
-    if (key.startsWith('mod:')) { const i = key.lastIndexOf(':'); return `部件 · ${targetLabel(key.slice(4, i))} ${key.slice(i + 1) === 'pct' ? '(% 增加)' : '(+固定)'}`; }
-    if (key.startsWith('msp:')) return '部件赋予 · ' + spLabel(key.slice(4)) + ' 数值';
+    if (key.startsWith('mod:')) { const i = key.lastIndexOf(':'); return `模组 · ${targetLabel(key.slice(4, i))} ${key.slice(i + 1) === 'pct' ? '(% 增加)' : '(+固定)'}`; }
+    if (key.startsWith('msp:')) return '模组赋予 · ' + spLabel(key.slice(4)) + ' 数值';
     if (key.startsWith('sp:')) return spLabel(key.slice(3)) + ' 数值';
     return targetLabel(key);
   }
@@ -278034,7 +278034,7 @@ function fitFixed(points) {
     const diff = Math.abs(1 - r.sum).toFixed(2);
     return r.status === 'low'
       ? `合计比 1 少 ${diff} → 可能有未记录的能力(占比 ${diff})或数值输入错误`
-      : `合计比 1 多 ${diff} → 可能混入了附加部件的数值或输入错误`;
+      : `合计比 1 多 ${diff} → 可能混入了附加模组的数值或输入错误`;
   }
   function classesFor(v) {
     return CLASSES.filter(c => Object.keys(c.need).every(k => (v[k] || 0) >= c.need[k]));
@@ -278068,7 +278068,7 @@ function fitFixed(points) {
     const sel = $('#metric');
     const list = metricList();
     if (!list.some(m => m[0] === st.metric)) st.metric = 'base';
-    sel.innerHTML = list.map((m, i) => (i === (U.ready ? 14 : METRICS.length) ? '<option disabled>── 特殊 · 部件效果 ──</option>' : '') + `<option value="${esc(m[0])}">${esc(m[1])}</option>`).join('');
+    sel.innerHTML = list.map((m, i) => (i === (U.ready ? 14 : METRICS.length) ? '<option disabled>── 特殊 · 模组效果 ──</option>' : '') + `<option value="${esc(m[0])}">${esc(m[1])}</option>`).join('');
     sel.value = st.metric;
   }
   function modelVal(key, l, s) {
@@ -278119,11 +278119,11 @@ function fitFixed(points) {
   // ---------- game table (units): real stats for every word ----------
   const U = { ready: false, err: '', map: new Map(), idx: null, n: 0 };
   const U_SP = { harvest_aura: 'harvest_aura', crit: 'crit', splash: 'splash', pierce: 'pierce', slow: 'slow', knockback: 'knockback', multi_harvest: 'multi', armor_buff_aura: 'aura_armor', burn_aura: 'aura_burn', multishot: 'multishot', slow_aura: 'aura_slow', stun: 'stun', dmg_buff_aura: 'aura_atk', heal_aura: 'aura_heal', armor_shred: 'shred', poison: 'poison', firerate_buff_aura: 'aura_aspd', chain: 'chain' };
-  const U_FX = { toughness: '生命值', armor: '防御力', damage: '攻击力', attack_speed: '攻击速度', range: '射程', harvest_speed: '采集速度', harvest_amount: '采集量' };
-  const U_KIND = { T: '防御塔', H: '采集塔', Q: '部件(品质)', A: '部件(动作)' };
+  const U_FX = { toughness: '生命值', armor: '防御力', damage: '攻击力', attack_speed: '攻速', range: '射程', harvest_speed: '采集速度', harvest_amount: '采集量' };
+  const U_KIND = { T: '防御塔', H: '采集塔', Q: '模组(品质)', A: '模组(动作)' };
   // cursed words: special level/tower words that ignore the units table (default stats + one Curse special)
   const CURSED = ('shit shitty bullshit bullshitter horseshit batshit shithead shitface shitbag shitshow fuck fucked fucking fucker fuckface fuckwit motherfucker motherfuckers motherfucking goddamn goddammit asshole assholes asshat asshats asswipe asswipes dumbass dumbasses jackass jackasses douchebag douchebags gigachad gigachads soyjak soyjaks wojak wojaks coomer coom cooms coomers goon goons gooner gooners gooning sus sussy bofa ligma sugma mald malding copium maxxing delulu rizzler rizzlord gyatt yeet yeets pog pogging poggers pogchamp pogchamps uwu cunt cunty unc bitch bitchy bitches brainrot bussin bussy chungus chud').split(' ');
-  const CURSE_NEG = ['基础射程 1', '基础生命值 1', '无法受到治疗', '仅 1 个部件槽', '无法安装在友方建筑射程内', '无法安装在资源节点射程内'];
+  const CURSE_NEG = ['基础射程 1', '基础生命值 1', '无法受到治疗', '仅 1 个模组槽', '无法安装在友方建筑射程内', '无法安装在资源节点射程内'];
   const curseOf = w => { const B = 1.05 * wordSum(w, SCRABBLE_ARR) * w.length; return Math.max(5, Math.round(35 * Math.pow(Math.max(0.01, B / 9.45), 0.66) / 5) * 5); };
   function addCursed(map) {
     CURSED.forEach(w => map.set(w, { k: 'T', cursed: true, atk: 16.5, range: 5.32, itv: 1, rate: 1, aspd: 2, hp: 100, ar: 1, sp: { curse: curseOf(w) } }));
@@ -278205,17 +278205,17 @@ function fitFixed(points) {
     return 0;
   }
   const U_METRICS = [
-    ['dps', '防御塔 DPS (攻击力 × 每秒攻击)'], ['ehp', '防御塔有效生命值 (生命值×(1+防御力/K))'], ['power', '防御塔综合 (DPS×有效生命值)'],
-    ['t_atk', '防御塔攻击力'], ['rate', '防御塔每秒攻击次数'], ['t_hp', '防御塔生命值'], ['t_armor', '防御塔防御力'], ['t_range', '防御塔射程'],
+    ['dps', '防御塔 DPS (攻击力 × 每秒攻击次数)'], ['ehp', '防御塔等效生命值 (生命值×(1+防御力/K))'], ['power', '防御塔综合 (DPS×等效生命值)'],
+    ['t_atk', '防御塔攻击力'], ['rate', '防御塔攻速'], ['t_hp', '防御塔生命值'], ['t_armor', '防御塔防御力'], ['t_range', '防御塔射程'],
     ['yield', '采集效率 (采集量÷间隔)'], ['h_harvest', '采集量'], ['h_interval', '采集速度 (1÷间隔)'], ['h_range', '采集范围'], ['h_hp', '采集塔生命值'], ['nsp', '特殊能力数量']
   ];
   function uMetricList() {
-    const list = [['base', '基础公式 (长度·字母和)']];
+    const list = [['base', '基础公式 (长度 × 字母和)']];
     U_METRICS.forEach(m => list.push([m[0], m[1] + ' · 实测']));
     Object.keys(SP_BASE).filter(k => k !== 'area').forEach(k => list.push(['sp:' + k, '特殊 · ' + SP_BASE[k] + ' · 实测']));
     const fxs = new Set();
     for (const r of U.map.values()) if (r.fx) for (const k in r.fx) fxs.add(k);
-    [...fxs].sort().forEach(k => { const [s, o] = k.split(':'); list.push(['fx:' + k, '部件 · ' + fxLabel(s, o) + ' · 实测']); });
+    [...fxs].sort().forEach(k => { const [s, o] = k.split(':'); list.push(['fx:' + k, '模组 · ' + fxLabel(s, o) + ' · 实测']); });
     return list;
   }
   function uText(r) {
@@ -278280,7 +278280,7 @@ function fitFixed(points) {
     const p = purgeLists();
     const tags = arr => arr.length ? arr.map(x => '<span class="tag">' + up(x) + '</span>').join('') : '<span class="muted">无</span>';
     const total = p.cards.length + p.mods.length + p.black.length;
-    out.innerHTML = '<p><b>防御塔图鉴</b> ' + p.cards.length + ' 个</p><div>' + tags(p.cards.map(c => c.word)) + '</div><p><b>部件图鉴</b> ' + p.mods.length + ' 个</p><div>' + tags(p.mods.map(m => m.word)) + '</div><p><b>排除单词(无效列表)</b> ' + p.black.length + ' 个</p><div>' + tags(p.black) + '</div>' +
+    out.innerHTML = '<p><b>塔图鉴</b> ' + p.cards.length + ' 个</p><div>' + tags(p.cards.map(c => c.word)) + '</div><p><b>模组图鉴</b> ' + p.mods.length + ' 个</p><div>' + tags(p.mods.map(m => m.word)) + '</div><p><b>排除单词(无效列表)</b> ' + p.black.length + ' 个</p><div>' + tags(p.black) + '</div>' +
       (total ? '<p class="row"><button class="primary" data-purgedo="1">删除上述 ' + total + ' 个</button></p><p class="note">删除后可用"撤销"恢复一次。</p>' : '<p class="muted">没有数值表中不存在的记录。</p>');
   }
   function purgeDo() {
@@ -278291,7 +278291,7 @@ function fitFixed(points) {
     black = new Set([...black].filter(w => !p.black.includes(w)));
     store.set('babble.black', [...black]);
     saveCards(); saveMods(); renderBlack(); refreshAll();
-    $('#purgeOut').innerHTML = '<p>已删除 (防御塔图鉴 ' + p.cards.length + ' · 部件图鉴 ' + p.mods.length + ' · 排除单词 ' + p.black.length + ' 个)。</p><p class="row"><button data-purgeundo="1">撤销</button></p>';
+    $('#purgeOut').innerHTML = '<p>已删除 (塔图鉴 ' + p.cards.length + ' · 模组图鉴 ' + p.mods.length + ' · 排除单词 ' + p.black.length + ' 个)。</p><p class="row"><button data-purgeundo="1">撤销</button></p>';
   }
   function purgeUndo() {
     const u = store.get('babble.purgeUndo', null);
@@ -278375,10 +278375,10 @@ function fitFixed(points) {
     const need = U.ready ? [] : metricInfo()[2];
     const missing = need.filter(k => !st.models[k] && !c0For(k));
     const isMod = st.metric.startsWith('mod:') || st.metric.startsWith('msp:');
-    $('#metricNote').textContent = st.metric === 'base' ? '' : U.ready ? '按游戏数值表的实际值计算。不属于该类型的单词(例如: 防御塔分数中的部件单词)计 0 分。' :
+    $('#metricNote').textContent = st.metric === 'base' ? '' : U.ready ? '按游戏数值表的实际值计算。不属于该类型的单词(例如: 塔分数中的模组单词)计 0 分。' :
       missing.length ? `注意: ${missing.map(keyLabel).join(', ')} 的基准系数未知，暂以基础公式代替。请在图鉴中记录后在公式推定标签页进行推定。`
-        : isMod ? '部件效果由一种效果占用整个单词，因此会直接得到该值(与实测几乎一致)。'
-          : '防御塔本体值是"某一能力独占 1.0 占比"时的最大值。实际防御塔若有多个能力会分摊合计 1.0，因此低于此值。';
+        : isMod ? '模组效果由一种效果占用整个单词，因此会直接得到该值(与实测几乎一致)。'
+          : '塔本体值是"某一能力独占 1.0 占比"时的最大值。实际塔若有多个能力会分摊合计 1.0，因此低于此值。';
   }
   function afterDataChange() {
     buildMetricOptions();
@@ -278438,8 +278438,8 @@ function fitFixed(points) {
   // ---------- rendering: calculator ----------
   function cardBadge(w) {
     const c = cardMap.get(w), m = modMap.get(w);
-    return uBadge(w) + (c ? ` <span class="b card" title="防御塔图鉴中的单词">图鉴·${c.role === 'tower' ? '防御塔' : '采集塔'}</span>` : '') +
-      (m ? ' <span class="b mod" title="部件图鉴中的单词">部件</span>' : '');
+    return uBadge(w) + (c ? ` <span class="b card" title="塔图鉴中的单词">图鉴·${c.role === 'tower' ? '防御塔' : '采集塔'}</span>` : '') +
+      (m ? ' <span class="b mod" title="模组图鉴中的单词">模组</span>' : '');
   }
   // meaning lookup: links to online dictionaries (needs internet; nothing is sent from this page)
   function dictLinks(w) {
@@ -278449,7 +278449,7 @@ function fitFixed(points) {
   }
   function recBtns(w) {
     if (U.ready) return dictLinks(w);
-    return `<button class="x" data-addcard="${w}" title="记录到防御塔图鉴">图鉴</button> <button class="x" data-addmod="${w}" title="记录到部件图鉴">部件</button> ${dictLinks(w)}`;
+    return `<button class="x" data-addcard="${w}" title="记录到塔图鉴">图鉴</button> <button class="x" data-addmod="${w}" title="记录到模组图鉴">模组</button> ${dictLinks(w)}`;
   }
   function wordCell(i) {
     const w = dict.words[i];
@@ -278578,7 +278578,7 @@ function fitFixed(points) {
     if (dict.index.has(w)) idx = dict.index.get(w);
     const canMake = S.cnt ? (() => { const c = rackCounts(w); for (let k = 0; k < 26; k++) if (c[k] > S.cnt[k]) return false; return true; })() : null;
     out.innerHTML = `<div class="bw"><span class="w">${up(w)}</span> <span class="meta">${w.length} 字母 · 字母和 ${sum} · ${esc(metricInfo()[1])} ${fmt(p)}</span>
-      ${idx >= 0 ? posBadges(idx) : '<span class="b u">内置词典中没有</span>'}${cardBadge(w)}${U.ready && U.map.get(w) ? '<div class="meta">等级值 ' + fmt(wordValue(w)) + ' · ' + esc(uText(U.map.get(w))) + '</div>' : ''}${U.ready && U.map.get(w) && U.map.get(w).cursed ? '<div class="meta">诅咒: 被此防御塔击中的敌人 5 秒内受到的所有来源伤害 +' + U.map.get(w).sp.curse + '%(不可叠加)。生成时会随机附带一个副作用: ' + esc(CURSE_NEG.join(' / ')) + '</div>' : ''}
+      ${idx >= 0 ? posBadges(idx) : '<span class="b u">内置词典中没有</span>'}${cardBadge(w)}${U.ready && U.map.get(w) ? '<div class="meta">等级值 ' + fmt(wordValue(w)) + ' · ' + esc(uText(U.map.get(w))) + '</div>' : ''}${U.ready && U.map.get(w) && U.map.get(w).cursed ? '<div class="meta">诅咒: 被此击中的敌人 5 秒内受到的所有来源伤害 +' + U.map.get(w).sp.curse + '%(不可叠加)。生成时会随机附带一个副作用: ' + esc(CURSE_NEG.join(' / ')) + '</div>' : 防御塔''}
       ${canMake === null ? '' : canMake ? '<span class="b ok">可用当前字母拼出</span>' : '<span class="b no">无法用当前字母拼出</span>'}
       ${black.has(w) ? '<button class="x" data-unban="' + w + '">取消排除</button>' : '<button class="x" data-ban="' + w + '">无效</button>'} ${recBtns(w)}</div>`;
   }
@@ -278791,8 +278791,8 @@ function fitFixed(points) {
         <td class="cdstats">${eff}${gr ? `<div>赋予: ${gr}</div>` : ''}${m.note ? `<div class="meta">${esc(m.note)}</div>` : ''}</td>
         <td><button class="x" data-medit="${m.word}">编辑</button> <button class="x" data-mdel="${m.word}">删除</button></td></tr>`;
     }).join('');
-    $('#mdTable').innerHTML = rows ? `<table><thead><tr><th>部件</th><th>效果</th><th></th></tr></thead><tbody>${rows}</tbody></table>`
-      : '<p class="muted">还没有记录部件。</p>';
+    $('#mdTable').innerHTML = rows ? `<table><thead><tr><th>模组</th><th>效果</th><th></th></tr></thead><tbody>${rows}</tbody></table>`
+      : '<p class="muted">还没有记录模组。</p>';
   }
 
   // ---------- per-item fits ----------
@@ -278814,7 +278814,7 @@ function fitFixed(points) {
   }
   function renderFit() {
     const keys = allFitKeys();
-    const names = { 1: '基础属性', 2: '特殊能力数值', 3: '部件效果' };
+    const names = { 1: '基础属性', 2: '特殊能力数值', 3: '模组效果' };
     let last = 0, rows = '';
     keys.forEach(key => {
       const g = groupOf(key);
@@ -278825,7 +278825,7 @@ function fitFixed(points) {
       if (c0) {
         const sh = pts.map(p => p.power / (c0 * p.len * p.sum));
         const avg = sh.length ? sh.reduce((a, x) => a + x, 0) / sh.length : null;
-        const tail = key.startsWith('mod:') || key.startsWith('msp:') ? '(部件通常占比 1.0，因此精确匹配)' : '(各单词占比不同，实测值 ≤ 此值)';
+        const tail = key.startsWith('mod:') || key.startsWith('msp:') ? '(模组通常占比 1.0，因此精确匹配)' : '(各单词占比不同，实测值 ≤ 此值)';
         rows += `<tr><td>${esc(keyLabel(key))}${baseNote}</td><td>${pts.length}</td>
           <td>${c0} × 长度 × 字母和 × 占比 <span class="muted">${tail}</span></td>
           <td>${avg === null ? '-' : '平均占比 ' + avg.toFixed(2)}</td><td><span class="muted">在设置中修改系数</span></td></tr>`;
@@ -278850,7 +278850,7 @@ function fitFixed(points) {
     const guessN = all.filter(r => r.status === 'okguess').length;
     const t = all.filter(r => r.kind === 'tower'), m = all.filter(r => r.kind === 'mod');
     const cnt = arr => arr.filter(r => r.status === 'ok').length + '/' + arr.filter(judged).length;
-    $('#shareSummary').innerHTML = `占比合计为 1.0(±${SHARE_TOL})的单词: <b>防御塔 ${cnt(t)}</b> · <b>部件 ${cnt(m)}</b> ${bad ? `<span class="muted">· 下方 ⚠ ${bad} 个可能是输入错误或遗漏记录</span>` : ''}${guessN ? `<span class="muted"> · 包含推定系数、未参与判定的单词 ${guessN} 个(OK*)</span>` : ''}`;
+    $('#shareSummary').innerHTML = `占比合计为 1.0(±${SHARE_TOL})的单词: <b>塔 ${cnt(t)}</b> · <b>模组 ${cnt(m)}</b> ${bad ? `<span class="muted">· 下方 ⚠ ${bad} 个可能是输入错误或遗漏记录</span>` : ''}${guessN ? `<span class="muted"> · 包含推定系数、未参与判定的单词 ${guessN} 个(OK*)</span>` : ''}`;
     const list = all.filter(r => !only || r.status === 'low' || r.status === 'high' || r.status === 'unk');
     const rows = list.map(r => {
       const parts = r.parts.map(p => {
@@ -278860,7 +278860,7 @@ function fitFixed(points) {
       }).join(' ');
       const cls = r.status === 'ok' ? 'ok' : r.status === 'unk' || r.status === 'okguess' ? '' : 'no';
       const tag = { ok: 'OK', okguess: 'OK*', unk: '无法判定' }[r.status] || '⚠';
-      return `<tr><td><span class="w" style="font-size:16px">${up(r.word)}</span><div class="meta">${r.kind === 'tower' ? '防御塔' : '部件'} · B=${r.B}</div></td>
+      return `<tr><td><span class="w" style="font-size:16px">${up(r.word)}</span><div class="meta">${r.kind === 'tower' ? '防御塔' : '模组'} · B=${r.B}</div></td>
         <td>${parts}</td><td class="num">${r.status === 'unk' ? '-' : r.sum.toFixed(2)}</td>
         <td><span class="b ${cls}">${tag}</span> <span class="meta">${esc(shareHint(r))}</span></td></tr>`;
     }).join('');
@@ -278901,7 +278901,7 @@ function fitFixed(points) {
       const sh = c > 0 && m.val > 0 ? m.val / (c * B) : null;
       return `<tr><td><b>${up(m.word)}</b></td><td>${m.dir === 'down' ? '纵向' : '横向'}</td><td>${esc(META_EFF[m.eff])}</td><td class="num">+${fmt(m.val)}</td><td class="num">${B}</td><td class="num">${sh === null ? '-' : fmt(sh)}</td><td>${esc(m.towers)}</td><td><button class="x" data-mtdel="${i}">删除</button></td></tr>`;
     }).join('');
-    $('#mtTable').innerHTML = rows ? `<table><thead><tr><th>单词</th><th>方向</th><th>效果</th><th>数值</th><th>B</th><th>数值÷(系数×B)</th><th>参与防御塔(首字母)</th><th></th></tr></thead><tbody>${rows}</tbody></table>` : '<p class="muted">还没有记录。</p>';
+    $('#mtTable').innerHTML = rows ? `<table><thead><tr><th>单词</th><th>方向</th><th>效果</th><th>数值</th><th>B</th><th>数值÷(系数×B)</th><th>参与塔(首字母)</th><th></th></tr></thead><tbody>${rows}</tbody></table>` : '<p class="muted">还没有记录。</p>';
   }
   function addMeta() {
     const m = normMeta({ word: $('#mtWord').value, dir: $('#mtDir').value, eff: $('#mtEff').value, val: parseFloat($('#mtVal').value), towers: $('#mtTw').value });
@@ -278938,7 +278938,7 @@ function fitFixed(points) {
       const fill = [...w].map((ch, k) => raw[k] === '_' ? `${up(ch)}: ${(byInit[ch] || ['(图鉴中没有)']).map(up).join('/')}` : '').filter(Boolean).join(' · ');
       return `<tr><td><b>${up(w)}</b> ${dictLinks(w)}</td><td class="num">${B}</td><td class="num">生命值 +${fmt(st.c0.t_hp * B * 0.4)} / 攻击光环 +${fmt(st.c0['sp:aura_atk'] * B * 0.5)}</td><td>${fill}</td></tr>`;
     }).join('');
-    out.innerHTML = res.length ? `<p class="note">${res.length} 个候选 (按 B 从大到小, 前 30 个)。加成是按 3 条记录中观察到的比例(生命值型系数的约 0.4, 光环型约 0.5)估算的值，实际附带哪种效果因单词而异，属于<b>推定</b>。</p><table><thead><tr><th>完整单词</th><th>B</th><th>加成估算</th><th>可填入空格的防御塔首字母</th></tr></thead><tbody>${rows}</tbody></table>` : '<p class="muted">没有匹配的单词。' + (own ? ' 取消勾选"仅限我图鉴中防御塔的首字母"可显示更多。' : '') + '</p>';
+    out.innerHTML = res.length ? `<p class="note">${res.length} 个候选 (按 B 从大到小, 前 30 个)。加成是按 3 条记录中观察到的比例(生命值型系数的约 0.4, 光环型约 0.5)估算的值，实际附带哪种效果因单词而异，属于<b>推定</b>。</p><table><thead><tr><th>完整单词</th><th>B</th><th>加成估算</th><th>可填入空格的塔首字母</th></tr></thead><tbody>${rows}</tbody></table>` : '<p class="muted">没有匹配的单词。' + (own ? ' 取消勾选"仅限我图鉴中防御塔的首字母"可显示更多。' : '') + '</p>';
   }
   // attacks per second from attack-speed value: two candidate shapes (both fit the 3 recorded pairs)
   const aspsRate = x => x - 1;
@@ -279278,7 +279278,7 @@ function fitFixed(points) {
     const a = document.createElement('a');
     a.href = url; a.download = name; document.body.appendChild(a); a.click(); a.remove();
     setTimeout(() => URL.revokeObjectURL(url), 2000);
-    $('#bkMsg').textContent = `已保存为 ${name}。请查看下载文件夹。(防御塔 ${cards.length} · 部件 ${mods.length} · 推定式 ${Object.keys(st.models).length})`;
+    $('#bkMsg').textContent = `已保存为 ${name}。请查看下载文件夹。(塔 ${cards.length} · 模组 ${mods.length} · 推定式 ${Object.keys(st.models).length})`;
   };
   $('#bkPick').onclick = () => $('#bkFile').click();
   $('#bkFile').addEventListener('change', () => {
@@ -279290,9 +279290,9 @@ function fitFixed(points) {
       try { d = JSON.parse(String(rd.result)); } catch (e) { d = null; }
       if (!d || typeof d !== 'object' || !('cards' in d || 'mods' in d)) { alert('备份文件格式不正确。'); $('#bkFile').value = ''; return; }
       const nc = Array.isArray(d.cards) ? d.cards.length : 0, nm = Array.isArray(d.mods) ? d.mods.length : 0;
-      if (!confirm(`"是否加载 "${f.name}"？\n当前记录(防御塔 ${cards.length} · 部件 ${mods.length})将被替换为文件内容(防御塔 ${nc} · 部件 ${nm})。`)) { $('#bkFile').value = ''; return; }
+      if (!confirm(`"是否加载 "${f.name}"？\n当前记录(塔 ${cards.length} · 模组 ${mods.length})将被替换为文件内容(塔 ${nc} · 模组 ${nm})。`)) { $('#bkFile').value = ''; return; }
       $('#cdBox').value = String(rd.result);
-      if (loadBackup()) $('#bkMsg').textContent = `已从 ${f.name} 加载。(防御塔 ${cards.length} · 部件 ${mods.length} · 推定式 ${Object.keys(st.models).length})${migText() ? ' · ' + migText() : ''}`;
+      if (loadBackup()) $('#bkMsg').textContent = `已从 ${f.name} 加载。(塔 ${cards.length} · 模组 ${mods.length} · 推定式 ${Object.keys(st.models).length})${migText() ? ' · ' + migText() : ''}`;
       $('#bkFile').value = '';
     };
     rd.readAsText(f);
