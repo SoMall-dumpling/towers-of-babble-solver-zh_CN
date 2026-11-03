@@ -278578,7 +278578,7 @@ function fitFixed(points) {
     if (dict.index.has(w)) idx = dict.index.get(w);
     const canMake = S.cnt ? (() => { const c = rackCounts(w); for (let k = 0; k < 26; k++) if (c[k] > S.cnt[k]) return false; return true; })() : null;
     out.innerHTML = `<div class="bw"><span class="w">${up(w)}</span> <span class="meta">${w.length} 字母 · 字母和 ${sum} · ${esc(metricInfo()[1])} ${fmt(p)}</span>
-      ${idx >= 0 ? posBadges(idx) : '<span class="b u">内置词典中没有</span>'}${cardBadge(w)}${U.ready && U.map.get(w) ? '<div class="meta">等级值 ' + fmt(wordValue(w)) + ' · ' + esc(uText(U.map.get(w))) + '</div>' : ''}${U.ready && U.map.get(w) && U.map.get(w).cursed ? '<div class="meta">诅咒: 被此击中的敌人 5 秒内受到的所有来源伤害 +' + U.map.get(w).sp.curse + '%(不可叠加)。生成时会随机附带一个副作用: ' + esc(CURSE_NEG.join(' / ')) + '</div>' : 防御塔''}
+      ${idx >= 0 ? posBadges(idx) : '<span class="b u">内置词典中没有</span>'}${cardBadge(w)}${U.ready && U.map.get(w) ? '<div class="meta">等级值 ' + fmt(wordValue(w)) + ' · ' + esc(uText(U.map.get(w))) + '</div>' : ''}${U.ready && U.map.get(w) && U.map.get(w).cursed ? '<div class="meta">诅咒: 被此防御塔击中的敌人 5 秒内受到的所有来源伤害 +' + U.map.get(w).sp.curse + '%(不可叠加)。生成时会随机附带一个副作用: ' + esc(CURSE_NEG.join(' / ')) + '</div>' : ''}
       ${canMake === null ? '' : canMake ? '<span class="b ok">可用当前字母拼出</span>' : '<span class="b no">无法用当前字母拼出</span>'}
       ${black.has(w) ? '<button class="x" data-unban="' + w + '">取消排除</button>' : '<button class="x" data-ban="' + w + '">无效</button>'} ${recBtns(w)}</div>`;
   }
